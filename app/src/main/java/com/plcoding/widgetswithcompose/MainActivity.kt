@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
                     val onboardingCompleted by getOnboardingStatusUseCase().collectAsState(initial = null)
 
                     if (onboardingCompleted != null) {
-                        val startDestination = if (onboardingCompleted == true) com.plcoding.widgetswithcompose.presentation.navigation.Screen.HomeScreen.route else com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingScreen.route
+                        val startDestination = if (onboardingCompleted == true) com.plcoding.widgetswithcompose.presentation.navigation.Screen.MainScreen.route else com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingScreen.route
                         
                         androidx.navigation.compose.NavHost(
                             navController = navController,
@@ -88,8 +88,8 @@ class MainActivity : ComponentActivity() {
                                     com.plcoding.widgetswithcompose.presentation.onboarding.OnboardingInterestsScreen(navController = navController, viewModel = onboardingViewModel)
                                 }
                             }
-                            composable(com.plcoding.widgetswithcompose.presentation.navigation.Screen.HomeScreen.route) {
-                                com.plcoding.widgetswithcompose.presentation.home.HomeScreen()
+                            composable(com.plcoding.widgetswithcompose.presentation.navigation.Screen.MainScreen.route) {
+                                com.plcoding.widgetswithcompose.presentation.MainScreen(rootNavController = navController)
                             }
                         }
                     } else {

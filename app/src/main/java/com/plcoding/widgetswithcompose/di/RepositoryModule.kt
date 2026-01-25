@@ -25,4 +25,10 @@ abstract class RepositoryModule {
     abstract fun bindUserRepository(
         userPreferencesRepositoryImpl: UserPreferencesRepositoryImpl
     ): UserRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindHabitRepository(
+        habitRepositoryImpl: com.plcoding.widgetswithcompose.data.repository.HabitRepositoryImpl
+    ): com.plcoding.widgetswithcompose.domain.repository.HabitRepository
 }

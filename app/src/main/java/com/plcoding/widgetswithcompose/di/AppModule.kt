@@ -22,7 +22,8 @@ object AppModule {
             context,
             QuoteDatabase::class.java,
             "quote_db"
-        ).build()
+        ).fallbackToDestructiveMigration()
+         .build()
     }
 
     @Provides
@@ -35,5 +36,11 @@ object AppModule {
     @Singleton
     fun provideReadHistoryDao(db: QuoteDatabase): ReadHistoryDao {
         return db.readHistoryDao
+    }
+
+    @Provides
+    @Singleton
+    fun provideHabitDao(db: QuoteDatabase): com.plcoding.widgetswithcompose.data.local.dao.HabitDao {
+        return db.habitDao
     }
 }

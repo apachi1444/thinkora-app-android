@@ -21,7 +21,9 @@ class HomeViewModel @Inject constructor(
     private val getDailyQuoteUseCase: GetDailyQuoteUseCase,
     private val getDailyStreakUseCase: GetDailyStreakUseCase,
     private val markQuoteAsReadUseCase: MarkQuoteAsReadUseCase,
-    private val toggleFavoriteUseCase: ToggleFavoriteUseCase
+    private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
+    private val getUserNameUseCase: com.plcoding.widgetswithcompose.domain.use_case.GetUserNameUseCase,
+    private val getHabitsUseCase: com.plcoding.widgetswithcompose.domain.use_case.GetHabitsUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -30,6 +32,17 @@ class HomeViewModel @Inject constructor(
     init {
         loadDailyQuote()
         loadStreak()
+        loadUserName()
+    }
+
+    private fun loadUserName() {
+        getUserNameUseCase().onEach { name ->
+            _state.value = _state.value.copy(userName = name)
+        }.launchIn(viewModelScope)
+
+        getHabitsUseCase().onEach { habits ->
+             _state.value = _state.value.copy(habits = habits)
+        }.launchIn(viewModelScope)
     }
 
     private fun loadDailyQuote() {
@@ -66,7 +79,9 @@ class HomeViewModel @Inject constructor(
 
 data class HomeState(
     val dailyQuote: Quote? = null,
-    val streak: DailyStreak = DailyStreak(0, 0)
+    val streak: DailyStreak = DailyStreak(0, 0),
+    val userName: String = "",
+    val habits: List<com.plcoding.widgetswithcompose.domain.model.Habit> = emptyList()
 )
 
 sealed class HomeEvent {

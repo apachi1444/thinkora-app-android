@@ -208,7 +208,7 @@ fun OnboardingInterestsScreen(
         viewModel.uiEvent.collect { event ->
             when(event) {
                 is OnboardingUiEvent.OnboardingCompleted -> {
-                    navController.navigate(Screen.HomeScreen.route) {
+                    navController.navigate(Screen.MainScreen.route) {
                         popUpTo(Screen.OnboardingIntro.route) { inclusive = true } // Pop everything from intro
                         // Also pop the graph start if structured that way
                     }
