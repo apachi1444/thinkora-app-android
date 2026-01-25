@@ -63,4 +63,5 @@ sealed class OnboardingEvent {
 
 sealed class OnboardingUiEvent {
     object OnboardingCompleted: OnboardingUiEvent()
+    data class NavigateTo(val route: String): OnboardingUiEvent()
 }

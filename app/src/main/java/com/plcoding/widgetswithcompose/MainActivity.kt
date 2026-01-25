@@ -14,15 +14,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import com.plcoding.widgetswithcompose.ui.theme.WidgetsWithComposeTheme
-import com.plcoding.widgetswithcompose.ui.theme.setEdgeToEdgeConfig
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -60,8 +61,32 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             startDestination = startDestination
                         ) {
-                            composable(com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingScreen.route) {
-                                com.plcoding.widgetswithcompose.presentation.onboarding.OnboardingScreen(navController = navController)
+                            navigation(
+                                startDestination = com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingIntro.route,
+                                route = com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingScreen.route
+                            ) {
+                                composable(com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingIntro.route) { backStackEntry ->
+                                    // Scope ViewModel to the navigation graph to share state
+                                    val parentEntry = remember(backStackEntry) {
+                                        navController.getBackStackEntry(com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingScreen.route)
+                                    }
+                                    val onboardingViewModel: com.plcoding.widgetswithcompose.presentation.onboarding.OnboardingViewModel = androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
+                                    com.plcoding.widgetswithcompose.presentation.onboarding.OnboardingIntroScreen(navController = navController)
+                                }
+                                composable(com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingName.route) { backStackEntry ->
+                                    val parentEntry = remember(backStackEntry) {
+                                        navController.getBackStackEntry(com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingScreen.route)
+                                    }
+                                    val onboardingViewModel: com.plcoding.widgetswithcompose.presentation.onboarding.OnboardingViewModel = androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
+                                    com.plcoding.widgetswithcompose.presentation.onboarding.OnboardingNameScreen(navController = navController, viewModel = onboardingViewModel)
+                                }
+                                composable(com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingInterests.route) { backStackEntry ->
+                                    val parentEntry = remember(backStackEntry) {
+                                        navController.getBackStackEntry(com.plcoding.widgetswithcompose.presentation.navigation.Screen.OnboardingScreen.route)
+                                    }
+                                    val onboardingViewModel: com.plcoding.widgetswithcompose.presentation.onboarding.OnboardingViewModel = androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
+                                    com.plcoding.widgetswithcompose.presentation.onboarding.OnboardingInterestsScreen(navController = navController, viewModel = onboardingViewModel)
+                                }
                             }
                             composable(com.plcoding.widgetswithcompose.presentation.navigation.Screen.HomeScreen.route) {
                                 com.plcoding.widgetswithcompose.presentation.home.HomeScreen()
