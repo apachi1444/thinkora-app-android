@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.SplashScreenApp" parent="android:Theme.Material.Light.NoActionBar" />
 
-    <style name="Theme.WidgetsWithCompose" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="SplashScreenTheme" parent="Theme.SplashScreenApp">
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.SplashScreenApp</item>
+    </style>
 </resources>
