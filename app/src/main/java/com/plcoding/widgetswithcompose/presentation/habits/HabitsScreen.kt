@@ -53,7 +53,12 @@ fun HabitsScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                items(state.habits) { habit ->
-                   HabitItem(habit = habit)
+                   HabitItem(
+                       habit = habit,
+                       onIncrementClick = { habitId ->
+                           viewModel.onEvent(HabitsEvent.IncrementStreak(habitId))
+                       }
+                   )
                }
             }
         }
@@ -71,7 +76,10 @@ fun HabitsScreen(
 }
 
 @Composable
-fun HabitItem(habit: com.plcoding.widgetswithcompose.domain.model.Habit) {
+fun HabitItem(
+    habit: com.plcoding.widgetswithcompose.domain.model.Habit,
+    onIncrementClick: ((String) -> Unit)? = null
+) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
@@ -92,19 +100,31 @@ fun HabitItem(habit: com.plcoding.widgetswithcompose.domain.model.Habit) {
                )
            }
            
-           Row(verticalAlignment = Alignment.CenterVertically) {
+           Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                Icon(
                    Icons.Default.Build,
                    contentDescription = null, 
                    tint = Color(0xFFF97316)
                )
-               Spacer(modifier = Modifier.width(4.dp))
                Text(
                    text = "${habit.streak}",
                    style = MaterialTheme.typography.titleMedium,
                    fontWeight = FontWeight.Bold,
                    color = Color(0xFFF97316)
                )
+               
+               if (onIncrementClick != null) {
+                   IconButton(
+                       onClick = { onIncrementClick(habit.id) },
+                       modifier = Modifier.size(32.dp)
+                   ) {
+                       Icon(
+                           Icons.Default.Add,
+                           contentDescription = "Increment",
+                           tint = MaterialTheme.colorScheme.primary
+                       )
+                   }
+               }
            }
         }
     }

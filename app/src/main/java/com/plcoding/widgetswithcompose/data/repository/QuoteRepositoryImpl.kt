@@ -93,11 +93,41 @@ class QuoteRepositoryImpl @Inject constructor(
 
     private suspend fun seedQuotes() {
         val seed = listOf(
-            QuoteEntity(UUID.randomUUID().toString(), "The best way to get started is to quit talking and begin doing.", "Walt Disney", "Business", false),
-            QuoteEntity(UUID.randomUUID().toString(), "Don't let yesterday take up too much of today.", "Will Rogers", "Life", false),
-            QuoteEntity(UUID.randomUUID().toString(), "It's not whether you get knocked down, it's whether you get up.", "Vince Lombardi", "Sports", false),
-            QuoteEntity(UUID.randomUUID().toString(), "If you are working on something that you really care about, you don't have to be pushed. The vision pulls you.", "Steve Jobs", "Tech", false),
-            QuoteEntity(UUID.randomUUID().toString(), "Technology is best when it brings people together.", "Matt Mullenweg", "Tech", false)
+            QuoteEntity(UUID.randomUUID().toString(),
+                "The best way to get started is to quit talking and begin doing.",
+                "Walt Disney",
+                "Business",
+                isFavorite = false,
+                isRead = false
+            ),
+            QuoteEntity(UUID.randomUUID().toString(),
+                "The best way to get started is to quit talking and begin doing.",
+                "Walt Disney",
+                "Business",
+                isFavorite = false,
+                isRead = false
+            ),
+            QuoteEntity(UUID.randomUUID().toString(),
+                "The best way to get started is to quit talking and begin doing.",
+                "Walt Disney",
+                "Business",
+                isFavorite = false,
+                isRead = false
+            ),
+            QuoteEntity(UUID.randomUUID().toString(),
+                "The best way to get started is to quit talking and begin doing.",
+                "Walt Disney",
+                "Business",
+                isFavorite = false,
+                isRead = false
+            ),
+            QuoteEntity(UUID.randomUUID().toString(),
+                "The best way to get started is to quit talking and begin doing.",
+                "Walt Disney",
+                "Business",
+                isFavorite = false,
+                isRead = false
+            )
         )
         seed.forEach { quoteDao.insertQuote(it) }
     }

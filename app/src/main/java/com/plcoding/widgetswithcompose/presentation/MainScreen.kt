@@ -5,16 +5,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NamedNavArgument
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDeepLink
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,10 +25,9 @@ import com.plcoding.widgetswithcompose.presentation.navigation.Screen
 import com.plcoding.widgetswithcompose.presentation.settings.SettingsScreen
 
 
-
 @Composable
 fun MainScreen(
-    rootNavController: NavHostController // Controller for root navigation (Auth/Onboarding vs Main)
+    rootNavController: NavHostController
 ) {
     val bottomNavController = rememberNavController()
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
@@ -83,13 +82,23 @@ fun MainScreen(
             modifier = Modifier.padding(padding)
         ) {
             composable(Screen.HomeScreen.route) {
-                HomeScreen(navController = rootNavController) // Pass root controller for deeper navigation if needed
+                HomeScreen(navController = rootNavController)
             }
             composable(Screen.HabitsScreen.route) {
                 com.plcoding.widgetswithcompose.presentation.habits.HabitsScreen()
             }
             composable(Screen.SettingsScreen.route) {
                 SettingsScreen()
+            }
+            composable(
+                route = Screen.CategoryQuotesScreen.route,
+                arguments = listOf(
+                    androidx.navigation.navArgument("categoryName") {
+                        type = androidx.navigation.NavType.StringType
+                    }
+                )
+            ) {
+                com.plcoding.widgetswithcompose.presentation.category.CategoryQuotesScreen(navController = bottomNavController)
             }
         }
     }

@@ -14,4 +14,7 @@ interface HabitDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertHabit(habit: HabitEntity)
+
+    @Query("UPDATE habits SET streak = streak + 1 WHERE id = :id")
+    suspend fun incrementStreak(id: String)
 }

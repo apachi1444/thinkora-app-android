@@ -16,7 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HabitsViewModel @Inject constructor(
     private val getHabitsUseCase: GetHabitsUseCase,
-    private val addHabitUseCase: AddHabitUseCase
+    private val addHabitUseCase: AddHabitUseCase,
+    private val incrementHabitStreakUseCase: com.plcoding.widgetswithcompose.domain.use_case.IncrementHabitStreakUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HabitsState())
@@ -45,6 +46,11 @@ class HabitsViewModel @Inject constructor(
             is HabitsEvent.HideAddDialog -> {
                 _state.value = _state.value.copy(isAddDialogVisible = false)
             }
+            is HabitsEvent.IncrementStreak -> {
+                viewModelScope.launch {
+                    incrementHabitStreakUseCase(event.habitId)
+                }
+            }
         }
     }
 }
@@ -58,4 +64,5 @@ sealed class HabitsEvent {
     data class AddHabit(val name: String, val initialStreak: Int) : HabitsEvent()
     object ShowAddDialog : HabitsEvent()
     object HideAddDialog : HabitsEvent()
+    data class IncrementStreak(val habitId: String) : HabitsEvent()
 }

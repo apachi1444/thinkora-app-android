@@ -1,7 +1,18 @@
 package com.plcoding.widgetswithcompose.presentation.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -9,13 +20,21 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,9 +60,7 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            //.padding(padding) // No scaffold padding needed here as it's passed from MainScreen if we lifted it, but MainScreen passes padding to NavHost. 
-            // Actually NavHost in MainScreen has modifier.padding(padding). So HomeScreen just fills max size.
-            .background(Color(0xFFF8F9FC)) 
+            .background(Color(0xFFF8F9FC))
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
     ) {
@@ -60,7 +77,11 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(12.dp))
         
         state.dailyQuote?.let { quote ->
-            HeroQuoteCard(quote = quote)
+            HeroQuoteCard(
+                quote = quote,
+                onMarkRead = { viewModel.onEvent(HomeEvent.MarkAsRead) },
+                onToggleFavorite = { viewModel.onEvent(HomeEvent.ToggleFavorite) }
+            )
         } ?: Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -82,7 +103,11 @@ fun HomeScreen(
         )
         Spacer(modifier = Modifier.height(12.dp))
 
-        CategoriesRow()
+        CategoriesRow(
+            onCategoryClick = { category ->
+                navController.navigate(Screen.CategoryQuotesScreen.createRoute(category))
+            }
+        )
 
         Spacer(modifier = Modifier.height(24.dp))
         
@@ -106,7 +131,12 @@ fun HomeScreen(
              Spacer(modifier = Modifier.height(12.dp))
              // Display first 3 items or so
              state.habits.take(3).forEach { habit ->
-                 com.plcoding.widgetswithcompose.presentation.habits.HabitItem(habit = habit)
+                 com.plcoding.widgetswithcompose.presentation.habits.HabitItem(
+                     habit = habit,
+                     onIncrementClick = { habitId ->
+                         viewModel.onEvent(HomeEvent.IncrementHabitStreak(habitId))
+                     }
+                 )
                  Spacer(modifier = Modifier.height(8.dp))
              }
          }
@@ -168,11 +198,14 @@ fun HomeHeader(userName: String) {
 }
 
 @Composable
-fun HeroQuoteCard(quote: Quote) {
+fun HeroQuoteCard(
+    quote: Quote,
+    onMarkRead: () -> Unit,
+    onToggleFavorite: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(180.dp)
             .clip(RoundedCornerShape(24.dp))
             .background(
                 brush = Brush.horizontalGradient(
@@ -230,17 +263,75 @@ fun HeroQuoteCard(quote: Quote) {
                 maxLines = 3
             )
             
-            Text(
-                text = "- ${quote.author}",
-                style = MaterialTheme.typography.labelMedium,
-                color = Color.White.copy(alpha = 0.8f)
-            )
+            Column {
+                Text(
+                    text = "- ${quote.author}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color.White.copy(alpha = 0.8f)
+                )
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    Surface(
+                        onClick = onMarkRead,
+                        shape = RoundedCornerShape(12.dp),
+                        color = if (quote.isRead) Color.White.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.2f)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Icon(
+                                imageVector = if (quote.isRead) Icons.Default.Check else Icons.Default.Check,
+                                contentDescription = "Mark as read",
+                                tint = Color.White,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Text(
+                                text = if (quote.isRead) "Read" else "Mark Read",
+                                color = Color.White,
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                        }
+                    }
+                    
+                    Surface(
+                        onClick = onToggleFavorite,
+                        shape = RoundedCornerShape(12.dp),
+                        color = Color.White.copy(alpha = 0.2f)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Icon(
+                                imageVector = if (quote.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                                contentDescription = "Favorite",
+                                tint = if (quote.isFavorite) Color(0xFFFF6B9D) else Color.White,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Text(
+                                text = "Favorite",
+                                color = Color.White,
+                                style = MaterialTheme.typography.labelSmall
+                            )
+                        }
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
-fun CategoriesRow() {
+fun CategoriesRow(
+    onCategoryClick: (String) -> Unit
+) {
     val categories = listOf(
         "Business" to Color(0xFFE0E7FF),
         "Life" to Color(0xFFFCE7F3),
@@ -251,7 +342,7 @@ fun CategoriesRow() {
     LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
         items(categories.size) { index ->
             val (name, color) = categories[index]
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable { onCategoryClick(name) }) {
                 Box(
                     modifier = Modifier
                         .size(64.dp)

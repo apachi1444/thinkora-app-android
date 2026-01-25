@@ -35,4 +35,8 @@ class HabitRepositoryImpl @Inject constructor(
         )
         habitDao.insertHabit(habit)
     }
+
+    override suspend fun incrementHabitStreak(id: String) {
+        habitDao.incrementStreak(id)
+    }
 }

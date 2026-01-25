@@ -10,7 +10,8 @@ data class QuoteEntity(
     val content: String,
     val author: String,
     val category: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
+    val isRead: Boolean
 ) {
     fun toDomain(isRead: Boolean): Quote {
         return Quote(

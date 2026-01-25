@@ -23,7 +23,8 @@ class HomeViewModel @Inject constructor(
     private val markQuoteAsReadUseCase: MarkQuoteAsReadUseCase,
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val getUserNameUseCase: com.plcoding.widgetswithcompose.domain.use_case.GetUserNameUseCase,
-    private val getHabitsUseCase: com.plcoding.widgetswithcompose.domain.use_case.GetHabitsUseCase
+    private val getHabitsUseCase: com.plcoding.widgetswithcompose.domain.use_case.GetHabitsUseCase,
+    private val incrementHabitStreakUseCase: com.plcoding.widgetswithcompose.domain.use_case.IncrementHabitStreakUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HomeState())
@@ -73,6 +74,11 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
+            is HomeEvent.IncrementHabitStreak -> {
+                viewModelScope.launch {
+                    incrementHabitStreakUseCase(event.habitId)
+                }
+            }
         }
     }
 }
@@ -87,4 +93,5 @@ data class HomeState(
 sealed class HomeEvent {
     object MarkAsRead: HomeEvent()
     object ToggleFavorite: HomeEvent()
+    data class IncrementHabitStreak(val habitId: String): HomeEvent()
 }
