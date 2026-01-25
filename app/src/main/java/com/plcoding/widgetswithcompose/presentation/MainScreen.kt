@@ -82,7 +82,7 @@ fun MainScreen(
             modifier = Modifier.padding(padding)
         ) {
             composable(Screen.HomeScreen.route) {
-                HomeScreen(navController = rootNavController)
+                HomeScreen(navController = bottomNavController)
             }
             composable(Screen.HabitsScreen.route) {
                 com.plcoding.widgetswithcompose.presentation.habits.HabitsScreen()
