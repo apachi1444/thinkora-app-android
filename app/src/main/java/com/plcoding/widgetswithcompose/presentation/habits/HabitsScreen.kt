@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,8 +26,13 @@ fun HabitsScreen(
     viewModel: HabitsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    var habitToDelete by remember { mutableStateOf<com.plcoding.widgetswithcompose.domain.model.Habit?>(null) }
+    var showDeleteConfirmation by remember { mutableStateOf(false) }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { viewModel.onEvent(HabitsEvent.ShowAddDialog) },
@@ -55,7 +61,10 @@ fun HabitsScreen(
             ) {
                items(state.habits, key = { it.id }) { habit ->
                    SwipeToDeleteContainer(
-                       onDelete = { viewModel.onEvent(HabitsEvent.DeleteHabit(habit.id)) }
+                       onDelete = {
+                           habitToDelete = habit
+                           showDeleteConfirmation = true
+                       }
                    ) {
                        HabitItem(
                            habit = habit,
@@ -74,6 +83,35 @@ fun HabitsScreen(
                 onConfirm = { name, streak -> 
                     viewModel.onEvent(HabitsEvent.AddHabit(name, streak))
                     viewModel.onEvent(HabitsEvent.HideAddDialog)
+                }
+            )
+        }
+
+        if (showDeleteConfirmation && habitToDelete != null) {
+            DeleteConfirmationDialog(
+                habitName = habitToDelete!!.name,
+                onConfirm = {
+                    val deletedHabit = habitToDelete!!
+                    viewModel.onEvent(HabitsEvent.DeleteHabit(deletedHabit.id))
+                    showDeleteConfirmation = false
+                    habitToDelete = null
+                    
+                    // Show snackbar with undo
+                    coroutineScope.launch {
+                        val result = snackbarHostState.showSnackbar(
+                            message = "${deletedHabit.name} deleted",
+                            actionLabel = "Undo",
+                            duration = SnackbarDuration.Long
+                        )
+                        if (result == SnackbarResult.ActionPerformed) {
+                            // Undo deletion
+                            viewModel.onEvent(HabitsEvent.AddHabit(deletedHabit.name, deletedHabit.streak))
+                        }
+                    }
+                },
+                onDismiss = {
+                    showDeleteConfirmation = false
+                    habitToDelete = null
                 }
             )
         }
@@ -187,6 +225,48 @@ fun SwipeToDeleteContainer(
         },
         dismissContent = { content() },
         directions = setOf(DismissDirection.EndToStart)
+    )
+}
+
+@Composable
+fun DeleteConfirmationDialog(
+    habitName: String,
+    onConfirm: () -> Unit,
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = null,
+                tint = Color(0xFFEF4444)
+            )
+        },
+        title = { 
+            Text(
+                "Delete Habit?",
+                fontWeight = FontWeight.Bold
+            ) 
+        },
+        text = { 
+            Text("Are you sure you want to delete \"$habitName\"? You can undo this action.") 
+        },
+        confirmButton = {
+            Button(
+                onClick = onConfirm,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFEF4444)
+                )
+            ) {
+                Text("Delete")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
     )
 }
 
