@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.plcoding.widgetswithcompose.domain.model.Habit
 import com.plcoding.widgetswithcompose.domain.use_case.AddHabitUseCase
+import com.plcoding.widgetswithcompose.domain.use_case.DeleteHabitUseCase
 import com.plcoding.widgetswithcompose.domain.use_case.GetHabitsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 class HabitsViewModel @Inject constructor(
     private val getHabitsUseCase: GetHabitsUseCase,
     private val addHabitUseCase: AddHabitUseCase,
-    private val incrementHabitStreakUseCase: com.plcoding.widgetswithcompose.domain.use_case.IncrementHabitStreakUseCase
+    private val incrementHabitStreakUseCase: com.plcoding.widgetswithcompose.domain.use_case.IncrementHabitStreakUseCase,
+    private val deleteHabitUseCase: DeleteHabitUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HabitsState())
@@ -51,6 +53,11 @@ class HabitsViewModel @Inject constructor(
                     incrementHabitStreakUseCase(event.habitId)
                 }
             }
+            is HabitsEvent.DeleteHabit -> {
+                viewModelScope.launch {
+                    deleteHabitUseCase(event.habitId)
+                }
+            }
         }
     }
 }
@@ -65,4 +72,5 @@ sealed class HabitsEvent {
     object ShowAddDialog : HabitsEvent()
     object HideAddDialog : HabitsEvent()
     data class IncrementStreak(val habitId: String) : HabitsEvent()
+    data class DeleteHabit(val habitId: String) : HabitsEvent()
 }

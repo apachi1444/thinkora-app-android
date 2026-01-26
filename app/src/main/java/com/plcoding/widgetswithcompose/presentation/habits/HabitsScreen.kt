@@ -8,6 +8,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -52,13 +53,17 @@ fun HabitsScreen(
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-               items(state.habits) { habit ->
-                   HabitItem(
-                       habit = habit,
-                       onIncrementClick = { habitId ->
-                           viewModel.onEvent(HabitsEvent.IncrementStreak(habitId))
-                       }
-                   )
+               items(state.habits, key = { it.id }) { habit ->
+                   SwipeToDeleteContainer(
+                       onDelete = { viewModel.onEvent(HabitsEvent.DeleteHabit(habit.id)) }
+                   ) {
+                       HabitItem(
+                           habit = habit,
+                           onIncrementClick = { habitId ->
+                               viewModel.onEvent(HabitsEvent.IncrementStreak(habitId))
+                           }
+                       )
+                   }
                }
             }
         }
@@ -128,6 +133,61 @@ fun HabitItem(
            }
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SwipeToDeleteContainer(
+    onDelete: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    var isRemoved by remember { mutableStateOf(false) }
+    val dismissState = rememberDismissState(
+        confirmValueChange = { dismissValue ->
+            if (dismissValue == DismissValue.DismissedToStart || dismissValue == DismissValue.DismissedToEnd) {
+                isRemoved = true
+                true
+            } else {
+                false
+            }
+        }
+    )
+
+    LaunchedEffect(isRemoved) {
+        if (isRemoved) {
+            kotlinx.coroutines.delay(300)
+            onDelete()
+        }
+    }
+
+    SwipeToDismiss(
+        state = dismissState,
+        background = {
+            val color = when (dismissState.dismissDirection) {
+                DismissDirection.StartToEnd, DismissDirection.EndToStart -> Color(0xFFEF4444)
+                null -> Color.Transparent
+            }
+            
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color, shape = MaterialTheme.shapes.medium)
+                    .padding(horizontal = 20.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                if (dismissState.dismissDirection != null) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete",
+                        tint = Color.White,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
+        },
+        dismissContent = { content() },
+        directions = setOf(DismissDirection.EndToStart)
+    )
 }
 
 @Composable

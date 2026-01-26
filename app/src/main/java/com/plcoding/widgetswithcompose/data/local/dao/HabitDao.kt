@@ -17,4 +17,7 @@ interface HabitDao {
 
     @Query("UPDATE habits SET streak = streak + 1 WHERE id = :id")
     suspend fun incrementStreak(id: String)
+
+    @Query("DELETE FROM habits WHERE id = :id")
+    suspend fun deleteHabit(id: String)
 }
