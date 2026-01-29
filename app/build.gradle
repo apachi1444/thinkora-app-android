@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'com.plcoding.widgetswithcompose'
+    namespace 'com.apachi.thinkora'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.plcoding.widgetswithcompose"
+        applicationId "com.apachi.thinkora"
         minSdk 24
         targetSdk 34
         versionCode 1
