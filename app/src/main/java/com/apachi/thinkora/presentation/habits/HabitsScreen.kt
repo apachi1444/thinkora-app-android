@@ -96,7 +96,6 @@ fun HabitsScreen(
                     showDeleteConfirmation = false
                     habitToDelete = null
                     
-                    // Show snackbar with undo
                     coroutineScope.launch {
                         val result = snackbarHostState.showSnackbar(
                             message = "${deletedHabit.name} deleted",
@@ -104,7 +103,6 @@ fun HabitsScreen(
                             duration = SnackbarDuration.Long
                         )
                         if (result == SnackbarResult.ActionPerformed) {
-                            // Undo deletion
                             viewModel.onEvent(HabitsEvent.AddHabit(deletedHabit.name, deletedHabit.streak))
                         }
                     }
@@ -115,7 +113,45 @@ fun HabitsScreen(
                 }
             )
         }
+
+        if (state.isWidgetTutorialVisible) {
+            WidgetDiscoveryDialog(
+                onDismiss = { viewModel.onEvent(HabitsEvent.HideWidgetTutorial) }
+            )
+        }
     }
+}
+
+@Composable
+fun WidgetDiscoveryDialog(
+    onDismiss: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = {
+            Icon(
+                imageVector = Icons.Default.Build, // Process icon, or use a custom widget icon
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
+            )
+        },
+        title = {
+            Text(
+                "Add a Widget!",
+                fontWeight = FontWeight.Bold
+            )
+        },
+        text = {
+            Text("Did you know? You can add a widget to your home screen to track your habits easily without opening the app!")
+        },
+        confirmButton = {
+            Button(
+                onClick = onDismiss
+            ) {
+                Text("Got it!")
+            }
+        }
+    )
 }
 
 @Composable

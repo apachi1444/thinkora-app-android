@@ -19,7 +19,8 @@ class HabitsViewModel @Inject constructor(
     private val getHabitsUseCase: GetHabitsUseCase,
     private val addHabitUseCase: AddHabitUseCase,
     private val incrementHabitStreakUseCase: com.apachi.thinkora.domain.use_case.IncrementHabitStreakUseCase,
-    private val deleteHabitUseCase: DeleteHabitUseCase
+    private val deleteHabitUseCase: DeleteHabitUseCase,
+    @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HabitsState())
@@ -39,7 +40,11 @@ class HabitsViewModel @Inject constructor(
         when(event) {
             is HabitsEvent.AddHabit -> {
                 viewModelScope.launch {
+                    if (state.value.habits.isEmpty()) {
+                        _state.value = _state.value.copy(isWidgetTutorialVisible = true)
+                    }
                     addHabitUseCase(event.name, event.initialStreak)
+                    updateWidget()
                 }
             }
             is HabitsEvent.ShowAddDialog -> {
@@ -51,20 +56,30 @@ class HabitsViewModel @Inject constructor(
             is HabitsEvent.IncrementStreak -> {
                 viewModelScope.launch {
                     incrementHabitStreakUseCase(event.habitId)
+                    updateWidget()
                 }
             }
             is HabitsEvent.DeleteHabit -> {
                 viewModelScope.launch {
                     deleteHabitUseCase(event.habitId)
+                    updateWidget()
                 }
             }
+            is HabitsEvent.HideWidgetTutorial -> {
+                _state.value = _state.value.copy(isWidgetTutorialVisible = false)
+            }
         }
+    }
+
+    private fun updateWidget() {
+        com.apachi.thinkora.HabitsWidget.updateHabitsData(context)
     }
 }
 
 data class HabitsState(
     val habits: List<Habit> = emptyList(),
-    val isAddDialogVisible: Boolean = false
+    val isAddDialogVisible: Boolean = false,
+    val isWidgetTutorialVisible: Boolean = false
 )
 
 sealed class HabitsEvent {
@@ -73,4 +88,5 @@ sealed class HabitsEvent {
     object HideAddDialog : HabitsEvent()
     data class IncrementStreak(val habitId: String) : HabitsEvent()
     data class DeleteHabit(val habitId: String) : HabitsEvent()
+    object HideWidgetTutorial : HabitsEvent()
 }

@@ -31,12 +31,24 @@ import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
-import com.apachi.thinkora.data.local.QuoteDatabase
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
+import com.apachi.thinkora.domain.repository.HabitRepository
+
+@EntryPoint
+@InstallIn(SingletonComponent::class)
+interface WidgetEntryPoint {
+    fun getHabitRepository(): HabitRepository
+}
 
 object HabitsWidget : GlanceAppWidget() {
 
@@ -143,25 +155,15 @@ object HabitsWidget : GlanceAppWidget() {
     override fun Content() {
         WidgetContent()
     }
-}
 
-class HabitsWidgetReceiver : GlanceAppWidgetReceiver() {
-    override val glanceAppWidget: GlanceAppWidget
-        get() = HabitsWidget
-        
-    override fun onUpdate(
-        context: Context,
-        appWidgetManager: android.appwidget.AppWidgetManager,
-        appWidgetIds: IntArray
-    ) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds)
-        updateHabitsData(context)
-    }
-    
-    private fun updateHabitsData(context: Context) {
+    fun updateHabitsData(context: Context) {
         CoroutineScope(Dispatchers.IO).launch {
-            val db = getDatabase(context)
-            val habits = db.habitDao.getAllHabits().first()
+            val repository = EntryPointAccessors.fromApplication(
+                context.applicationContext,
+                WidgetEntryPoint::class.java
+            ).getHabitRepository()
+            
+            val habits = repository.getAllHabits().first()
             
             androidx.glance.appwidget.GlanceAppWidgetManager(context)
                 .getGlanceIds(HabitsWidget::class.java)
@@ -187,15 +189,33 @@ class HabitsWidgetReceiver : GlanceAppWidgetReceiver() {
     }
 }
 
+class HabitsWidgetReceiver : GlanceAppWidgetReceiver() {
+    override val glanceAppWidget: GlanceAppWidget
+        get() = HabitsWidget
+        
+    override fun onUpdate(
+        context: Context,
+        appWidgetManager: android.appwidget.AppWidgetManager,
+        appWidgetIds: IntArray
+    ) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
+        HabitsWidget.updateHabitsData(context)
+    }
+}
+
 class NavigatePrevCallback : ActionCallback {
     override suspend fun onAction(
         context: Context,
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-        val db = getDatabase(context)
+        val repository = EntryPointAccessors.fromApplication(
+            context.applicationContext,
+            WidgetEntryPoint::class.java
+        ).getHabitRepository()
+
         val habits = withContext(Dispatchers.IO) {
-            db.habitDao.getAllHabits().first()
+            repository.getAllHabits().first()
         }
         
         updateAppWidgetState(context, glanceId) { prefs ->
@@ -222,9 +242,13 @@ class NavigateNextCallback : ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-        val db = getDatabase(context)
+        val repository = EntryPointAccessors.fromApplication(
+            context.applicationContext,
+            WidgetEntryPoint::class.java
+        ).getHabitRepository()
+
         val habits = withContext(Dispatchers.IO) {
-            db.habitDao.getAllHabits().first()
+            repository.getAllHabits().first()
         }
         
         updateAppWidgetState(context, glanceId) { prefs ->
@@ -251,9 +275,13 @@ class IncrementHabitCallback : ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
-        val db = getDatabase(context)
+        val repository = EntryPointAccessors.fromApplication(
+            context.applicationContext,
+            WidgetEntryPoint::class.java
+        ).getHabitRepository()
+
         val habits = withContext(Dispatchers.IO) {
-            db.habitDao.getAllHabits().first()
+            repository.getAllHabits().first()
         }
         
         updateAppWidgetState(context, glanceId) { prefs ->
@@ -262,21 +290,12 @@ class IncrementHabitCallback : ActionCallback {
             if (habits.isNotEmpty() && currentIndex < habits.size) {
                 val currentHabit = habits[currentIndex]
                 withContext(Dispatchers.IO) {
-                    db.habitDao.incrementStreak(currentHabit.id)
+                    repository.incrementHabitStreak(currentHabit.id)
                 }
                 prefs[HabitsWidget.habitStreakKey] = currentHabit.streak + 1
             }
         }
         HabitsWidget.update(context, glanceId)
     }
-}
-
-// Helper function to get database instance
-private fun getDatabase(context: Context): QuoteDatabase {
-    return androidx.room.Room.databaseBuilder(
-        context.applicationContext,
-        QuoteDatabase::class.java,
-        "quote_db"
-    ).fallbackToDestructiveMigration().build()
 }
 
