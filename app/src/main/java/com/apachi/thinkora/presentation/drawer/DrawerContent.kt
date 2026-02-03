@@ -1,10 +1,8 @@
 package com.apachi.thinkora.presentation.drawer
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -16,12 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun DrawerContent(
@@ -110,17 +104,15 @@ fun DrawerContent(
         Spacer(modifier = Modifier.height(32.dp))
 
         // --- Menu Items ---
-        DrawerMenuItem(icon = Icons.Outlined.CreditCard, label = "Payment Methods", onClick = {})
+        DrawerMenuItem(icon = Icons.Outlined.Delete, label = "Payment Methods", onClick = {})
         Spacer(modifier = Modifier.height(24.dp))
-        DrawerMenuItem(icon = Icons.Outlined.History, label = "Payment History", onClick = {})
+        DrawerMenuItem(icon = Icons.Outlined.DateRange, label = "Payment History", onClick = {})
         Spacer(modifier = Modifier.height(24.dp))
         DrawerMenuItem(icon = Icons.Outlined.Lock, label = "Change Password", onClick = {})
         Spacer(modifier = Modifier.height(24.dp))
         DrawerMenuItem(icon = Icons.Outlined.Person, label = "Invites Friends", onClick = {})
         Spacer(modifier = Modifier.height(24.dp))
         DrawerMenuItem(icon = Icons.Outlined.Info, label = "FAQs", onClick = {})
-        Spacer(modifier = Modifier.height(24.dp))
-        DrawerMenuItem(icon = Icons.Outlined.QuestionMark, label = "About Us", onClick = {})
 
         Spacer(modifier = Modifier.weight(1f))
 

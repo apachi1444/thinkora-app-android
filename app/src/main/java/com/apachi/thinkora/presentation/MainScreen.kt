@@ -27,7 +27,6 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-@Composable
 fun MainScreen(
     rootNavController: NavHostController
 ) {
