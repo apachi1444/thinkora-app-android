@@ -9,6 +9,8 @@ sealed class Screen(val route: String) {
     object HabitsScreen : Screen("habits_screen")
     object SettingsScreen : Screen("settings_screen")
     object MainScreen : Screen("main_screen")
+    object NotificationsScreen : Screen("notifications_screen")
+    object SearchScreen : Screen("search_screen")
     object CategoryQuotesScreen : Screen("category_quotes_screen/{categoryName}") {
         fun createRoute(categoryName: String) = "category_quotes_screen/$categoryName"
     }

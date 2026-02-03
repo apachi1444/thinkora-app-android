@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
@@ -53,6 +54,7 @@ import com.apachi.thinkora.presentation.navigation.Screen
 @Composable
 fun HomeScreen(
     navController: NavController,
+    onOpenDrawer: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
@@ -64,7 +66,12 @@ fun HomeScreen(
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
     ) {
-        HomeHeader(userName = state.userName)
+        HomeHeader(
+            userName = state.userName,
+            onSearchClick = { navController.navigate(Screen.SearchScreen.route) },
+            onNotificationClick = { navController.navigate(Screen.NotificationsScreen.route) },
+            onOpenDrawer = onOpenDrawer
+        )
         
         Spacer(modifier = Modifier.height(24.dp))
         
@@ -144,13 +151,29 @@ fun HomeScreen(
 }
 
 @Composable
-fun HomeHeader(userName: String) {
+fun HomeHeader(
+    userName: String,
+    onSearchClick: () -> Unit,
+    onNotificationClick: () -> Unit,
+    onOpenDrawer: () -> Unit
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
+             // Side Menu Icon
+            IconButton(
+                onClick = onOpenDrawer,
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.White)
+            ) {
+                Icon(Icons.Default.Menu, contentDescription = "Menu")
+            }
+
             // Profile Image (Placeholder)
             Box(
                 modifier = Modifier
@@ -178,7 +201,7 @@ fun HomeHeader(userName: String) {
         
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             IconButton(
-                onClick = { },
+                onClick = { onNotificationClick() },
                 modifier = Modifier
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color.White)
@@ -186,7 +209,7 @@ fun HomeHeader(userName: String) {
                 Icon(Icons.Default.Notifications, contentDescription = "Notifications")
             }
             IconButton(
-                onClick = { },
+                onClick = { onSearchClick() },
                 modifier = Modifier
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color.White)

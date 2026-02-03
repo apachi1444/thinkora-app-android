@@ -31,4 +31,10 @@ abstract class RepositoryModule {
     abstract fun bindHabitRepository(
         habitRepositoryImpl: com.apachi.thinkora.data.repository.HabitRepositoryImpl
     ): com.apachi.thinkora.domain.repository.HabitRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindNotificationRepository(
+        notificationRepositoryImpl: com.apachi.thinkora.data.repository.NotificationRepositoryImpl
+    ): com.apachi.thinkora.domain.repository.NotificationRepository
 }

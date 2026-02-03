@@ -1,0 +1,177 @@
+package com.apachi.thinkora.presentation.drawer
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+
+@Composable
+fun DrawerContent(
+    onLogoutClick: () -> Unit,
+    onCloseDrawer: () -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .width(320.dp) // Adjust width as needed
+            .clip(RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp))
+            .background(Color.White)
+            .padding(24.dp)
+    ) {
+        // --- Header Section ---
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Top
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(60.dp)
+                    .clip(RoundedCornerShape(16.dp))
+                    .background(Color.LightGray)
+            ) {
+                 // Placeholder for User Image
+                 // Image(painter = rememberAsyncImagePainter("url"), contentDescription = null, contentScale = ContentScale.Crop)
+            }
+
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                 IconButton(
+                    onClick = { /* TODO */ },
+                    modifier = Modifier
+                        .size(40.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color(0xFFF1F5F9))
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Notifications,
+                        contentDescription = "Notifications",
+                        tint = Color(0xFF64748B),
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+                IconButton(
+                    onClick = { /* TODO */ },
+                    modifier = Modifier
+                         .size(40.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(Color(0xFFF1F5F9))
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.FavoriteBorder,
+                        contentDescription = "Favorites",
+                        tint = Color(0xFF64748B),
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = "Jerry Milona",
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF1E293B)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Icon(
+                imageVector = Icons.Default.Edit,
+                contentDescription = "Edit Profile",
+                tint = Color(0xFF6366F1),
+                modifier = Modifier.size(16.dp)
+            )
+        }
+        Text(
+            text = "zararehman@domain.io", // Dummy email from screenshot
+            style = MaterialTheme.typography.bodyMedium,
+            color = Color(0xFF94A3B8)
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        // --- Menu Items ---
+        DrawerMenuItem(icon = Icons.Outlined.CreditCard, label = "Payment Methods", onClick = {})
+        Spacer(modifier = Modifier.height(24.dp))
+        DrawerMenuItem(icon = Icons.Outlined.History, label = "Payment History", onClick = {})
+        Spacer(modifier = Modifier.height(24.dp))
+        DrawerMenuItem(icon = Icons.Outlined.Lock, label = "Change Password", onClick = {})
+        Spacer(modifier = Modifier.height(24.dp))
+        DrawerMenuItem(icon = Icons.Outlined.Person, label = "Invites Friends", onClick = {})
+        Spacer(modifier = Modifier.height(24.dp))
+        DrawerMenuItem(icon = Icons.Outlined.Info, label = "FAQs", onClick = {})
+        Spacer(modifier = Modifier.height(24.dp))
+        DrawerMenuItem(icon = Icons.Outlined.QuestionMark, label = "About Us", onClick = {})
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        // --- Footer ---
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onLogoutClick() }
+                .padding(vertical = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+             Icon(
+                imageVector = Icons.Default.ExitToApp, // Using ExitToApp as Close/Logout
+                contentDescription = "Logout",
+                 tint = Color(0xFF1E293B)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                text = "Logout",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF1E293B)
+            )
+        }
+    }
+}
+
+@Composable
+fun DrawerMenuItem(
+    icon: ImageVector,
+    label: String,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() },
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = label,
+            tint = Color(0xFF1E293B),
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            color = Color(0xFF1E293B),
+            fontWeight = FontWeight.Medium
+        )
+    }
+}

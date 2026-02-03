@@ -43,4 +43,10 @@ object AppModule {
     fun provideHabitDao(db: QuoteDatabase): com.apachi.thinkora.data.local.dao.HabitDao {
         return db.habitDao
     }
+
+    @Provides
+    @Singleton
+    fun provideNotificationDao(db: QuoteDatabase): com.apachi.thinkora.data.local.dao.NotificationDao {
+        return db.notificationDao
+    }
 }
