@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <receiver
-            android:name=".HabitsWidgetReceiver"
+            android:name="com.apachi.thinkora.feature.habits.widget.HabitsWidgetReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

@@ -150,7 +150,7 @@ fun WidgetDiscoveryDialog(
             Button(
                 onClick = {
                     val appWidgetManager = android.appwidget.AppWidgetManager.getInstance(context)
-                    val myProvider = android.content.ComponentName(context, com.apachi.thinkora.HabitsWidgetReceiver::class.java)
+                    val myProvider = android.content.ComponentName(context, com.apachi.thinkora.feature.habits.widget.HabitsWidgetReceiver::class.java)
                     
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && appWidgetManager.isRequestPinAppWidgetSupported) {
                         appWidgetManager.requestPinAppWidget(myProvider, null, null)

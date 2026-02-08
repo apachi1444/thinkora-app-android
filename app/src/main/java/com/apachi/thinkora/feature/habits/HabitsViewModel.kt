@@ -72,7 +72,7 @@ class HabitsViewModel @Inject constructor(
     }
 
     private fun updateWidget() {
-        com.apachi.thinkora.HabitsWidget.updateHabitsData(context)
+        com.apachi.thinkora.feature.habits.widget.HabitsWidget.updateHabitsData(context)
     }
 }
 

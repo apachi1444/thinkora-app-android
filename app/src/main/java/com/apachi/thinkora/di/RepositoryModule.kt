@@ -37,4 +37,10 @@ abstract class RepositoryModule {
     abstract fun bindNotificationRepository(
         notificationRepositoryImpl: com.apachi.thinkora.data.repository.NotificationRepositoryImpl
     ): com.apachi.thinkora.domain.repository.NotificationRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindGamificationRepository(
+        gamificationRepositoryImpl: com.apachi.thinkora.data.repository.GamificationRepositoryImpl
+    ): com.apachi.thinkora.domain.repository.GamificationRepository
 }

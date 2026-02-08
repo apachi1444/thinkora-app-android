@@ -89,7 +89,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                             composable(com.apachi.thinkora.presentation.navigation.Screen.MainScreen.route) {
-                                com.apachi.thinkora.presentation.MainScreen(rootNavController = navController)
+                                com.apachi.thinkora.feature.main.MainScreen(rootNavController = navController)
                             }
                         }
                     } else {

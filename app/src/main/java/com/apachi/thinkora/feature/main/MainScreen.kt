@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation
+package com.apachi.thinkora.feature.main
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -44,8 +44,9 @@ fun MainScreen(
         drawerContent = {
             com.apachi.thinkora.feature.drawer.DrawerContent(
                 onLogoutClick = { /* TODO: Handle logout */ },
-                onCloseDrawer = {
+                onAchievementsClick = {
                     isDrawerOpen = false
+                    bottomNavController.navigate(Screen.AchievementsScreen.route)
                 }
             )
         }
@@ -140,6 +141,12 @@ fun MainScreen(
                     deepLinks = listOf(androidx.navigation.navDeepLink { uriPattern = "thinkora://app/notifications" })
                 ) {
                     com.apachi.thinkora.feature.notifications.NotificationsScreen(navController = bottomNavController)
+                }
+                composable(
+                    route = Screen.AchievementsScreen.route,
+                    deepLinks = listOf(androidx.navigation.navDeepLink { uriPattern = "thinkora://app/achievements" })
+                ) {
+                    com.apachi.thinkora.feature.gamification.AchievementsScreen(navController = bottomNavController)
                 }
             }
         }

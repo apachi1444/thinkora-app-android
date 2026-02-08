@@ -14,4 +14,5 @@ sealed class Screen(val route: String) {
     object CategoryQuotesScreen : Screen("category_quotes_screen/{categoryName}") {
         fun createRoute(categoryName: String) = "category_quotes_screen/$categoryName"
     }
+    object AchievementsScreen : Screen("achievements_screen")
 }

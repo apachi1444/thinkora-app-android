@@ -1,4 +1,4 @@
-package com.apachi.thinkora
+package com.apachi.thinkora.feature.home.widget
 
 import android.content.Context
 import androidx.compose.runtime.Composable
