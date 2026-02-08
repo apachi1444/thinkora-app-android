@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.onboarding
+package com.apachi.thinkora.feature.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background

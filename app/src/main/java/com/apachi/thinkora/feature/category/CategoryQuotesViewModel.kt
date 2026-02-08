@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.category
+package com.apachi.thinkora.feature.category
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel

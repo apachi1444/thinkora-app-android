@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.drawer
+package com.apachi.thinkora.feature.drawer
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

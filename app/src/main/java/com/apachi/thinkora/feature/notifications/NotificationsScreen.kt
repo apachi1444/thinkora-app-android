@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.notifications
+package com.apachi.thinkora.feature.notifications
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

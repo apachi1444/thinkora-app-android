@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.settings
+package com.apachi.thinkora.feature.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

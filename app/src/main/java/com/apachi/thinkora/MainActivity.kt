@@ -70,22 +70,22 @@ class MainActivity : ComponentActivity() {
                                     val parentEntry = remember(backStackEntry) {
                                         navController.getBackStackEntry(com.apachi.thinkora.presentation.navigation.Screen.OnboardingScreen.route)
                                     }
-                                    val onboardingViewModel: com.apachi.thinkora.presentation.onboarding.OnboardingViewModel = androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
-                                    com.apachi.thinkora.presentation.onboarding.OnboardingIntroScreen(navController = navController)
+                                    val onboardingViewModel: com.apachi.thinkora.feature.onboarding.OnboardingViewModel = androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
+                                    com.apachi.thinkora.feature.onboarding.OnboardingIntroScreen(navController = navController)
                                 }
                                 composable(com.apachi.thinkora.presentation.navigation.Screen.OnboardingName.route) { backStackEntry ->
                                     val parentEntry = remember(backStackEntry) {
                                         navController.getBackStackEntry(com.apachi.thinkora.presentation.navigation.Screen.OnboardingScreen.route)
                                     }
-                                    val onboardingViewModel: com.apachi.thinkora.presentation.onboarding.OnboardingViewModel = androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
-                                    com.apachi.thinkora.presentation.onboarding.OnboardingNameScreen(navController = navController, viewModel = onboardingViewModel)
+                                    val onboardingViewModel: com.apachi.thinkora.feature.onboarding.OnboardingViewModel = androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
+                                    com.apachi.thinkora.feature.onboarding.OnboardingNameScreen(navController = navController, viewModel = onboardingViewModel)
                                 }
                                 composable(com.apachi.thinkora.presentation.navigation.Screen.OnboardingInterests.route) { backStackEntry ->
                                     val parentEntry = remember(backStackEntry) {
                                         navController.getBackStackEntry(com.apachi.thinkora.presentation.navigation.Screen.OnboardingScreen.route)
                                     }
-                                    val onboardingViewModel: com.apachi.thinkora.presentation.onboarding.OnboardingViewModel = androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
-                                    com.apachi.thinkora.presentation.onboarding.OnboardingInterestsScreen(navController = navController, viewModel = onboardingViewModel)
+                                    val onboardingViewModel: com.apachi.thinkora.feature.onboarding.OnboardingViewModel = androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
+                                    com.apachi.thinkora.feature.onboarding.OnboardingInterestsScreen(navController = navController, viewModel = onboardingViewModel)
                                 }
                             }
                             composable(com.apachi.thinkora.presentation.navigation.Screen.MainScreen.route) {

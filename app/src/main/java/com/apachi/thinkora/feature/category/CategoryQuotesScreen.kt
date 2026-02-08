@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.category
+package com.apachi.thinkora.feature.category
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.apachi.thinkora.presentation.home.HeroQuoteCard
+import com.apachi.thinkora.feature.home.HeroQuoteCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

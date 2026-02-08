@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -20,9 +21,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.apachi.thinkora.presentation.home.HomeScreen
+import com.apachi.thinkora.feature.home.HomeScreen
 import com.apachi.thinkora.presentation.navigation.Screen
-import com.apachi.thinkora.presentation.settings.SettingsScreen
+import com.apachi.thinkora.feature.settings.SettingsScreen
 import kotlinx.coroutines.launch
 
 
@@ -33,16 +34,18 @@ fun MainScreen(
     val bottomNavController = rememberNavController()
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val drawerState = androidx.compose.material3.rememberDrawerState(initialValue = androidx.compose.material3.DrawerValue.Closed)
-    val scope = androidx.compose.runtime.rememberCoroutineScope()
+    var isDrawerOpen by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
 
-    androidx.compose.material3.ModalNavigationDrawer(
-        drawerState = drawerState,
+
+    com.apachi.thinkora.feature.drawer.ZoomDrawer(
+        isDrawerOpen = isDrawerOpen,
+        onCloseDrawer = { isDrawerOpen = false },
+        drawerBackgroundColor = Color.White,
         drawerContent = {
-            com.apachi.thinkora.presentation.drawer.DrawerContent(
+            com.apachi.thinkora.feature.drawer.DrawerContent(
                 onLogoutClick = { /* TODO: Handle logout */ },
                 onCloseDrawer = {
-                    scope.launch { drawerState.close() }
+                    isDrawerOpen = false
                 }
             )
         }
@@ -101,14 +104,14 @@ fun MainScreen(
                 ) {
                     HomeScreen(
                         navController = bottomNavController,
-                        onOpenDrawer = { scope.launch { drawerState.open() } }
+                        onOpenDrawer = { isDrawerOpen = true }
                     )
                 }
                 composable(
                     route = Screen.HabitsScreen.route,
                     deepLinks = listOf(androidx.navigation.navDeepLink { uriPattern = "thinkora://app/habits" })
                 ) {
-                    com.apachi.thinkora.presentation.habits.HabitsScreen()
+                    com.apachi.thinkora.feature.habits.HabitsScreen()
                 }
                 composable(
                     route = Screen.SettingsScreen.route,
@@ -124,19 +127,19 @@ fun MainScreen(
                         }
                     )
                 ) {
-                    com.apachi.thinkora.presentation.category.CategoryQuotesScreen(navController = bottomNavController)
+                    com.apachi.thinkora.feature.category.CategoryQuotesScreen(navController = bottomNavController)
                 }
                 composable(
                     route = Screen.SearchScreen.route,
                     deepLinks = listOf(androidx.navigation.navDeepLink { uriPattern = "thinkora://app/search" })
                 ) {
-                    com.apachi.thinkora.presentation.search.SearchScreen(navController = bottomNavController)
+                    com.apachi.thinkora.feature.search.SearchScreen(navController = bottomNavController)
                 }
                 composable(
                     route = Screen.NotificationsScreen.route,
                     deepLinks = listOf(androidx.navigation.navDeepLink { uriPattern = "thinkora://app/notifications" })
                 ) {
-                    com.apachi.thinkora.presentation.notifications.NotificationsScreen(navController = bottomNavController)
+                    com.apachi.thinkora.feature.notifications.NotificationsScreen(navController = bottomNavController)
                 }
             }
         }

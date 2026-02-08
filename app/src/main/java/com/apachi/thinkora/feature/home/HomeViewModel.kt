@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.home
+package com.apachi.thinkora.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.search
+package com.apachi.thinkora.feature.search
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

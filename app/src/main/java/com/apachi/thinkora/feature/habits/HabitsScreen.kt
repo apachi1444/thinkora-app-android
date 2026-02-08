@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.habits
+package com.apachi.thinkora.feature.habits
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -126,6 +126,8 @@ fun HabitsScreen(
 fun WidgetDiscoveryDialog(
     onDismiss: () -> Unit
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    
     AlertDialog(
         onDismissRequest = onDismiss,
         icon = {
@@ -146,9 +148,26 @@ fun WidgetDiscoveryDialog(
         },
         confirmButton = {
             Button(
+                onClick = {
+                    val appWidgetManager = android.appwidget.AppWidgetManager.getInstance(context)
+                    val myProvider = android.content.ComponentName(context, com.apachi.thinkora.HabitsWidgetReceiver::class.java)
+                    
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && appWidgetManager.isRequestPinAppWidgetSupported) {
+                        appWidgetManager.requestPinAppWidget(myProvider, null, null)
+                    } else {
+                        android.widget.Toast.makeText(context, "Widget pinning is not supported on this device.", android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                    onDismiss()
+                }
+            ) {
+                Text("Add Widget")
+            }
+        },
+        dismissButton = {
+            TextButton(
                 onClick = onDismiss
             ) {
-                Text("Got it!")
+                Text("Got it")
             }
         }
     )

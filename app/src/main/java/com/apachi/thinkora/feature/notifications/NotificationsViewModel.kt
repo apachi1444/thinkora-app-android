@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.notifications
+package com.apachi.thinkora.feature.notifications
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

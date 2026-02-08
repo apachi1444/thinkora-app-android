@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.home
+package com.apachi.thinkora.feature.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -138,7 +138,7 @@ fun HomeScreen(
              Spacer(modifier = Modifier.height(12.dp))
              // Display first 3 items or so
              state.habits.take(3).forEach { habit ->
-                 com.apachi.thinkora.presentation.habits.HabitItem(
+                 com.apachi.thinkora.feature.habits.HabitItem(
                      habit = habit,
                      onIncrementClick = { habitId ->
                          viewModel.onEvent(HomeEvent.IncrementHabitStreak(habitId))

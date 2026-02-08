@@ -1,4 +1,4 @@
-package com.apachi.thinkora.presentation.habits
+package com.apachi.thinkora.feature.habits
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
