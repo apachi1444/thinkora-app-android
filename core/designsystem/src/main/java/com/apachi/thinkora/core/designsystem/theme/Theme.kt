@@ -1,4 +1,4 @@
-package com.apachi.thinkora.ui.theme
+package com.apachi.thinkora.core.designsystem.theme
 
 import android.app.Activity
 import android.os.Build
@@ -38,7 +38,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun WidgetsWithComposeTheme(
+fun ThinkoraTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

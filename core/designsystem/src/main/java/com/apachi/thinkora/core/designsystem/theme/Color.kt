@@ -1,4 +1,4 @@
-package com.apachi.thinkora.ui.theme
+package com.apachi.thinkora.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 

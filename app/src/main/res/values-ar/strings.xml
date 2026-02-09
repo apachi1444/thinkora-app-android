@@ -1,0 +1,86 @@
+<resources>
+    <string name="app_name">ثينكورا</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_habits">العادات</string>
+    <string name="nav_settings">الإعدادات</string>
+
+    <!-- Drawer -->
+    <string name="drawer_title">ثينكورا</string>
+    <string name="drawer_notifications">الإشعارات</string>
+    <string name="drawer_favorites">المفضلة</string>
+    <string name="drawer_edit_profile">تعديل الملف الشخصي</string>
+    <string name="drawer_logout">تسجيل الخروج</string>
+    <string name="drawer_my_quotes">اقتباساتي</string>
+    <string name="drawer_analytics">التحليلات</string>
+    <string name="drawer_achievements">الإنجازات</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_profile_section">الملف الشخصي</string>
+    <string name="settings_my_profile">ملفي الشخصي</string>
+    <string name="settings_appearance_section">المظهر</string>
+    <string name="settings_dark_mode">الوضع الداكن</string>
+    <string name="settings_language">اللغة</string>
+    <string name="settings_payment_methods">طرق الدفع</string>
+    <string name="settings_payment_history">سجل المدفوعات</string>
+    <string name="settings_change_password">تغيير كلمة المرور</string>
+    <string name="settings_invite_friends">دعوة الأصدقاء</string>
+    <string name="settings_faqs">الأسئلة الشائعة</string>
+    <string name="settings_about_us">من نحن</string>
+    <string name="settings_logout">تسجيل الخروج</string>
+
+    <!-- Language Selection -->
+    <string name="language_english">English</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_dialog_title">اختر اللغة</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting">صباح الخير</string>
+    <string name="home_quote_of_day">اقتباس اليوم</string>
+    <string name="home_categories">الفئات</string>
+    <string name="home_daily_streak">السلسلة اليومية</string>
+    <string name="home_days">أيام</string>
+    <string name="home_explore_quotes">استكشف الاقتباسات</string>
+
+    <!-- Habits Screen -->
+    <string name="habits_title">عاداتي</string>
+    <string name="habits_add">إضافة عادة</string>
+    <string name="habits_empty">لا توجد عادات بعد. ابدأ ببناء عادات جيدة!</string>
+    <string name="habits_delete_confirm">حذف هذه العادة؟</string>
+    <string name="habits_delete">حذف</string>
+    <string name="habits_cancel">إلغاء</string>
+    <string name="habits_undo">تراجع</string>
+    <string name="habits_deleted">تم حذف العادة</string>
+
+    <!-- Custom Quotes Screen -->
+    <string name="custom_quotes_title">اقتباساتي</string>
+    <string name="custom_quotes_empty">لا توجد اقتباسات شخصية بعد. أضف اقتباسك الأول!</string>
+    <string name="custom_quotes_add">إضافة اقتباس</string>
+
+    <!-- Add Quote Screen -->
+    <string name="add_quote_title">إضافة اقتباس شخصي</string>
+    <string name="add_quote_content_label">محتوى الاقتباس</string>
+    <string name="add_quote_author_label">المؤلف (اختياري)</string>
+    <string name="add_quote_category_label">الفئة</string>
+    <string name="add_quote_save_button">حفظ الاقتباس</string>
+    <string name="add_quote_category_personal">شخصي</string>
+    <string name="add_quote_category_motivation">تحفيزي</string>
+    <string name="add_quote_category_work">عمل</string>
+    <string name="add_quote_category_life">حياة</string>
+
+    <!-- Analytics Screen -->
+    <string name="analytics_title">التحليلات</string>
+    <string name="analytics_weekly_progress">التقدم الأسبوعي</string>
+    <string name="analytics_empty">لا توجد بيانات بعد. أكمل العادات لرؤية تقدمك!</string>
+    <string name="analytics_completions">إكمالات</string>
+
+    <!-- Common -->
+    <string name="common_back">رجوع</string>
+    <string name="common_save">حفظ</string>
+    <string name="common_cancel">إلغاء</string>
+    <string name="common_delete">حذف</string>
+    <string name="common_edit">تعديل</string>
+    <string name="common_done">تم</string>
+
+</resources>

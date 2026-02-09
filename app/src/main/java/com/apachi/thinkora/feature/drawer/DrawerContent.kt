@@ -16,6 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
 
 @Composable
 fun DrawerContent(
@@ -29,7 +32,8 @@ fun DrawerContent(
             .fillMaxHeight()
             .width(320.dp) // Adjust width as needed
             .clip(RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp))
-            .background(Color.White)
+            .clip(RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp))
+            .background(MaterialTheme.colorScheme.surface)
             .padding(24.dp)
     ) {
         // --- Header Section ---
@@ -59,7 +63,7 @@ fun DrawerContent(
                     Icon(
                         imageVector = Icons.Default.Notifications,
                         contentDescription = "Notifications",
-                        tint = Color(0xFF64748B),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )
                 }
@@ -73,7 +77,7 @@ fun DrawerContent(
                     Icon(
                         imageVector = Icons.Default.FavoriteBorder,
                         contentDescription = "Favorites",
-                        tint = Color(0xFF64748B),
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )
                 }
@@ -84,23 +88,25 @@ fun DrawerContent(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "Jerry Milona",
+                text = stringResource(R.string.settings_my_profile),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF1E293B)
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.width(8.dp))
             Icon(
                 imageVector = Icons.Default.Edit,
                 contentDescription = "Edit Profile",
-                tint = Color(0xFF6366F1),
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(16.dp)
             )
         }
         Text(
             text = "zararehman@domain.io", // Dummy email from screenshot
             style = MaterialTheme.typography.bodyMedium,
-            color = Color(0xFF94A3B8)
+            text = "zararehman@domain.io", // Dummy email from screenshot
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -135,14 +141,14 @@ fun DrawerContent(
              Icon(
                 imageVector = Icons.Default.ExitToApp, // Using ExitToApp as Close/Logout
                 contentDescription = "Logout",
-                 tint = Color(0xFF1E293B)
+                 tint = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
-                text = "Logout",
+                text = stringResource(R.string.drawer_logout),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF1E293B)
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
     }
@@ -163,14 +169,14 @@ fun DrawerMenuItem(
         Icon(
             imageVector = icon,
             contentDescription = label,
-            tint = Color(0xFF1E293B),
+            tint = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.width(16.dp))
         Text(
             text = label,
             style = MaterialTheme.typography.bodyLarge,
-            color = Color(0xFF1E293B),
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Medium
         )
     }

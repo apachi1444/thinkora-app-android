@@ -27,17 +27,31 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
+import androidx.compose.runtime.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
+import androidx.compose.material.icons.filled.Language
+
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    viewModel: SettingsViewModel = hiltViewModel()
+) {
+    val isDarkTheme by viewModel.isDarkTheme.collectAsState()
+    val languageCode by viewModel.languageCode.collectAsState()
+    var showLanguageDialog by remember { mutableStateOf(false) }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF8F9FC))
+            .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
         Text(
-            text = "Profile",
+            text = stringResource(R.string.settings_profile_section),
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray
         )
@@ -48,13 +62,97 @@ fun SettingsScreen() {
         
         Spacer(modifier = Modifier.height(32.dp))
         
-        SettingsItem(icon = Icons.Default.Check, title = "Payment Methods")
-        SettingsItem(icon = Icons.Default.Home, title = "Payment History")
-        SettingsItem(icon = Icons.Default.Lock, title = "Change Password")
-        SettingsItem(icon = Icons.Default.Settings, title = "Invite Friends")
-        SettingsItem(icon = Icons.Default.Warning, title = "FAQs")
-        SettingsItem(icon = Icons.Default.Info, title = "About Us")
-        SettingsItem(icon = Icons.Default.ShoppingCart, title = "Logout", titleColor = Color.Red)
+        // Appearance Section
+        Text(
+            text = stringResource(R.string.settings_appearance_section),
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Default.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(stringResource(R.string.settings_dark_mode), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+            }
+            Switch(
+                checked = isDarkTheme,
+                onCheckedChange = { viewModel.setDarkTheme(it) }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Language Selection
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { showLanguageDialog = true }
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(Icons.Default.Language, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
+                Spacer(modifier = Modifier.width(16.dp))
+                Text(stringResource(R.string.settings_language), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+            }
+            Text(
+                text = if (languageCode == "ar") stringResource(R.string.language_arabic) else stringResource(R.string.language_english),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        SettingsItem(icon = Icons.Default.Check, title = stringResource(R.string.settings_payment_methods))
+        SettingsItem(icon = Icons.Default.Home, title = stringResource(R.string.settings_payment_history))
+        SettingsItem(icon = Icons.Default.Lock, title = stringResource(R.string.settings_change_password))
+        SettingsItem(icon = Icons.Default.Settings, title = stringResource(R.string.settings_invite_friends))
+        SettingsItem(icon = Icons.Default.Warning, title = stringResource(R.string.settings_faqs))
+        SettingsItem(icon = Icons.Default.Info, title = stringResource(R.string.settings_about_us))
+        SettingsItem(icon = Icons.Default.ShoppingCart, title = stringResource(R.string.settings_logout), titleColor = MaterialTheme.colorScheme.error)
+    }
+
+    // Language Selection Dialog
+    if (showLanguageDialog) {
+        AlertDialog(
+            onDismissRequest = { showLanguageDialog = false },
+            title = { Text(stringResource(R.string.language_dialog_title)) },
+            text = {
+                Column {
+                    TextButton(
+                        onClick = {
+                            viewModel.setLanguage("en")
+                            showLanguageDialog = false
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(stringResource(R.string.language_english), modifier = Modifier.fillMaxWidth())
+                    }
+                    TextButton(
+                        onClick = {
+                            viewModel.setLanguage("ar")
+                            showLanguageDialog = false
+                        },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(stringResource(R.string.language_arabic), modifier = Modifier.fillMaxWidth())
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showLanguageDialog = false }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            }
+        )
     }
 }
 
@@ -82,9 +180,10 @@ fun ProfileSection() {
         
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "My Profile",
+                text = stringResource(R.string.settings_my_profile),
                 style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.width(8.dp))
             Icon(
@@ -101,7 +200,7 @@ fun ProfileSection() {
 fun SettingsItem(
     icon: ImageVector,
     title: String,
-    titleColor: Color = Color.Black
+    titleColor: Color = MaterialTheme.colorScheme.onSurface
 ) {
     Row(
         modifier = Modifier
@@ -113,7 +212,7 @@ fun SettingsItem(
         Icon(
             imageVector = icon,
             contentDescription = null,
-            tint = Color.Black,
+            tint = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.size(24.dp)
         )
         Spacer(modifier = Modifier.width(16.dp))
@@ -126,7 +225,7 @@ fun SettingsItem(
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
             contentDescription = null,
-            tint = Color.Gray
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

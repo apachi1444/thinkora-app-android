@@ -31,6 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.apachi.thinkora.core.ui.ads.BannerAd
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
 
 
 @Composable
@@ -81,8 +83,8 @@ fun MainScreen(
                                     popUpTo(Screen.HomeScreen.route) { inclusive = true }
                                 }
                             },
-                            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                            label = { Text("Home") }
+                            icon = { Icon(Icons.Default.Home, contentDescription = stringResource(R.string.nav_home)) },
+                            label = { Text(stringResource(R.string.nav_home)) }
                         )
                         NavigationBarItem(
                             selected = currentRoute == Screen.HabitsScreen.route,
@@ -93,8 +95,8 @@ fun MainScreen(
                                     restoreState = true
                                 }
                             },
-                            icon = { Icon(Icons.Default.DateRange, contentDescription = "Habits") },
-                            label = { Text("Habits") }
+                            icon = { Icon(Icons.Default.DateRange, contentDescription = stringResource(R.string.nav_habits)) },
+                            label = { Text(stringResource(R.string.nav_habits)) }
                         )
                         NavigationBarItem(
                             selected = currentRoute == Screen.SettingsScreen.route,
@@ -105,8 +107,8 @@ fun MainScreen(
                                     restoreState = true
                                 }
                             },
-                            icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
-                            label = { Text("Settings") }
+                            icon = { Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.nav_settings)) },
+                            label = { Text(stringResource(R.string.nav_settings)) }
                         )
                     }
                 }

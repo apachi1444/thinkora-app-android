@@ -23,14 +23,21 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.apachi.thinkora.ui.theme.WidgetsWithComposeTheme
+import com.apachi.thinkora.core.designsystem.theme.ThinkoraTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import androidx.compose.runtime.LaunchedEffect
+import androidx.core.os.LocaleListCompat
+import java.util.Locale
+import androidx.appcompat.app.AppCompatDelegate
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject
     lateinit var getOnboardingStatusUseCase: com.apachi.thinkora.domain.use_case.GetOnboardingStatusUseCase
+
+    @Inject
+    lateinit var settingsRepository: com.apachi.thinkora.core.domain.repository.SettingsRepository
 
     @Inject
     lateinit var adManager: com.apachi.thinkora.core.ads.AdManager
@@ -48,7 +55,17 @@ class MainActivity : ComponentActivity() {
         isAppReady = true
         // setEdgeToEdgeConfig()
         setContent {
-            WidgetsWithComposeTheme {
+            val isDarkTheme by settingsRepository.isDarkThemeConfig.collectAsState(initial = false)
+            val languageCode by settingsRepository.languageCode.collectAsState(initial = "en")
+
+            // Apply language dynamically
+            LaunchedEffect(languageCode) {
+                val locale = Locale(languageCode)
+                val localeList = LocaleListCompat.create(locale)
+                AppCompatDelegate.setApplicationLocales(localeList)
+            }
+
+            ThinkoraTheme(darkTheme = isDarkTheme) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

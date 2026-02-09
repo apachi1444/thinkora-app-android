@@ -1,3 +1,86 @@
 <resources>
     <string name="app_name">Thinkora</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_habits">Habits</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Drawer -->
+    <string name="drawer_title">Thinkora</string>
+    <string name="drawer_notifications">Notifications</string>
+    <string name="drawer_favorites">Favorites</string>
+    <string name="drawer_edit_profile">Edit Profile</string>
+    <string name="drawer_logout">Logout</string>
+    <string name="drawer_my_quotes">My Quotes</string>
+    <string name="drawer_analytics">Analytics</string>
+    <string name="drawer_achievements">Achievements</string>
+
+    <!-- Settings Screen -->
+    <string name="settings_profile_section">Profile</string>
+    <string name="settings_my_profile">My Profile</string>
+    <string name="settings_appearance_section">Appearance</string>
+    <string name="settings_dark_mode">Dark Mode</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_payment_methods">Payment Methods</string>
+    <string name="settings_payment_history">Payment History</string>
+    <string name="settings_change_password">Change Password</string>
+    <string name="settings_invite_friends">Invite Friends</string>
+    <string name="settings_faqs">FAQs</string>
+    <string name="settings_about_us">About Us</string>
+    <string name="settings_logout">Logout</string>
+
+    <!-- Language Selection -->
+    <string name="language_english">English</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_dialog_title">Select Language</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting">Good Morning</string>
+    <string name="home_quote_of_day">Quote of the Day</string>
+    <string name="home_categories">Categories</string>
+    <string name="home_daily_streak">Daily Streak</string>
+    <string name="home_days">days</string>
+    <string name="home_explore_quotes">Explore Quotes</string>
+
+    <!-- Habits Screen -->
+    <string name="habits_title">My Habits</string>
+    <string name="habits_add">Add Habit</string>
+    <string name="habits_empty">No habits yet. Start building good habits!</string>
+    <string name="habits_delete_confirm">Delete this habit?</string>
+    <string name="habits_delete">Delete</string>
+    <string name="habits_cancel">Cancel</string>
+    <string name="habits_undo">Undo</string>
+    <string name="habits_deleted">Habit deleted</string>
+
+    <!-- Custom Quotes Screen -->
+    <string name="custom_quotes_title">My Quotes</string>
+    <string name="custom_quotes_empty">No personal quotes yet. Add your first quote!</string>
+    <string name="custom_quotes_add">Add Quote</string>
+
+    <!-- Add Quote Screen -->
+    <string name="add_quote_title">Add Personal Quote</string>
+    <string name="add_quote_content_label">Quote Content</string>
+    <string name="add_quote_author_label">Author (Optional)</string>
+    <string name="add_quote_category_label">Category</string>
+    <string name="add_quote_save_button">Save Quote</string>
+    <string name="add_quote_category_personal">Personal</string>
+    <string name="add_quote_category_motivation">Motivation</string>
+    <string name="add_quote_category_work">Work</string>
+    <string name="add_quote_category_life">Life</string>
+
+    <!-- Analytics Screen -->
+    <string name="analytics_title">Analytics</string>
+    <string name="analytics_weekly_progress">Weekly Progress</string>
+    <string name="analytics_empty">No data yet. Complete habits to see your progress!</string>
+    <string name="analytics_completions">completions</string>
+
+    <!-- Common -->
+    <string name="common_back">Back</string>
+    <string name="common_save">Save</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_delete">Delete</string>
+    <string name="common_edit">Edit</string>
+    <string name="common_done">Done</string>
+
 </resources>

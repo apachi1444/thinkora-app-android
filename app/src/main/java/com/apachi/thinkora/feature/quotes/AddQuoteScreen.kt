@@ -1,21 +1,22 @@
 package com.apachi.thinkora.feature.quotes
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+package com.apachi.thinkora.feature.quotes
+
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.compose.ui.platform.LocalContext
 import android.app.Activity
+import com.apachi.thinkora.core.designsystem.component.ThinkoraTextField
+import com.apachi.thinkora.core.designsystem.component.ThinkoraButton
+import com.apachi.thinkora.core.designsystem.component.ThinkoraTopAppBar
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,14 +33,17 @@ fun AddQuoteScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Add Personal Quote") },
+    Scaffold(
+        topBar = {
+            ThinkoraTopAppBar(
+                title = { Text(stringResource(R.string.add_quote_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
+        }
         }
     ) { padding ->
         Column(
@@ -49,25 +53,31 @@ fun AddQuoteScreen(
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            OutlinedTextField(
+            ThinkoraTextField(
                 value = content,
                 onValueChange = { content = it },
-                label = { Text("Quote Content") },
+                label = { Text(stringResource(R.string.add_quote_content_label)) },
                 modifier = Modifier.fillMaxWidth().height(150.dp),
                 maxLines = 5
             )
 
-            OutlinedTextField(
+            ThinkoraTextField(
                 value = author,
                 onValueChange = { author = it },
-                label = { Text("Author (Optional)") },
+                label = { Text(stringResource(R.string.add_quote_author_label)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
             // Category Selection (Simple dropdown or chips)
-            Text("Category", style = MaterialTheme.typography.labelLarge)
+            Text(stringResource(R.string.add_quote_category_label), style = MaterialTheme.typography.labelLarge)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                listOf("Personal", "Motivation", "Work", "Life").forEach { cat ->
+                val categories = listOf(
+                    stringResource(R.string.add_quote_category_personal),
+                    stringResource(R.string.add_quote_category_motivation),
+                    stringResource(R.string.add_quote_category_work),
+                    stringResource(R.string.add_quote_category_life)
+                )
+                categories.forEach { cat ->
                     FilterChip(
                         selected = category == cat,
                         onClick = { category = cat },
@@ -78,7 +88,7 @@ fun AddQuoteScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            Button(
+            ThinkoraButton(
                 onClick = {
                     if (content.isNotBlank()) {
                         viewModel.addQuote(content, author.ifBlank { "Me" }, category, activity) {
@@ -87,9 +97,9 @@ fun AddQuoteScreen(
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enable = content.isNotBlank()
+                enabled = content.isNotBlank()
             ) {
-                Text("Save Quote")
+                Text(stringResource(R.string.add_quote_save_button))
             }
         }
     }
