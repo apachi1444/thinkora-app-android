@@ -26,7 +26,8 @@ import javax.inject.Inject
 class QuoteRepositoryImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val quoteDao: QuoteDao,
-    private val readHistoryDao: ReadHistoryDao
+    private val readHistoryDao: ReadHistoryDao,
+    private val analyticsManager: com.apachi.thinkora.core.analytics.AnalyticsManager
 ) : QuoteRepository {
 
     private val TODAY_DATE = longPreferencesKey("today_date")
@@ -98,35 +99,40 @@ class QuoteRepositoryImpl @Inject constructor(
                 "Walt Disney",
                 "Business",
                 isFavorite = false,
-                isRead = false
+                isRead = false,
+                isCustom = false
             ),
             QuoteEntity(UUID.randomUUID().toString(),
                 "The best way to get started is to quit talking and begin doing.",
                 "Walt Disney",
                 "Business",
                 isFavorite = false,
-                isRead = false
+                isRead = false,
+                isCustom = false
             ),
             QuoteEntity(UUID.randomUUID().toString(),
                 "The best way to get started is to quit talking and begin doing.",
                 "Walt Disney",
                 "Business",
                 isFavorite = false,
-                isRead = false
+                isRead = false,
+                isCustom = false
             ),
             QuoteEntity(UUID.randomUUID().toString(),
                 "The best way to get started is to quit talking and begin doing.",
                 "Walt Disney",
                 "Business",
                 isFavorite = false,
-                isRead = false
+                isRead = false,
+                isCustom = false
             ),
             QuoteEntity(UUID.randomUUID().toString(),
                 "The best way to get started is to quit talking and begin doing.",
                 "Walt Disney",
                 "Business",
                 isFavorite = false,
-                isRead = false
+                isRead = false,
+                isCustom = false
             )
         )
         seed.forEach { quoteDao.insertQuote(it) }
@@ -187,6 +193,30 @@ class QuoteRepositoryImpl @Inject constructor(
         }
         
         return DailyStreak(streak, sortedDates.first())
+    }
+
+    override fun getCustomQuotes(): Flow<List<Quote>> {
+        return quoteDao.getCustomQuotes().map { entities ->
+            entities.map { it.toDomain(isRead = false) }
+        }
+    }
+
+    override suspend fun addQuote(content: String, author: String, category: String) {
+        val quote = QuoteEntity(
+            id = UUID.randomUUID().toString(),
+            content = content,
+            author = author,
+            category = category,
+            isFavorite = false,
+            isRead = false,
+            isCustom = true
+        )
+        quoteDao.insertQuote(quote)
+        analyticsManager.logEvent("custom_quote_added", mapOf("category" to category))
+    }
+
+    override suspend fun deleteQuote(quoteId: String) {
+        quoteDao.deleteQuote(quoteId)
     }
 
     private fun getTodayEpochDay(): Long {

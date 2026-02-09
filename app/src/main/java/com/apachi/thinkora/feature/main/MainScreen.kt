@@ -47,6 +47,14 @@ fun MainScreen(
                 onAchievementsClick = {
                     isDrawerOpen = false
                     bottomNavController.navigate(Screen.AchievementsScreen.route)
+                },
+                onCustomQuotesClick = {
+                    isDrawerOpen = false
+                    bottomNavController.navigate(Screen.CustomQuotesScreen.route)
+                },
+                onAnalyticsClick = {
+                    isDrawerOpen = false
+                    bottomNavController.navigate(Screen.AnalyticsScreen.route)
                 }
             )
         }
@@ -147,6 +155,15 @@ fun MainScreen(
                     deepLinks = listOf(androidx.navigation.navDeepLink { uriPattern = "thinkora://app/achievements" })
                 ) {
                     com.apachi.thinkora.feature.gamification.AchievementsScreen(navController = bottomNavController)
+                }
+                composable(route = Screen.CustomQuotesScreen.route) {
+                    com.apachi.thinkora.feature.quotes.CustomQuotesScreen(navController = bottomNavController)
+                }
+                composable(route = Screen.AddQuoteScreen.route) {
+                    com.apachi.thinkora.feature.quotes.AddQuoteScreen(navController = bottomNavController, viewModel = androidx.hilt.navigation.compose.hiltViewModel())
+                }
+                composable(route = Screen.AnalyticsScreen.route) {
+                    com.apachi.thinkora.feature.analytics.AnalyticsScreen(navController = bottomNavController)
                 }
             }
         }

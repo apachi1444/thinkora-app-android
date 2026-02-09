@@ -10,4 +10,7 @@ interface QuoteRepository {
     suspend fun toggleFavorite(quoteId: String)
     suspend fun markQuoteAsRead(quoteId: String)
     fun getDailyStreak(): Flow<DailyStreak>
+    fun getCustomQuotes(): Flow<List<Quote>>
+    suspend fun addQuote(content: String, author: String, category: String)
+    suspend fun deleteQuote(quoteId: String)
 }

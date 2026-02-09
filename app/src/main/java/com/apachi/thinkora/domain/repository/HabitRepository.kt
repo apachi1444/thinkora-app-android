@@ -8,4 +8,5 @@ interface HabitRepository {
     suspend fun addHabit(name: String, initialStreak: Int)
     suspend fun incrementHabitStreak(id: String)
     suspend fun deleteHabit(id: String)
+    fun getCompletions(habitId: String): Flow<List<Long>>
 }

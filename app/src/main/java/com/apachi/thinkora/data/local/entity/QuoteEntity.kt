@@ -11,7 +11,8 @@ data class QuoteEntity(
     val author: String,
     val category: String,
     val isFavorite: Boolean,
-    val isRead: Boolean
+    val isRead: Boolean,
+    val isCustom: Boolean = false
 ) {
     fun toDomain(isRead: Boolean): Quote {
         return Quote(
@@ -20,7 +21,8 @@ data class QuoteEntity(
             author = author,
             category = category,
             isFavorite = isFavorite,
-            isRead = isRead
+            isRead = isRead,
+            isCustom = isCustom
         )
     }
 }
