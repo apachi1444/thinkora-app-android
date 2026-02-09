@@ -104,8 +104,6 @@ fun DrawerContent(
         Text(
             text = "zararehman@domain.io", // Dummy email from screenshot
             style = MaterialTheme.typography.bodyMedium,
-            text = "zararehman@domain.io", // Dummy email from screenshot
-            style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 

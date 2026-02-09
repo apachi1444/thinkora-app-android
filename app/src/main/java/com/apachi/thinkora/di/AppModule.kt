@@ -72,4 +72,10 @@ object AppModule {
     fun provideAchievementDao(db: QuoteDatabase): AchievementDao {
         return db.achievementDao
     }
+
+    @Provides
+    @Singleton
+    fun provideAdManager(adMobManager: com.apachi.thinkora.core.ads.AdMobManager): com.apachi.thinkora.core.ads.AdManager {
+        return adMobManager
+    }
 }

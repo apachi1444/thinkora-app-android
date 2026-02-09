@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.AnticipateInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
@@ -29,7 +30,6 @@ import javax.inject.Inject
 import androidx.compose.runtime.LaunchedEffect
 import androidx.core.os.LocaleListCompat
 import java.util.Locale
-import androidx.appcompat.app.AppCompatDelegate
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

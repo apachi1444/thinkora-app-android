@@ -1,5 +1,7 @@
 package com.apachi.thinkora.feature.main
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -15,24 +17,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.apachi.thinkora.feature.home.HomeScreen
-import com.apachi.thinkora.presentation.navigation.Screen
-import com.apachi.thinkora.presentation.navigation.Screen
-import com.apachi.thinkora.feature.settings.SettingsScreen
-import kotlinx.coroutines.launch
-import com.apachi.thinkora.core.ads.AdManager
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.apachi.thinkora.core.ui.ads.BannerAd
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.ui.res.stringResource
 import com.apachi.thinkora.R
+import com.apachi.thinkora.core.ads.AdManager
+import com.apachi.thinkora.core.ui.ads.BannerAd
+import com.apachi.thinkora.feature.home.HomeScreen
+import com.apachi.thinkora.feature.settings.SettingsScreen
+import com.apachi.thinkora.presentation.navigation.Screen
 
 
 @Composable

@@ -13,9 +13,10 @@ import com.apachi.thinkora.data.local.entity.ReadHistoryEntity
         ReadHistoryEntity::class, 
         com.apachi.thinkora.data.local.entity.HabitEntity::class, 
         com.apachi.thinkora.data.local.entity.NotificationEntity::class,
-        com.apachi.thinkora.data.local.entity.AchievementEntity::class
+        com.apachi.thinkora.data.local.entity.AchievementEntity::class,
+        com.apachi.thinkora.data.local.entity.HabitCompletionEntity::class
     ],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 @androidx.room.TypeConverters(Converters::class)
