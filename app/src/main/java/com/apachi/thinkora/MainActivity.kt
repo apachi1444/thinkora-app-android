@@ -32,6 +32,9 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var getOnboardingStatusUseCase: com.apachi.thinkora.domain.use_case.GetOnboardingStatusUseCase
 
+    @Inject
+    lateinit var adManager: com.apachi.thinkora.core.ads.AdManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val splashScreen = installSplashScreen()
@@ -89,7 +92,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             }
                             composable(com.apachi.thinkora.presentation.navigation.Screen.MainScreen.route) {
-                                com.apachi.thinkora.feature.main.MainScreen(rootNavController = navController)
+                                com.apachi.thinkora.feature.main.MainScreen(rootNavController = navController, adManager = adManager)
                             }
                         }
                     } else {

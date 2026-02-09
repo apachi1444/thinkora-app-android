@@ -23,13 +23,20 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.apachi.thinkora.feature.home.HomeScreen
 import com.apachi.thinkora.presentation.navigation.Screen
+import com.apachi.thinkora.presentation.navigation.Screen
 import com.apachi.thinkora.feature.settings.SettingsScreen
 import kotlinx.coroutines.launch
+import com.apachi.thinkora.core.ads.AdManager
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.apachi.thinkora.core.ui.ads.BannerAd
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 
 
 @Composable
 fun MainScreen(
-    rootNavController: NavHostController
+    rootNavController: NavHostController,
+    adManager: AdManager
 ) {
     val bottomNavController = rememberNavController()
     val navBackStackEntry by bottomNavController.currentBackStackEntryAsState()
@@ -61,44 +68,47 @@ fun MainScreen(
     ) {
         Scaffold(
             bottomBar = {
-                NavigationBar(
-                    containerColor = Color.White,
-                    tonalElevation = 8.dp
-                ) {
-                    NavigationBarItem(
-                        selected = currentRoute == Screen.HomeScreen.route,
-                        onClick = {
-                            bottomNavController.navigate(Screen.HomeScreen.route) {
-                                popUpTo(Screen.HomeScreen.route) { inclusive = true }
-                            }
-                        },
-                        icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                        label = { Text("Home") }
-                    )
-                    NavigationBarItem(
-                        selected = currentRoute == Screen.HabitsScreen.route,
-                        onClick = {
-                            bottomNavController.navigate(Screen.HabitsScreen.route) {
-                                popUpTo(Screen.HomeScreen.route) { saveState = true }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
-                        icon = { Icon(Icons.Default.DateRange, contentDescription = "Habits") },
-                        label = { Text("Habits") }
-                    )
-                    NavigationBarItem(
-                        selected = currentRoute == Screen.SettingsScreen.route,
-                        onClick = {
-                            bottomNavController.navigate(Screen.SettingsScreen.route) {
-                                popUpTo(Screen.HomeScreen.route) { saveState = true }
-                                launchSingleTop = true
-                                restoreState = true
-                            }
-                        },
-                        icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
-                        label = { Text("Settings") }
-                    )
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    BannerAd(adManager = adManager)
+                    NavigationBar(
+                        containerColor = Color.White,
+                        tonalElevation = 8.dp
+                    ) {
+                        NavigationBarItem(
+                            selected = currentRoute == Screen.HomeScreen.route,
+                            onClick = {
+                                bottomNavController.navigate(Screen.HomeScreen.route) {
+                                    popUpTo(Screen.HomeScreen.route) { inclusive = true }
+                                }
+                            },
+                            icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
+                            label = { Text("Home") }
+                        )
+                        NavigationBarItem(
+                            selected = currentRoute == Screen.HabitsScreen.route,
+                            onClick = {
+                                bottomNavController.navigate(Screen.HabitsScreen.route) {
+                                    popUpTo(Screen.HomeScreen.route) { saveState = true }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
+                            icon = { Icon(Icons.Default.DateRange, contentDescription = "Habits") },
+                            label = { Text("Habits") }
+                        )
+                        NavigationBarItem(
+                            selected = currentRoute == Screen.SettingsScreen.route,
+                            onClick = {
+                                bottomNavController.navigate(Screen.SettingsScreen.route) {
+                                    popUpTo(Screen.HomeScreen.route) { saveState = true }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
+                            icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
+                            label = { Text("Settings") }
+                        )
+                    }
                 }
             }
         ) { padding ->

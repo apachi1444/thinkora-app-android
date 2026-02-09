@@ -14,6 +14,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.compose.ui.platform.LocalContext
+import android.app.Activity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -24,6 +26,9 @@ fun AddQuoteScreen(
     var content by remember { mutableStateOf("") }
     var author by remember { mutableStateOf("") }
     var category by remember { mutableStateOf("Personal") }
+
+    val context = LocalContext.current
+    val activity = context as? Activity
 
     Scaffold(
         topBar = {
@@ -76,8 +81,9 @@ fun AddQuoteScreen(
             Button(
                 onClick = {
                     if (content.isNotBlank()) {
-                        viewModel.addQuote(content, author.ifBlank { "Me" }, category)
-                        navController.popBackStack()
+                        viewModel.addQuote(content, author.ifBlank { "Me" }, category, activity) {
+                            navController.popBackStack()
+                        }
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
