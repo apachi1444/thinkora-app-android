@@ -29,8 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.R
+
 import androidx.compose.runtime.*
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
@@ -51,7 +50,7 @@ fun SettingsScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = stringResource(R.string.settings_profile_section),
+            text = "Profile",
             style = MaterialTheme.typography.bodyMedium,
             color = Color.Gray
         )
@@ -64,7 +63,7 @@ fun SettingsScreen(
         
         // Appearance Section
         Text(
-            text = stringResource(R.string.settings_appearance_section),
+            text = "Appearance",
             style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.primary
         )
@@ -78,7 +77,7 @@ fun SettingsScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Default.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                 Spacer(modifier = Modifier.width(16.dp))
-                Text(stringResource(R.string.settings_dark_mode), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                Text("Dark Mode", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
             }
             Switch(
                 checked = isDarkTheme,
@@ -100,10 +99,10 @@ fun SettingsScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(Icons.Filled.Favorite, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
                 Spacer(modifier = Modifier.width(16.dp))
-                Text(stringResource(R.string.settings_language), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+                Text("Language", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
             }
             Text(
-                text = if (languageCode == "ar") stringResource(R.string.language_arabic) else stringResource(R.string.language_english),
+                text = if (languageCode == "ar") "Arabic" else "English",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -111,20 +110,20 @@ fun SettingsScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        SettingsItem(icon = Icons.Default.Check, title = stringResource(R.string.settings_payment_methods))
-        SettingsItem(icon = Icons.Default.Home, title = stringResource(R.string.settings_payment_history))
-        SettingsItem(icon = Icons.Default.Lock, title = stringResource(R.string.settings_change_password))
-        SettingsItem(icon = Icons.Default.Settings, title = stringResource(R.string.settings_invite_friends))
-        SettingsItem(icon = Icons.Default.Warning, title = stringResource(R.string.settings_faqs))
-        SettingsItem(icon = Icons.Default.Info, title = stringResource(R.string.settings_about_us))
-        SettingsItem(icon = Icons.Default.ShoppingCart, title = stringResource(R.string.settings_logout), titleColor = MaterialTheme.colorScheme.error)
+        SettingsItem(icon = Icons.Default.Check, title = "Payment Methods")
+        SettingsItem(icon = Icons.Default.Home, title = "Payment History")
+        SettingsItem(icon = Icons.Default.Lock, title = "Change Password")
+        SettingsItem(icon = Icons.Default.Settings, title = "Invite Friends")
+        SettingsItem(icon = Icons.Default.Warning, title = "FAQs")
+        SettingsItem(icon = Icons.Default.Info, title = "About Us")
+        SettingsItem(icon = Icons.Default.ShoppingCart, title = "Logout", titleColor = MaterialTheme.colorScheme.error)
     }
 
     // Language Selection Dialog
     if (showLanguageDialog) {
         AlertDialog(
             onDismissRequest = { showLanguageDialog = false },
-            title = { Text(stringResource(R.string.language_dialog_title)) },
+            title = { Text("Select Language") },
             text = {
                 Column {
                     TextButton(
@@ -134,7 +133,7 @@ fun SettingsScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(stringResource(R.string.language_english), modifier = Modifier.fillMaxWidth())
+                        Text("English", modifier = Modifier.fillMaxWidth())
                     }
                     TextButton(
                         onClick = {
@@ -143,13 +142,13 @@ fun SettingsScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text(stringResource(R.string.language_arabic), modifier = Modifier.fillMaxWidth())
+                        Text("Arabic", modifier = Modifier.fillMaxWidth())
                     }
                 }
             },
             confirmButton = {
                 TextButton(onClick = { showLanguageDialog = false }) {
-                    Text(stringResource(R.string.common_cancel))
+                    Text("Cancel")
                 }
             }
         )
@@ -180,7 +179,7 @@ fun ProfileSection() {
         
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = stringResource(R.string.settings_my_profile),
+                text = "My Profile",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface

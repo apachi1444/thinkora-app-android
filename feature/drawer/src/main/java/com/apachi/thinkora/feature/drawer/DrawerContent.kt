@@ -16,9 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.R
+
 
 @Composable
 fun DrawerContent(
@@ -88,7 +86,7 @@ fun DrawerContent(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = stringResource(R.string.settings_my_profile),
+                text = "My Profile",
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
@@ -143,7 +141,7 @@ fun DrawerContent(
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
-                text = stringResource(R.string.drawer_logout),
+                text = "Logout",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface

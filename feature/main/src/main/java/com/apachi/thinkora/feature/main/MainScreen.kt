@@ -30,7 +30,7 @@ import com.apachi.thinkora.ui.ads.BannerAd
 
 import com.apachi.thinkora.feature.home.HomeScreen
 import com.apachi.thinkora.feature.settings.SettingsScreen
-import com.apachi.thinkora.presentation.navigation.Screen
+import com.apachi.thinkora.domain.navigation.Screen
 
 
 @Composable

@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.apachi.thinkora.feature.home.HeroQuoteCard
+import com.apachi.thinkora.ui.components.HeroQuoteCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

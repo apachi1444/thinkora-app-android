@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-import com.apachi.thinkora.core.ads.AdManager
+import com.apachi.thinkora.data.ads.AdManager
 import android.app.Activity
 
 @HiltViewModel

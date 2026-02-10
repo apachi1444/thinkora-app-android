@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.apachi.thinkora.domain.model.Quote
-import com.apachi.thinkora.presentation.navigation.Screen
+import com.apachi.thinkora.domain.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

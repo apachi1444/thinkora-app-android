@@ -49,7 +49,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.apachi.thinkora.domain.model.Quote
-import com.apachi.thinkora.presentation.navigation.Screen
+import com.apachi.thinkora.domain.navigation.Screen
+import com.apachi.thinkora.ui.components.HeroQuoteCard
 
 @Composable
 fun HomeScreen(
@@ -220,135 +221,6 @@ fun HomeHeader(
     }
 }
 
-@Composable
-fun HeroQuoteCard(
-    quote: Quote,
-    onMarkRead: () -> Unit,
-    onToggleFavorite: () -> Unit
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(24.dp))
-            .background(
-                brush = Brush.horizontalGradient(
-                    colors = listOf(
-                        Color(0xFF6366F1), // Indigo
-                        Color(0xFF8B5CF6)  // Violet
-                    )
-                )
-            )
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(20.dp),
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Icon(
-                        Icons.Default.DateRange,
-                        contentDescription = null, 
-                        tint = Color.White.copy(alpha = 0.8f),
-                        modifier = Modifier.size(16.dp)
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = "Today",
-                        color = Color.White.copy(alpha = 0.8f),
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                }
-                
-                Surface(
-                    color = Color.White.copy(alpha = 0.2f),
-                    shape = RoundedCornerShape(8.dp)
-                ) {
-                    Text(
-                        text = quote.category,
-                        modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                        color = Color.White,
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                }
-            }
-            
-            Text(
-                text = "\"${quote.content}\"",
-                style = MaterialTheme.typography.bodyLarge,
-                color = Color.White,
-                fontWeight = FontWeight.Medium,
-                maxLines = 3
-            )
-            
-            Column {
-                Text(
-                    text = "- ${quote.author}",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = Color.White.copy(alpha = 0.8f)
-                )
-                
-                Spacer(modifier = Modifier.height(12.dp))
-                
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    Surface(
-                        onClick = onMarkRead,
-                        shape = RoundedCornerShape(12.dp),
-                        color = if (quote.isRead) Color.White.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.2f)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Icon(
-                                imageVector = if (quote.isRead) Icons.Default.Check else Icons.Default.Check,
-                                contentDescription = "Mark as read",
-                                tint = Color.White,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Text(
-                                text = if (quote.isRead) "Read" else "Mark Read",
-                                color = Color.White,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                        }
-                    }
-                    
-                    Surface(
-                        onClick = onToggleFavorite,
-                        shape = RoundedCornerShape(12.dp),
-                        color = Color.White.copy(alpha = 0.2f)
-                    ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Icon(
-                                imageVector = if (quote.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                                contentDescription = "Favorite",
-                                tint = if (quote.isFavorite) Color(0xFFFF6B9D) else Color.White,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Text(
-                                text = "Favorite",
-                                color = Color.White,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 @Composable

@@ -42,7 +42,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.apachi.thinkora.presentation.navigation.Screen
+import com.apachi.thinkora.domain.navigation.Screen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class)

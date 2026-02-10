@@ -75,7 +75,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAdManager(adMobManager: com.apachi.thinkora.core.ads.AdMobManager): com.apachi.thinkora.core.ads.AdManager {
+    fun provideAdManager(adMobManager: com.apachi.thinkora.data.ads.AdMobManager): com.apachi.thinkora.data.ads.AdManager {
         return adMobManager
     }
 }

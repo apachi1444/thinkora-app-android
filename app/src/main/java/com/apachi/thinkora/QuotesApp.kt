@@ -3,7 +3,7 @@ package com.apachi.thinkora
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
-import com.apachi.thinkora.core.ads.AdManager
+import com.apachi.thinkora.data.ads.AdManager
 import javax.inject.Inject
 
 @HiltAndroidApp

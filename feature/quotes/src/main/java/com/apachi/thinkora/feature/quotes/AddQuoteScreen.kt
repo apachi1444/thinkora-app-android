@@ -14,8 +14,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import com.apachi.thinkora.core.designsystem.component.ThinkoraTextField
 import com.apachi.thinkora.core.designsystem.component.ThinkoraButton
 import com.apachi.thinkora.core.designsystem.component.ThinkoraTopAppBar
-import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.R
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,7 +32,7 @@ fun AddQuoteScreen(
     Scaffold(
         topBar = {
             ThinkoraTopAppBar(
-                title = { Text(stringResource(R.string.add_quote_title)) },
+                title = { Text("Add Quote") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
@@ -52,7 +51,7 @@ fun AddQuoteScreen(
             ThinkoraTextField(
                 value = content,
                 onValueChange = { content = it },
-                label = { Text(stringResource(R.string.add_quote_content_label)) },
+                label = { Text("Quote Content") },
                 modifier = Modifier.fillMaxWidth().height(150.dp),
                 maxLines = 5
             )
@@ -60,21 +59,21 @@ fun AddQuoteScreen(
             ThinkoraTextField(
                 value = author,
                 onValueChange = { author = it },
-                label = { Text(stringResource(R.string.add_quote_author_label)) },
+                label = { Text("Author") },
                 modifier = Modifier.fillMaxWidth()
             )
 
             // Category Selection (Simple dropdown or chips)
             Text(
-                stringResource(R.string.add_quote_category_label),
+                "Category",
                 style = MaterialTheme.typography.labelLarge
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 val categories = listOf(
-                    stringResource(R.string.add_quote_category_personal),
-                    stringResource(R.string.add_quote_category_motivation),
-                    stringResource(R.string.add_quote_category_work),
-                    stringResource(R.string.add_quote_category_life)
+                    "Personal",
+                    "Motivation",
+                    "Work",
+                    "Life"
                 )
                 categories.forEach { cat ->
                     FilterChip(
@@ -98,7 +97,7 @@ fun AddQuoteScreen(
                 modifier = Modifier.fillMaxWidth(),
                 enabled = content.isNotBlank()
             ) {
-                Text(stringResource(R.string.add_quote_save_button))
+                Text("Save Quote")
             }
         }
     }
