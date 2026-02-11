@@ -20,10 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Search
@@ -34,7 +30,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -42,15 +37,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.apachi.thinkora.domain.model.Quote
 import com.apachi.thinkora.domain.navigation.Screen
 import com.apachi.thinkora.ui.components.HeroQuoteCard
+import com.apachi.thinkora.feature.habits.HabitItem
 
 @Composable
 fun HomeScreen(
@@ -137,9 +131,8 @@ fun HomeScreen(
                 color = Color.Black
              )
              Spacer(modifier = Modifier.height(12.dp))
-             // Display first 3 items or so
              state.habits.take(3).forEach { habit ->
-                 com.apachi.thinkora.feature.habits.HabitItem(
+                 HabitItem(
                      habit = habit,
                      onIncrementClick = { habitId ->
                          viewModel.onEvent(HomeEvent.IncrementHabitStreak(habitId))
@@ -221,7 +214,6 @@ fun HomeHeader(
     }
 }
 
-}
 
 @Composable
 fun CategoriesRow(

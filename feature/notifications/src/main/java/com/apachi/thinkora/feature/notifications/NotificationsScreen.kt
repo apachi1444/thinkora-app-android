@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.apachi.thinkora.data.local.entity.NotificationEntity
+import com.apachi.thinkora.domain.model.Notification
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -134,7 +134,7 @@ fun NotificationsScreen(
 }
 
 @Composable
-fun NotificationItem(notification: NotificationEntity) {
+fun NotificationItem(notification: Notification) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

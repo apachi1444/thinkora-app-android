@@ -14,11 +14,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@Module
-@InstallIn(SingletonComponent::class)
+// @Module
+// @InstallIn(SingletonComponent::class)
 object AppModule {
-    @Provides
-    @Singleton
+//    @Provides
+//    @Singleton
     fun provideQuoteDatabase(@ApplicationContext context: Context): QuoteDatabase {
         return Room.databaseBuilder(
             context,
@@ -43,38 +43,38 @@ object AppModule {
          .build()
     }
 
-    @Provides
-    @Singleton
+//    @Provides
+//    @Singleton
     fun provideQuoteDao(db: QuoteDatabase): QuoteDao {
         return db.quoteDao
     }
 
-    @Provides
-    @Singleton
+//    @Provides
+//    @Singleton
     fun provideReadHistoryDao(db: QuoteDatabase): ReadHistoryDao {
         return db.readHistoryDao
     }
 
-    @Provides
-    @Singleton
+//    @Provides
+//    @Singleton
     fun provideHabitDao(db: QuoteDatabase): com.apachi.thinkora.data.local.dao.HabitDao {
         return db.habitDao
     }
 
-    @Provides
-    @Singleton
+//    @Provides
+//    @Singleton
     fun provideNotificationDao(db: QuoteDatabase): com.apachi.thinkora.data.local.dao.NotificationDao {
         return db.notificationDao
     }
 
-    @Provides
-    @Singleton
+//    @Provides
+//    @Singleton
     fun provideAchievementDao(db: QuoteDatabase): AchievementDao {
         return db.achievementDao
     }
 
-    @Provides
-    @Singleton
+//    @Provides
+//    @Singleton
     fun provideAdManager(adMobManager: com.apachi.thinkora.data.ads.AdMobManager): com.apachi.thinkora.data.ads.AdManager {
         return adMobManager
     }

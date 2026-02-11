@@ -13,3 +13,20 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# Build-related files
+build/
+app/build/
+core/data/build/
+core/domain/build/
+core/ui/build/
+feature/onboarding/build/
+feature/notifications/build/
+feature/quotes/build/
+
+# Android Studio / IntelliJ
+.idea/
+.idea/shelf/
+
+# OS generated
+Thumbs.db

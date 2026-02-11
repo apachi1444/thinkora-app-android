@@ -24,13 +24,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.apachi.thinkora.R
-import com.apachi.thinkora.core.ads.AdManager
+import com.apachi.thinkora.data.ads.AdManager
 import com.apachi.thinkora.ui.ads.BannerAd
-
 import com.apachi.thinkora.feature.home.HomeScreen
 import com.apachi.thinkora.feature.settings.SettingsScreen
 import com.apachi.thinkora.domain.navigation.Screen
+import com.apachi.thinkora.designsystem.R
 
 
 @Composable
