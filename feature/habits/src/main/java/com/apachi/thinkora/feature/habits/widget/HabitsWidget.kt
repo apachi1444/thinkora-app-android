@@ -50,6 +50,10 @@ interface WidgetEntryPoint {
     fun getHabitRepository(): HabitRepository
 }
 
+import androidx.glance.LocalContext
+import androidx.glance.appwidget.GlanceTheme
+import com.apachi.thinkora.R
+
 object HabitsWidget : GlanceAppWidget() {
 
     val currentIndexKey = intPreferencesKey("current_habit_index")
@@ -60,24 +64,25 @@ object HabitsWidget : GlanceAppWidget() {
 
     @Composable
     fun WidgetContent() {
+        val context = LocalContext.current
         val currentIndex = currentState(key = currentIndexKey) ?: 0
-        val habitName = currentState(key = habitNameKey) ?: "No habits"
+        val habitName = currentState(key = habitNameKey) ?: context.getString(R.string.widget_no_habits)
         val habitStreak = currentState(key = habitStreakKey) ?: 0
         val habitsCount = currentState(key = habitsCountKey) ?: 0
         
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(Color.White)
+                .background(GlanceTheme.colors.surface)
                 .padding(16.dp),
             verticalAlignment = Alignment.Vertical.CenterVertically,
             horizontalAlignment = Alignment.Horizontal.CenterHorizontally
         ) {
             Text(
-                text = "Your Habits",
+                text = context.getString(R.string.widget_your_habits),
                 style = TextStyle(
                     fontWeight = FontWeight.Bold,
-                    color = ColorProvider(Color.Black),
+                    color = GlanceTheme.colors.onSurface,
                     fontSize = 18.sp
                 )
             )
@@ -87,7 +92,7 @@ object HabitsWidget : GlanceAppWidget() {
                 Text(
                     text = "${currentIndex + 1} / $habitsCount",
                     style = TextStyle(
-                        color = ColorProvider(Color.Gray),
+                        color = GlanceTheme.colors.onSurfaceVariant,
                         fontSize = 12.sp
                     )
                 )
@@ -116,13 +121,13 @@ object HabitsWidget : GlanceAppWidget() {
                         text = habitName,
                         style = TextStyle(
                             fontWeight = FontWeight.Medium,
-                            color = ColorProvider(Color.Black),
+                            color = GlanceTheme.colors.onSurface,
                             fontSize = 16.sp
                         )
                     )
                     Spacer(modifier = GlanceModifier.height(8.dp))
                     Text(
-                        text = "🔥 $habitStreak days",
+                        text = context.getString(R.string.widget_streak_days, habitStreak.toString()),
                         style = TextStyle(
                             color = ColorProvider(Color(0xFFF97316)),
                             fontSize = 20.sp,
@@ -144,7 +149,7 @@ object HabitsWidget : GlanceAppWidget() {
             
             if (habitsCount > 0) {
                 Button(
-                    text = "+ Increment",
+                    text = context.getString(R.string.widget_increment),
                     onClick = actionRunCallback(IncrementHabitCallback::class.java)
                 )
             }
@@ -153,7 +158,9 @@ object HabitsWidget : GlanceAppWidget() {
 
     @Composable
     override fun Content() {
-        WidgetContent()
+        GlanceTheme {
+            WidgetContent()
+        }
     }
 
     fun updateHabitsData(context: Context) {
@@ -179,7 +186,7 @@ object HabitsWidget : GlanceAppWidget() {
                             prefs[HabitsWidget.habitStreakKey] = currentHabit.streak
                             prefs[HabitsWidget.currentIndexKey] = safeIndex
                         } else {
-                            prefs[HabitsWidget.habitNameKey] = "No habits yet"
+                            prefs[HabitsWidget.habitNameKey] = context.getString(R.string.widget_no_habits_yet)
                             prefs[HabitsWidget.habitStreakKey] = 0
                         }
                     }

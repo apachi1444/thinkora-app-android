@@ -244,7 +244,16 @@ fun OnboardingInterestsScreen(
                 FilterChip(
                     selected = state.selectedInterests.contains(interest),
                     onClick = { viewModel.onEvent(OnboardingEvent.ToggleInterest(interest)) },
-                    label = { Text(interest) }
+                    label = { 
+                        val labelRes = when(interest) {
+                            "Business" -> R.string.category_business
+                            "Life" -> R.string.category_life
+                            "Sports" -> R.string.category_sports
+                            "Tech" -> R.string.category_tech
+                            else -> null
+                        }
+                        Text(if (labelRes != null) stringResource(labelRes) else interest)
+                    }
                 )
             }
         }

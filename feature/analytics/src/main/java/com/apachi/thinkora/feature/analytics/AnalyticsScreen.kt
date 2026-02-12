@@ -19,6 +19,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AnalyticsScreen(
@@ -30,14 +33,23 @@ fun AnalyticsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Detailed Analytics") },
+                title = { Text(stringResource(R.string.analytics_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.common_back)
+                        )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface
+                )
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
         if (analyticsData.isEmpty()) {
             Box(
@@ -45,9 +57,9 @@ fun AnalyticsScreen(
                 contentAlignment = Alignment.Center
             ) {
                  Text(
-                    text = "No habit data available yet.\nStart logging habits to see analytics!",
+                    text = stringResource(R.string.analytics_empty),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
                  )
             }
@@ -69,7 +81,10 @@ fun AnalyticsScreen(
 fun AnalyticsCard(item: HabitAnalytics) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
     ) {
         Column(
             modifier = Modifier.padding(16.dp).fillMaxWidth()
@@ -85,16 +100,16 @@ fun AnalyticsCard(item: HabitAnalytics) {
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Streak: ${item.habit.streak}",
+                    text = stringResource(R.string.analytics_streak_label, item.habit.streak),
                     style = MaterialTheme.typography.labelMedium,
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "Last 7 Days Activity",
+                text = stringResource(R.string.analytics_weekly_activity),
                 style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Spacer(modifier = Modifier.height(8.dp))
             
@@ -115,12 +130,12 @@ fun WeeklyBarChart(
     modifier: Modifier = Modifier
 ) {
     val max = (data.maxOrNull() ?: 1).coerceAtLeast(1)
-    val barColor = Color(0xFF6366F1) // Indigo
+    val barColor = MaterialTheme.colorScheme.primary
 
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.Bottom // Align columns to bottom? They are full height.
+        verticalAlignment = Alignment.Bottom
     ) {
         data.forEachIndexed { index, value ->
             val ratio = (value.toFloat() / max.toFloat()).coerceIn(0f, 1f)
@@ -139,19 +154,18 @@ fun WeeklyBarChart(
                         Box(
                            modifier = Modifier
                                .fillMaxWidth()
-                               .fillMaxHeight(ratio) // Use fillMaxHeight with fraction
+                               .fillMaxHeight(ratio)
                                .background(
                                    color = barColor,
                                    shape = RoundedCornerShape(topStart = 4.dp, topEnd = 4.dp)
                                )
                         )
                    } else {
-                        // Empty placeholder or tiny line?
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(2.dp)
-                                .background(Color.LightGray.copy(alpha=0.3f))
+                                .background(MaterialTheme.colorScheme.outlineVariant.copy(alpha=0.3f))
                         )
                    }
                 }
@@ -167,7 +181,7 @@ fun WeeklyBarChart(
                 Text(
                     text = label,
                     style = MaterialTheme.typography.labelSmall,
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }

@@ -18,6 +18,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
 
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
+
 @Composable
 fun DrawerContent(
     onLogoutClick: () -> Unit,
@@ -28,8 +31,7 @@ fun DrawerContent(
     Column(
         modifier = Modifier
             .fillMaxHeight()
-            .width(320.dp) // Adjust width as needed
-            .clip(RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp))
+            .width(320.dp)
             .clip(RoundedCornerShape(topEnd = 24.dp, bottomEnd = 24.dp))
             .background(MaterialTheme.colorScheme.surface)
             .padding(24.dp)
@@ -44,11 +46,8 @@ fun DrawerContent(
                 modifier = Modifier
                     .size(60.dp)
                     .clip(RoundedCornerShape(16.dp))
-                    .background(Color.LightGray)
-            ) {
-                 // Placeholder for User Image
-                 // Image(painter = rememberAsyncImagePainter("url"), contentDescription = null, contentScale = ContentScale.Crop)
-            }
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+            )
 
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                  IconButton(
@@ -56,11 +55,11 @@ fun DrawerContent(
                     modifier = Modifier
                         .size(40.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(Color(0xFFF1F5F9))
+                        .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
                 ) {
                     Icon(
                         imageVector = Icons.Default.Notifications,
-                        contentDescription = "Notifications",
+                        contentDescription = stringResource(R.string.common_notifications),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )
@@ -70,11 +69,11 @@ fun DrawerContent(
                     modifier = Modifier
                          .size(40.dp)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(Color(0xFFF1F5F9))
+                        .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
                 ) {
                     Icon(
                         imageVector = Icons.Default.FavoriteBorder,
-                        contentDescription = "Favorites",
+                        contentDescription = stringResource(R.string.common_favorites),
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )
@@ -86,7 +85,7 @@ fun DrawerContent(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "My Profile",
+                text = stringResource(R.string.drawer_my_profile),
                 style = MaterialTheme.typography.titleLarge,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurface
@@ -94,13 +93,13 @@ fun DrawerContent(
             Spacer(modifier = Modifier.width(8.dp))
             Icon(
                 imageVector = Icons.Default.Edit,
-                contentDescription = "Edit Profile",
+                contentDescription = stringResource(R.string.drawer_edit_profile),
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(16.dp)
             )
         }
         Text(
-            text = "zararehman@domain.io", // Dummy email from screenshot
+            text = "zararehman@domain.io",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -108,21 +107,53 @@ fun DrawerContent(
         Spacer(modifier = Modifier.height(32.dp))
 
         // --- Menu Items ---
-        DrawerMenuItem(icon = Icons.Outlined.Star, label = "Achievements", onClick = onAchievementsClick)
+        DrawerMenuItem(
+            icon = Icons.Outlined.Star,
+            label = stringResource(R.string.drawer_achievements),
+            onClick = onAchievementsClick
+        )
         Spacer(modifier = Modifier.height(24.dp))
-        DrawerMenuItem(icon = Icons.Outlined.Edit, label = "My Quotes", onClick = onCustomQuotesClick)
+        DrawerMenuItem(
+            icon = Icons.Outlined.Edit,
+            label = stringResource(R.string.drawer_my_quotes),
+            onClick = onCustomQuotesClick
+        )
         Spacer(modifier = Modifier.height(24.dp))
-        DrawerMenuItem(icon = Icons.Outlined.Person, label = "Detailed Analytics", onClick = onAnalyticsClick)
+        DrawerMenuItem(
+            icon = Icons.Outlined.Person,
+            label = stringResource(R.string.drawer_analytics),
+            onClick = onAnalyticsClick
+        )
         Spacer(modifier = Modifier.height(24.dp))
-        DrawerMenuItem(icon = Icons.Outlined.Delete, label = "Payment Methods", onClick = {})
+        DrawerMenuItem(
+            icon = Icons.Outlined.Delete,
+            label = stringResource(R.string.drawer_payment_methods),
+            onClick = {}
+        )
         Spacer(modifier = Modifier.height(24.dp))
-        DrawerMenuItem(icon = Icons.Outlined.DateRange, label = "Payment History", onClick = {})
+        DrawerMenuItem(
+            icon = Icons.Outlined.DateRange,
+            label = stringResource(R.string.drawer_payment_history),
+            onClick = {}
+        )
         Spacer(modifier = Modifier.height(24.dp))
-        DrawerMenuItem(icon = Icons.Outlined.Lock, label = "Change Password", onClick = {})
+        DrawerMenuItem(
+            icon = Icons.Outlined.Lock,
+            label = stringResource(R.string.drawer_change_password),
+            onClick = {}
+        )
         Spacer(modifier = Modifier.height(24.dp))
-        DrawerMenuItem(icon = Icons.Outlined.Person, label = "Invites Friends", onClick = {})
+        DrawerMenuItem(
+            icon = Icons.Outlined.Person,
+            label = stringResource(R.string.drawer_invite_friends),
+            onClick = {}
+        )
         Spacer(modifier = Modifier.height(24.dp))
-        DrawerMenuItem(icon = Icons.Outlined.Info, label = "FAQs", onClick = {})
+        DrawerMenuItem(
+            icon = Icons.Outlined.Info,
+            label = stringResource(R.string.drawer_faqs),
+            onClick = {}
+        )
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -135,16 +166,16 @@ fun DrawerContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
              Icon(
-                imageVector = Icons.Default.ExitToApp, // Using ExitToApp as Close/Logout
-                contentDescription = "Logout",
-                 tint = MaterialTheme.colorScheme.onSurface
+                imageVector = Icons.Default.ExitToApp,
+                contentDescription = stringResource(R.string.drawer_logout),
+                 tint = MaterialTheme.colorScheme.error
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(
-                text = "Logout",
+                text = stringResource(R.string.drawer_logout),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.error
             )
         }
     }

@@ -25,6 +25,9 @@ import com.apachi.thinkora.domain.model.Notification
 import java.text.SimpleDateFormat
 import java.util.*
 
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
+
 @Composable
 fun NotificationsScreen(
     navController: NavController,
@@ -34,7 +37,7 @@ fun NotificationsScreen(
     var doNotDisturb by remember { mutableStateOf(false) }
 
     Surface(
-        color = Color(0xFFF8F9FC),
+        color = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
@@ -49,16 +52,16 @@ fun NotificationsScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Notifications",
+                    text = stringResource(R.string.notifications_title),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF1E293B)
+                    color = MaterialTheme.colorScheme.onBackground
                 )
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = "Close",
-                        tint = Color(0xFF64748B)
+                        contentDescription = stringResource(R.string.common_close),
+                        tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
                     )
                 }
             }
@@ -72,28 +75,22 @@ fun NotificationsScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Mark all as read",
+                    text = stringResource(R.string.notifications_mark_all_read),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFF94A3B8),
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable { viewModel.markAllAsRead() }
                 )
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "Do not disturb",
+                        text = stringResource(R.string.notifications_do_not_disturb),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Color(0xFF94A3B8),
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
                         modifier = Modifier.padding(end = 8.dp)
                     )
                     Switch(
                         checked = doNotDisturb,
-                        onCheckedChange = { doNotDisturb = it },
-                        colors = SwitchDefaults.colors(
-                            checkedThumbColor = Color.White,
-                            checkedTrackColor = Color(0xFF6366F1),
-                            uncheckedThumbColor = Color.White,
-                            uncheckedTrackColor = Color(0xFFE2E8F0)
-                        )
+                        onCheckedChange = { doNotDisturb = it }
                     )
                 }
             }
@@ -105,7 +102,7 @@ fun NotificationsScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.surface)
             ) {
                 if (notifications.isEmpty()) {
                     item {
@@ -116,16 +113,16 @@ fun NotificationsScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "No notifications yet",
+                                text = stringResource(R.string.notifications_empty),
                                 style = MaterialTheme.typography.bodyLarge,
-                                color = Color.Gray
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
                 } else {
                     items(notifications) { notification ->
                         NotificationItem(notification = notification)
-                        Divider(color = Color(0xFFF1F5F9))
+                        Divider(color = MaterialTheme.colorScheme.outlineVariant)
                     }
                 }
             }
@@ -146,35 +143,36 @@ fun NotificationItem(notification: Notification) {
                 .padding(top = 4.dp)
                 .size(8.dp)
                 .clip(CircleShape)
-                .background(if (!notification.isRead) Color(0xFF6366F1) else Color(0xFFCBD5E1))
+                .background(if (!notification.isRead) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline)
         )
 
         Spacer(modifier = Modifier.width(16.dp))
 
         Column {
             Text(
-                text = notification.message, // Assuming message contains the full text as shown in design or we compose it
+                text = notification.message,
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color(0xFF1E293B),
+                color = MaterialTheme.colorScheme.onSurface,
                 lineHeight = 20.sp
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = formatTimestamp(notification.timestamp),
                 style = MaterialTheme.typography.bodySmall,
-                color = Color(0xFF94A3B8)
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
 }
 
+@Composable
 private fun formatTimestamp(timestamp: Long): String {
     val now = System.currentTimeMillis()
     val diff = now - timestamp
     
     return when {
-        diff < 60 * 60 * 1000 -> "Just now" // Simplified for < 1 hour
-        diff < 24 * 60 * 60 * 1000 -> "${diff / (60 * 60 * 1000)} hours ago"
+        diff < 60 * 60 * 1000 -> stringResource(R.string.notifications_just_now)
+        diff < 24 * 60 * 60 * 1000 -> stringResource(R.string.notifications_hours_ago, diff / (60 * 60 * 1000))
         else -> SimpleDateFormat("MMM dd", Locale.getDefault()).format(Date(timestamp))
     }
 }

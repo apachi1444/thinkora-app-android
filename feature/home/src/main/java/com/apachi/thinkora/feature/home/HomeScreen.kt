@@ -57,7 +57,7 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFF8F9FC))
+            .background(MaterialTheme.colorScheme.surface)
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
     ) {
@@ -71,10 +71,10 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(24.dp))
         
         Text(
-            text = "Quote of the Day",
+            text = stringResource(R.string.home_quote_of_the_day),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(modifier = Modifier.height(12.dp))
         
@@ -89,7 +89,7 @@ fun HomeScreen(
                 .fillMaxWidth()
                 .height(180.dp)
                 .clip(RoundedCornerShape(20.dp))
-                .background(Color.LightGray),
+                .background(MaterialTheme.colorScheme.surfaceVariant),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
@@ -98,10 +98,10 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         Text(
-            text = "Categories",
+            text = stringResource(R.string.home_categories),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            color = MaterialTheme.colorScheme.onSurface
         )
         Spacer(modifier = Modifier.height(12.dp))
 
@@ -114,10 +114,10 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(24.dp))
         
         Text(
-            text = "Your Streak",
+            text = stringResource(R.string.home_your_streak),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.Black
+            color = MaterialTheme.colorScheme.onSurface
         )
          Spacer(modifier = Modifier.height(12.dp))
          StreakCard(streak = state.streak.currentStreak)
@@ -125,10 +125,10 @@ fun HomeScreen(
          if(state.habits.isNotEmpty()) {
              Spacer(modifier = Modifier.height(24.dp))
              Text(
-                text = "Your Habits",
+                text = stringResource(R.string.home_your_habits),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = Color.Black
+                color = MaterialTheme.colorScheme.onSurface
              )
              Spacer(modifier = Modifier.height(12.dp))
              state.habits.take(3).forEach { habit ->
@@ -163,7 +163,7 @@ fun HomeHeader(
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
             ) {
                 Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.common_menu))
             }
@@ -173,22 +173,23 @@ fun HomeHeader(
                 modifier = Modifier
                     .size(50.dp)
                     .clip(CircleShape)
-                    .background(Color.LightGray),
+                    .background(MaterialTheme.colorScheme.surfaceVariant),
                 contentAlignment = Alignment.Center
             ) {
-               Icon(Icons.Default.Build, contentDescription = null, tint = Color.White)
+               Icon(Icons.Default.Build, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             Spacer(modifier = Modifier.width(12.dp))
             Column {
                 Text(
                     text = stringResource(R.string.home_greeting_name, userName),
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = stringResource(R.string.home_inspiration_sub),
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
@@ -198,7 +199,7 @@ fun HomeHeader(
                 onClick = { onNotificationClick() },
                 modifier = Modifier
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
             ) {
                 Icon(Icons.Default.Notifications, contentDescription = stringResource(R.string.common_notifications))
             }
@@ -206,7 +207,7 @@ fun HomeHeader(
                 onClick = { onSearchClick() },
                 modifier = Modifier
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color.White)
+                    .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
             ) {
                 Icon(Icons.Default.Search, contentDescription = stringResource(R.string.common_search))
             }
@@ -220,10 +221,10 @@ fun CategoriesRow(
     onCategoryClick: (String) -> Unit
 ) {
     val categories = listOf(
-        stringResource(R.string.category_business) to Color(0xFFE0E7FF),
-        stringResource(R.string.category_life) to Color(0xFFFCE7F3),
-        stringResource(R.string.category_sports) to Color(0xFFDCFCE7),
-        stringResource(R.string.category_tech) to Color(0xFFFEF3C7)
+        stringResource(R.string.category_business) to MaterialTheme.colorScheme.primaryContainer,
+        stringResource(R.string.category_life) to MaterialTheme.colorScheme.secondaryContainer,
+        stringResource(R.string.category_sports) to MaterialTheme.colorScheme.tertiaryContainer,
+        stringResource(R.string.category_tech) to MaterialTheme.colorScheme.surfaceVariant
     )
     
     LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -241,25 +242,37 @@ fun CategoriesRow(
                         text = name.take(1),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black.copy(alpha = 0.6f)
+                        color = MaterialTheme.colorScheme.onContainer(color)
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = name,
                     style = MaterialTheme.typography.labelMedium,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
         }
     }
 }
 
+// Helper to get matching "on" color. In a real app, this should be part of the theme or a custom map.
+@Composable
+fun ColorScheme.onContainer(containerColor: Color): Color {
+    return when (containerColor) {
+        primaryContainer -> onPrimaryContainer
+        secondaryContainer -> onSecondaryContainer
+        tertiaryContainer -> onTertiaryContainer
+        else -> onSurfaceVariant
+    }
+}
+
 @Composable
 fun StreakCard(streak: Int) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
          Row(
@@ -270,22 +283,23 @@ fun StreakCard(streak: Int) {
                  modifier = Modifier
                     .size(50.dp)
                     .clip(CircleShape)
-                    .background(Color(0xFFFFEDD5)),
+                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)),
                  contentAlignment = Alignment.Center
              ) {
-                 Icon(Icons.Default.Star, contentDescription = null, tint = Color(0xFFF97316))
+                 Icon(Icons.Default.Star, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
              }
              Spacer(modifier = Modifier.width(16.dp))
              Column {
                  Text(
                      text = stringResource(R.string.home_streak_title, streak),
                      style = MaterialTheme.typography.titleMedium,
-                     fontWeight = FontWeight.Bold
+                     fontWeight = FontWeight.Bold,
+                     color = MaterialTheme.colorScheme.onSurface
                  )
                  Text(
                      text = stringResource(R.string.home_streak_desc),
                      style = MaterialTheme.typography.bodySmall,
-                     color = Color.Gray
+                     color = MaterialTheme.colorScheme.onSurfaceVariant
                  )
              }
          }

@@ -24,32 +24,22 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+import androidx.glance.LocalContext
+import androidx.glance.appwidget.GlanceTheme
+import com.apachi.thinkora.R
+
 class FavoriteQuotesWidget : GlanceAppWidget() {
     
-    // In a real app we would pass data via state or parameters. 
-    // Ideally use GlanceStateDefinition.
-    // For simplicity, I'll allow the Content() to fetch from Repo via EntryPoint?
-    // Glance architecture usually favors "Receiver" pushing state to "Widget".
-    // I'll define state using Preferences? 
-    // Or just simple "Wait for update".
-    // I can't easily inject into the Widget class itself unless I use specific Hilt integration for Glance (which is newer).
-    
-    // Simplest Clean Architecture way:
-    // Receiver (@AndroidEntryPoint) -> fetches data -> updateAppWidgetState()
-
     @Composable
     fun MyContent() {
-         // Placeholder. Real implementation depends on state.
-         // Since I can't easily inject here without more setup, I will keep it basic.
-         // Assuming state contains "content" and "author".
-         
-         val content = androidx.glance.currentState(androidx.datastore.preferences.core.stringPreferencesKey("content")) ?: "No favorites yet!"
+         val context = LocalContext.current
+         val content = androidx.glance.currentState(androidx.datastore.preferences.core.stringPreferencesKey("content")) ?: context.getString(R.string.widget_no_favorites)
          val author = androidx.glance.currentState(androidx.datastore.preferences.core.stringPreferencesKey("author")) ?: ""
 
          Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(Color.DarkGray)
+                .background(GlanceTheme.colors.surface)
                 .padding(16.dp),
             verticalAlignment = Alignment.Vertical.CenterVertically,
             horizontalAlignment = Alignment.Horizontal.CenterHorizontally
@@ -58,7 +48,7 @@ class FavoriteQuotesWidget : GlanceAppWidget() {
                 text = content,
                 style = TextStyle(
                     fontWeight = FontWeight.Medium,
-                    color = ColorProvider(Color.White),
+                    color = GlanceTheme.colors.onSurface,
                     fontSize = 18.sp
                 )
             )
@@ -67,7 +57,7 @@ class FavoriteQuotesWidget : GlanceAppWidget() {
                     text = "- $author",
                     style = TextStyle(
                         fontStyle = androidx.glance.text.FontStyle.Italic,
-                        color = ColorProvider(Color.LightGray),
+                        color = GlanceTheme.colors.onSurfaceVariant,
                         fontSize = 14.sp
                     )
                 )
@@ -77,7 +67,9 @@ class FavoriteQuotesWidget : GlanceAppWidget() {
 
     @Composable
     override fun Content() {
-        MyContent()
+        GlanceTheme {
+            MyContent()
+        }
     }
 }
 

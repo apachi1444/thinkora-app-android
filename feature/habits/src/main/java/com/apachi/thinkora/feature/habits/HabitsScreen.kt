@@ -20,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HabitsScreen(
@@ -36,9 +39,13 @@ fun HabitsScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = { viewModel.onEvent(HabitsEvent.ShowAddDialog) },
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add Habit", tint = Color.White)
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.habits_add_habit)
+                )
             }
         }
     ) { padding ->
@@ -46,13 +53,14 @@ fun HabitsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(Color(0xFFF8F9FC))
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
             Text(
-                text = "Your Habits",
+                text = stringResource(R.string.habits_title),
                 style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(16.dp))
             
@@ -88,8 +96,12 @@ fun HabitsScreen(
         }
 
         if (showDeleteConfirmation && habitToDelete != null) {
+            val confirmedHabitName = habitToDelete!!.name
+            val deletedConfirmMsg = stringResource(R.string.habits_deleted_confirm, confirmedHabitName)
+            val undoLabel = stringResource(R.string.habits_undo)
+
             DeleteConfirmationDialog(
-                habitName = habitToDelete!!.name,
+                habitName = confirmedHabitName,
                 onConfirm = {
                     val deletedHabit = habitToDelete!!
                     viewModel.onEvent(HabitsEvent.DeleteHabit(deletedHabit.id))
@@ -98,8 +110,8 @@ fun HabitsScreen(
                     
                     coroutineScope.launch {
                         val result = snackbarHostState.showSnackbar(
-                            message = "${deletedHabit.name} deleted",
-                            actionLabel = "Undo",
+                            message = deletedConfirmMsg,
+                            actionLabel = undoLabel,
                             duration = SnackbarDuration.Long
                         )
                         if (result == SnackbarResult.ActionPerformed) {
@@ -132,42 +144,42 @@ fun WidgetDiscoveryDialog(
         onDismissRequest = onDismiss,
         icon = {
             Icon(
-                imageVector = Icons.Default.Build, // Process icon, or use a custom widget icon
+                imageVector = Icons.Default.Build,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary
             )
         },
         title = {
             Text(
-                "Add a Widget!",
+                text = stringResource(R.string.habits_widget_tutorial_title),
                 fontWeight = FontWeight.Bold
             )
         },
         text = {
-            Text("Did you know? You can add a widget to your home screen to track your habits easily without opening the app!")
+            Text(stringResource(R.string.habits_widget_tutorial_desc))
         },
         confirmButton = {
             Button(
                 onClick = {
                     val appWidgetManager = android.appwidget.AppWidgetManager.getInstance(context)
-                    val myProvider = android.content.ComponentName(context, com.apachi.thinkora.feature.habits.widget.HabitsWidgetReceiver::class.java)
+                    val myProvider = android.content.ComponentName(context, "com.apachi.thinkora.feature.habits.widget.HabitsWidgetReceiver")
                     
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && appWidgetManager.isRequestPinAppWidgetSupported) {
                         appWidgetManager.requestPinAppWidget(myProvider, null, null)
                     } else {
-                        android.widget.Toast.makeText(context, "Widget pinning is not supported on this device.", android.widget.Toast.LENGTH_SHORT).show()
+                        android.widget.Toast.makeText(context, context.getString(R.string.habits_widget_unsupported), android.widget.Toast.LENGTH_SHORT).show()
                     }
                     onDismiss()
                 }
             ) {
-                Text("Add Widget")
+                Text(stringResource(R.string.habits_widget_add))
             }
         },
         dismissButton = {
             TextButton(
                 onClick = onDismiss
             ) {
-                Text("Got it")
+                Text(stringResource(R.string.habits_widget_dismiss))
             }
         }
     )
@@ -179,7 +191,10 @@ fun HabitItem(
     onIncrementClick: ((String) -> Unit)? = null
 ) {
     Card(
-        colors = CardDefaults.cardColors(containerColor = Color.White),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
         modifier = Modifier.fillMaxWidth()
     ) {
@@ -200,9 +215,9 @@ fun HabitItem(
            
            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                Icon(
-                   Icons.Default.Build,
+                   imageVector = Icons.Default.Build,
                    contentDescription = null, 
-                   tint = Color(0xFFF97316)
+                   tint = Color(0xFFF97316) // Keep streak orange as it's branding/status
                )
                Text(
                    text = "${habit.streak}",
@@ -217,8 +232,8 @@ fun HabitItem(
                        modifier = Modifier.size(32.dp)
                    ) {
                        Icon(
-                           Icons.Default.Add,
-                           contentDescription = "Increment",
+                           imageVector = Icons.Default.Add,
+                           contentDescription = stringResource(R.string.habits_increment),
                            tint = MaterialTheme.colorScheme.primary
                        )
                    }
@@ -257,7 +272,7 @@ fun SwipeToDeleteContainer(
         state = dismissState,
         background = {
             val color = when (dismissState.dismissDirection) {
-                DismissDirection.StartToEnd, DismissDirection.EndToStart -> Color(0xFFEF4444)
+                DismissDirection.StartToEnd, DismissDirection.EndToStart -> MaterialTheme.colorScheme.error
                 null -> Color.Transparent
             }
             
@@ -271,8 +286,8 @@ fun SwipeToDeleteContainer(
                 if (dismissState.dismissDirection != null) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
-                        tint = Color.White,
+                        contentDescription = stringResource(R.string.common_delete),
+                        tint = MaterialTheme.colorScheme.onError,
                         modifier = Modifier.size(32.dp)
                     )
                 }
@@ -295,31 +310,32 @@ fun DeleteConfirmationDialog(
             Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = null,
-                tint = Color(0xFFEF4444)
+                tint = MaterialTheme.colorScheme.error
             )
         },
         title = { 
             Text(
-                "Delete Habit?",
+                text = stringResource(R.string.habits_delete_title),
                 fontWeight = FontWeight.Bold
             ) 
         },
         text = { 
-            Text("Are you sure you want to delete \"$habitName\"? You can undo this action.") 
+            Text(stringResource(R.string.habits_delete_message, habitName)) 
         },
         confirmButton = {
             Button(
                 onClick = onConfirm,
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFEF4444)
+                    containerColor = MaterialTheme.colorScheme.error,
+                    contentColor = MaterialTheme.colorScheme.onError
                 )
             ) {
-                Text("Delete")
+                Text(stringResource(R.string.common_delete))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.common_cancel))
             }
         }
     )
@@ -335,20 +351,20 @@ fun AddHabitDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("New Habit") },
+        title = { Text(stringResource(R.string.habits_new_habit)) },
         text = {
             Column {
                 OutlinedTextField(
                     value = name,
                     onValueChange = { name = it },
-                    label = { Text("Habit Name") },
+                    label = { Text(stringResource(R.string.habits_name_label)) },
                     singleLine = true
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = streak,
                     onValueChange = { if (it.all { char -> char.isDigit() }) streak = it },
-                    label = { Text("Current Streak") },
+                    label = { Text(stringResource(R.string.habits_streak_label)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     singleLine = true
                 )
@@ -362,12 +378,12 @@ fun AddHabitDialog(
                     }
                 }
             ) {
-                Text("Add")
+                Text(stringResource(R.string.common_add))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text(stringResource(R.string.common_cancel))
             }
         }
     )

@@ -22,16 +22,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
     navController: NavController
 ) {
     var searchText by remember { mutableStateOf("") }
+    // Ideally these categories should be localized too, but let's stick to the list for now
+    // and just use translation for the keys if they were dynamic.
     val categories = listOf("All", "Haircuts", "Make up", "Massage", "Skin care")
     var selectedCategory by remember { mutableStateOf("All") }
 
     Surface(
-        color = Color(0xFFF8F9FC),
+        color = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize()
     ) {
         Column(
@@ -41,9 +47,9 @@ fun SearchScreen(
         ) {
             // Header
             Text(
-                text = "Search",
-                style = MaterialTheme.typography.bodyLarge, // Adjust style as needed
-                color = Color.Gray,
+                text = stringResource(R.string.search_title),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
@@ -55,14 +61,14 @@ fun SearchScreen(
                  TextField(
                     value = searchText,
                     onValueChange = { searchText = it },
-                    placeholder = { Text("Salon", color = Color.Gray) },
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = Color.Gray) },
+                    placeholder = { Text(stringResource(R.string.search_placeholder), color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier
                         .weight(1f)
                         .clip(RoundedCornerShape(12.dp))
-                        .background(Color.White),
+                        .background(MaterialTheme.colorScheme.surface),
                     colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color.White,
+                        containerColor = MaterialTheme.colorScheme.surface,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent
                     ),
@@ -70,7 +76,7 @@ fun SearchScreen(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 IconButton(onClick = { navController.popBackStack() }) {
-                     Icon(Icons.Default.Close, contentDescription = "Close", tint = Color(0xFF1E293B))
+                     Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_close), tint = MaterialTheme.colorScheme.onBackground)
                 }
             }
 
@@ -88,15 +94,15 @@ fun SearchScreen(
                         label = { 
                             Text(
                                 text = category, 
-                                color = if (isSelected) Color.White else Color(0xFF94A3B8)
+                                color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
                             ) 
                         },
                         colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = Color(0xFF1E293B),
+                            selectedContainerColor = MaterialTheme.colorScheme.primary,
                             containerColor = Color.Transparent
                         ),
                         border = FilterChipDefaults.filterChipBorder(
-                            borderColor = if (isSelected) Color(0xFF1E293B) else Color(0xFFE2E8F0)
+                            borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
                         ),
                         shape = RoundedCornerShape(24.dp)
                     )
@@ -106,10 +112,10 @@ fun SearchScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Result found (246)",
+                text = stringResource(R.string.search_results_found, 246),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF1E293B)
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -129,7 +135,7 @@ fun SearchScreen(
                 )
 
                 items(results) { result ->
-                     SearchResultItem(parseSearchResult(result))
+                     SearchResultItem(result)
                 }
             }
         }
@@ -144,24 +150,20 @@ data class SearchResult(
     val imageUrl: String
 )
 
-// Helper to make dummy data more visual if needed, but for now we use placeholder images or colored boxes
 @Composable
 fun SearchResultItem(result: SearchResult) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White, RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f), RoundedCornerShape(16.dp))
             .padding(12.dp)
     ) {
         Box(
             modifier = Modifier
                 .size(80.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(Color.LightGray)
-        ) {
-              // Image would go here
-              // Image(painter = rememberAsyncImagePainter(result.imageUrl), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.fillMaxSize())
-        }
+                .background(MaterialTheme.colorScheme.outlineVariant)
+        )
         
         Spacer(modifier = Modifier.width(16.dp))
         
@@ -172,13 +174,13 @@ fun SearchResultItem(result: SearchResult) {
                 text = result.name,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = Color(0xFF1E293B)
+                color = MaterialTheme.colorScheme.onSurface
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = result.address,
                 style = MaterialTheme.typography.bodySmall,
-                color = Color(0xFF94A3B8),
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -192,46 +194,26 @@ fun SearchResultItem(result: SearchResult) {
                     Icon(
                         imageVector = Icons.Default.Star,
                         contentDescription = null,
-                        tint = Color(0xFFFFB020),
+                        tint = Color(0xFFFFB020), // Rating stars are usually consistent
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    repeat(4) {
-                         Icon(
-                            imageVector = Icons.Default.Star,
-                            contentDescription = null,
-                            tint = Color(0xFFFFB020),
-                            modifier = Modifier.size(16.dp)
-                        )
-                    }
+                    Text(
+                        text = result.rating.toString(),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
                 }
                 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                     Icon(
-                        imageVector = Icons.Default.Star,
-                        contentDescription = null,
-                        tint = Color(0xFF64748B),
-                        modifier = Modifier.size(14.dp)
-                    )
-                    Spacer(modifier = Modifier.width(2.dp))
                     Text(
                         text = result.distance,
                         style = MaterialTheme.typography.labelSmall,
-                        color = Color(0xFF1E293B),
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
                     )
                 }
             }
         }
     }
-}
-
-// Fix missing LocationOn icon by adding import or finding alternative
-// Assuming the user has material icons extended or we use a basic one. 
-// I'll stick to basic icons available in Default for safety or assume extended is present.
-// LocationOn is in extended usually. I'll check imports. If not I will use Place.
-// Actually LocationOn is in Filled. 
-
-fun parseSearchResult(s: SearchResult) : SearchResult {
-    return s
 }
