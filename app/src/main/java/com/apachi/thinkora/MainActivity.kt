@@ -5,7 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnticipateInterpolator
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Box
@@ -32,7 +32,7 @@ import androidx.core.os.LocaleListCompat
 import java.util.Locale
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var getOnboardingStatusUseCase: com.apachi.thinkora.domain.use_case.GetOnboardingStatusUseCase
 

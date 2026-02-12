@@ -73,6 +73,33 @@
     <string name="analytics_empty">No data yet. Complete habits to see your progress!</string>
     <string name="analytics_completions">completions</string>
 
+    <!-- Onboarding Screen -->
+    <string name="onboarding_welcome_title">Welcome to Quotes</string>
+    <string name="onboarding_welcome_desc">Discover daily inspiration and wisdom from the greatest minds.</string>
+    <string name="onboarding_motivation_title">Daily Motivation</string>
+    <string name="onboarding_motivation_desc">Get a new quote every day to start your morning with positivity.</string>
+    <string name="onboarding_widget_title">Widget Integration</string>
+    <string name="onboarding_widget_desc">Add widgets to your home screen for instant access to your favorite quotes.</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="onboarding_name_question">What\'s your name?</string>
+    <string name="onboarding_name_label">Your Name</string>
+    <string name="onboarding_interests_title">Select your interests</string>
+    <string name="onboarding_interests_desc">Tailor your daily quotes.</string>
+    <string name="onboarding_complete_setup">Complete Setup</string>
+
+    <!-- Home Screen -->
+    <string name="home_greeting_name">Hi, %s</string>
+    <string name="home_inspiration_sub">Let\'s get inspired!</string>
+    <string name="home_streak_title">%d Day Streak!</string>
+    <string name="home_streak_desc">Keep reading daily to build your habit.</string>
+
+    <!-- Categories -->
+    <string name="category_business">Business</string>
+    <string name="category_life">Life</string>
+    <string name="category_sports">Sports</string>
+    <string name="category_tech">Tech</string>
+
     <!-- Common -->
     <string name="common_back">Back</string>
     <string name="common_save">Save</string>
@@ -80,5 +107,8 @@
     <string name="common_delete">Delete</string>
     <string name="common_edit">Edit</string>
     <string name="common_done">Done</string>
+    <string name="common_menu">Menu</string>
+    <string name="common_notifications">Notifications</string>
+    <string name="common_search">Search</string>
 
 </resources>

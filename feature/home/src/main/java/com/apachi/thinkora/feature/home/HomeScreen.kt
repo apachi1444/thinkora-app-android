@@ -165,7 +165,7 @@ fun HomeHeader(
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color.White)
             ) {
-                Icon(Icons.Default.Menu, contentDescription = "Menu")
+                Icon(Icons.Default.Menu, contentDescription = stringResource(R.string.common_menu))
             }
 
             // Profile Image (Placeholder)
@@ -181,12 +181,12 @@ fun HomeHeader(
             Spacer(modifier = Modifier.width(12.dp))
             Column {
                 Text(
-                    text = "Hi, $userName",
+                    text = stringResource(R.string.home_greeting_name, userName),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = "Let's get inspired!",
+                    text = stringResource(R.string.home_inspiration_sub),
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.Gray
                 )
@@ -200,7 +200,7 @@ fun HomeHeader(
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color.White)
             ) {
-                Icon(Icons.Default.Notifications, contentDescription = "Notifications")
+                Icon(Icons.Default.Notifications, contentDescription = stringResource(R.string.common_notifications))
             }
             IconButton(
                 onClick = { onSearchClick() },
@@ -208,7 +208,7 @@ fun HomeHeader(
                     .clip(RoundedCornerShape(12.dp))
                     .background(Color.White)
             ) {
-                Icon(Icons.Default.Search, contentDescription = "Search")
+                Icon(Icons.Default.Search, contentDescription = stringResource(R.string.common_search))
             }
         }
     }
@@ -220,10 +220,10 @@ fun CategoriesRow(
     onCategoryClick: (String) -> Unit
 ) {
     val categories = listOf(
-        "Business" to Color(0xFFE0E7FF),
-        "Life" to Color(0xFFFCE7F3),
-        "Sports" to Color(0xFFDCFCE7),
-        "Tech" to Color(0xFFFEF3C7)
+        stringResource(R.string.category_business) to Color(0xFFE0E7FF),
+        stringResource(R.string.category_life) to Color(0xFFFCE7F3),
+        stringResource(R.string.category_sports) to Color(0xFFDCFCE7),
+        stringResource(R.string.category_tech) to Color(0xFFFEF3C7)
     )
     
     LazyRow(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -278,12 +278,12 @@ fun StreakCard(streak: Int) {
              Spacer(modifier = Modifier.width(16.dp))
              Column {
                  Text(
-                     text = "$streak Day Streak!",
+                     text = stringResource(R.string.home_streak_title, streak),
                      style = MaterialTheme.typography.titleMedium,
                      fontWeight = FontWeight.Bold
                  )
                  Text(
-                     text = "Keep reading daily to build your habit.",
+                     text = stringResource(R.string.home_streak_desc),
                      style = MaterialTheme.typography.bodySmall,
                      color = Color.Gray
                  )

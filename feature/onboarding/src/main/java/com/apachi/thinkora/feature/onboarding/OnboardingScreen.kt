@@ -41,9 +41,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.apachi.thinkora.domain.navigation.Screen
-import kotlinx.coroutines.launch
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -52,18 +51,18 @@ fun OnboardingIntroScreen(
 ) {
     val pages = listOf(
         OnboardingPage(
-            title = "Welcome to Quotes",
-            description = "Discover daily inspiration and wisdom from the greatest minds.",
+            title = stringResource(R.string.onboarding_welcome_title),
+            description = stringResource(R.string.onboarding_welcome_desc),
             imageVector = Icons.Default.ArrowForward
         ),
         OnboardingPage(
-            title = "Daily Motivation",
-            description = "Get a new quote every day to start your morning with positivity.",
+            title = stringResource(R.string.onboarding_motivation_title),
+            description = stringResource(R.string.onboarding_motivation_desc),
             imageVector = Icons.Default.Star
         ),
         OnboardingPage(
-            title = "Widget Integration",
-            description = "Add widgets to your home screen for instant access to your favorite quotes.",
+            title = stringResource(R.string.onboarding_widget_title),
+            description = stringResource(R.string.onboarding_widget_desc),
             imageVector = Icons.Default.Check
         )
     )
@@ -115,7 +114,7 @@ fun OnboardingIntroScreen(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(if (pagerState.currentPage < pages.size - 1) "Next" else "Get Started")
+            Text(if (pagerState.currentPage < pages.size - 1) stringResource(R.string.onboarding_next) else stringResource(R.string.onboarding_get_started))
         }
     }
 }
@@ -171,13 +170,13 @@ fun OnboardingNameScreen(
         )
         Spacer(modifier = Modifier.height(32.dp))
         
-        Text(text = "What's your name?", style = MaterialTheme.typography.headlineSmall)
+        Text(text = stringResource(R.string.onboarding_name_question), style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = state.name,
             onValueChange = { viewModel.onEvent(OnboardingEvent.EnterName(it)) },
-            label = { Text("Your Name") },
+            label = { Text(stringResource(R.string.onboarding_name_label)) },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
@@ -189,7 +188,7 @@ fun OnboardingNameScreen(
             enabled = state.name.isNotBlank(),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Next")
+            Text(stringResource(R.string.onboarding_next))
             Spacer(modifier = Modifier.width(8.dp))
             Icon(Icons.Default.ArrowForward, contentDescription = null)
         }
@@ -226,12 +225,12 @@ fun OnboardingInterestsScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Select your interests",
+            text = stringResource(R.string.onboarding_interests_title),
             style = MaterialTheme.typography.headlineSmall
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Tailor your daily quotes.",
+            text = stringResource(R.string.onboarding_interests_desc),
             style = MaterialTheme.typography.bodyMedium
         )
         Spacer(modifier = Modifier.height(32.dp))
@@ -257,7 +256,7 @@ fun OnboardingInterestsScreen(
             enabled = state.selectedInterests.isNotEmpty(),
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Complete Setup")
+            Text(stringResource(R.string.onboarding_complete_setup))
         }
     }
 }
