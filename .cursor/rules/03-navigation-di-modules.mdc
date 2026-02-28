@@ -1,0 +1,11 @@
+---
+description: Navigation, Hilt, and module structure
+globs: "**/navigation/**/*.kt", "**/di/**/*.kt", "**/AndroidManifest.xml", "**/build.gradle"
+alwaysApply: false
+---
+
+# Navigation, DI & Modules
+
+- **Navigation**: Define all routes in `core/domain`'s `Screen` sealed class. Use object routes (`"screen_name"`) or parameterized routes (`"screen/{param}"`) with a `createRoute(param)` function. In Compose, use `composable(Screen.X.route)` and `navController.navigate(Screen.X.route)` or `Screen.X.createRoute(arg)`.
+- **Hilt**: Activities: `@AndroidEntryPoint`. ViewModels: `@HiltViewModel` and `hiltViewModel()` in composables; for nested nav use `hiltViewModel(navController.getBackStackEntry(route))`. Repositories and use cases provided via Hilt modules in `core/data`/`app`.
+- **Modules**: Feature modules depend on `core:domain`, `core:designsystem`, and optionally `core:data`/`core:ui`. App module wires feature modules and holds NavHost. Keep feature modules decoupled from each other; shared types live in `core/domain` or `core/designsystem`.

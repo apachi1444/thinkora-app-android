@@ -1,0 +1,22 @@
+---
+description: Use string resources for all user-facing text (en/ar)
+globs: "**/*.kt", "**/res/values/**/strings.xml"
+alwaysApply: false
+---
+
+# String resources (i18n)
+
+- **No hardcoded user-facing text** in Composables or View code. Use `stringResource(R.string.xxx)` (Compose) or `context.getString(R.string.xxx)` so the app can ship **en** and **ar** (and other locales) from `values/strings.xml` and `values-ar/strings.xml`.
+- **Add every new UI string** to the appropriate `strings.xml` (app or core/designsystem) and to `values-ar/strings.xml` for Arabic.
+- **Parameterized strings**: use format args, e.g. `stringResource(R.string.home_hi, userName)` with `<string name="home_hi">Hi, %1$s</string>`.
+- **Content descriptions**: use string resources for `contentDescription` (e.g. `stringResource(R.string.home_menu_cd)`), not inline literals.
+
+```kotlin
+// BAD
+Text("Your Streak")
+Icon(..., contentDescription = "Menu")
+
+// GOOD
+Text(stringResource(R.string.home_your_streak))
+Icon(..., contentDescription = stringResource(R.string.home_menu_cd))
+```

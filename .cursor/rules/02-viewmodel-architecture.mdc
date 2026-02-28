@@ -1,0 +1,29 @@
+---
+description: ViewModel and MVVM/Clean Architecture patterns
+globs: "**/*ViewModel.kt", "**/domain/use_case/**/*.kt", "**/domain/repository/**/*.kt"
+alwaysApply: false
+---
+
+# ViewModel & Architecture (Senior Standards)
+
+- **ViewModel**: One per screen (or flow). `@HiltViewModel` with constructor-injected use cases. Expose a single immutable state: `val state: StateFlow<State>` (from `MutableStateFlow` + `asStateFlow()`). Handle user actions via `fun onEvent(event: Event)`.
+- **State/Event**: Use a `data class State(...)` and `sealed class Event` in the same file as the ViewModel. State is immutable; update with `_state.update { it.copy(...) }` or `_state.value = _state.value.copy(...)`.
+- **Use cases**: ViewModels call domain use cases only (no repositories or data types in the UI layer). Use `viewModelScope.launch { }` or `flow.onEach { }.launchIn(viewModelScope)` for coroutines.
+- **No UI types in ViewModel**: Do not use `NavController`, `Context`, or Compose types in ViewModel. Navigation is triggered from UI via callbacks (e.g. `onNavigateToSearch`) or events that the screen translates into navigation.
+
+```kotlin
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val getDailyQuoteUseCase: GetDailyQuoteUseCase,
+    ...
+) : ViewModel() {
+    private val _state = MutableStateFlow(HomeState())
+    val state = _state.asStateFlow()
+
+    fun onEvent(event: HomeEvent) {
+        when (event) {
+            is HomeEvent.MarkAsRead -> viewModelScope.launch { ... }
+        }
+    }
+}
+```

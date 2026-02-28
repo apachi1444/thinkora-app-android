@@ -1,0 +1,12 @@
+---
+description: Kotlin, Coroutines, Flow, and data layer conventions
+globs: "**/*.kt"
+alwaysApply: false
+---
+
+# Kotlin, Coroutines & Data Layer
+
+- **Kotlin**: Prefer `val`, immutable data classes, sealed classes for events/results. Use `?.let {}` or early returns to avoid deep nesting. Prefer `when` for exhaustive handling.
+- **Coroutines**: Use `viewModelScope` in ViewModels; `coroutineScope`/structured concurrency in repositories or use cases. Prefer `Flow` for streams (DB, DataStore); collect with `collectAsState` in UI or `launchIn` + `onEach` in ViewModel.
+- **Data layer**: Repositories implement domain interfaces. Room: use `Flow` for reactive queries. DataStore: expose `Flow` for preferences. Do not expose Room/DataStore types to domain; map to domain models in the repository.
+- **Naming**: Use cases: verb phrase (`GetDailyQuoteUseCase`, `MarkQuoteAsReadUseCase`). DAOs: `XxxDao`; entities: `XxxEntity`; domain models: no suffix or `Quote`, `Habit`, etc.

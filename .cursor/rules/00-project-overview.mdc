@@ -1,0 +1,40 @@
+---
+description: Thinkora project context and architecture (always apply)
+alwaysApply: true
+---
+
+# Thinkora – Project Overview
+
+**App**: Daily inspiration & habit tracker (quotes, habits, widgets). Package: `com.apachi.thinkora`.
+
+**Stack**: Kotlin, Jetpack Compose (Material3), Clean Architecture + MVVM, Hilt, Room, DataStore, Navigation Compose, Glance widgets, Coroutines/Flow.
+
+**Docs**: `README.md`, `docs/technical.md`, `docs/functional.md`, `docs/status_and_next_steps.md`.
+
+**Structure**:
+- `app/` – Application entry, `MainActivity`, NavHost, theme/splash.
+- `core/designsystem` – Theme (ThinkoraTheme, Color, Type), shared components (e.g. ThinkoraTopAppBar).
+- `core/domain` – Models, repository interfaces, use cases, navigation (`Screen` sealed class).
+- `core/data` – Repositories impl, Room DAOs/entities, DataStore, analytics/ads.
+- `core/ui` – Shared UI (e.g. HeroQuoteCard, ads).
+- `feature/*` – Feature modules: each has Screen(s), ViewModel, optional sub-screens (e.g. `feature/home`, `feature/onboarding`, `feature/main`).
+
+**Conventions**:
+- Navigation: `Screen` in `core/domain`; routes like `"screen_name"` or `"screen/{param}"` with `createRoute(param)`.
+- ViewModels: `@HiltViewModel`, inject use cases; expose single `State` (data class) and `onEvent(Event)`.
+- UI: Prefer `core/designsystem` and `MaterialTheme`; avoid hardcoded colors/strings where theme/strings exist.
+
+**Imports (important)**: Never use fully qualified names inside the code body. Always declare imports at the top of the file and use short names in composables and elsewhere.
+
+```kotlin
+// ❌ BAD – FQN inside code
+composable(com.apachi.thinkora.domain.navigation.Screen.MainScreen.route) { ... }
+val vm: com.apachi.thinkora.feature.onboarding.OnboardingViewModel = hiltViewModel(parentEntry)
+
+// ✅ GOOD – imports at top, short names in code
+import com.apachi.thinkora.domain.navigation.Screen
+import com.apachi.thinkora.feature.onboarding.OnboardingViewModel
+// ...
+composable(Screen.MainScreen.route) { ... }
+val vm: OnboardingViewModel = hiltViewModel(parentEntry)
+```

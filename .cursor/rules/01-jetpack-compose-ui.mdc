@@ -1,0 +1,27 @@
+---
+description: Jetpack Compose UI standards (screens and components)
+globs: "**/*Screen.kt", "**/feature/**/*.kt", "**/core/designsystem/**/*.kt", "**/core/ui/**/*.kt"
+alwaysApply: false
+---
+
+# Jetpack Compose UI (Senior Standards)
+
+- **Material3**: Use `MaterialTheme` (colorScheme, typography) and Material3 components. No hardcoded colors; use `MaterialTheme.colorScheme.*` or design tokens from `core/designsystem`.
+- **Composables**: Keep screens thin; extract reusable pieces into `@Composable` functions in the same file or `core/designsystem`/`core/ui`. Pass callbacks (`onClick`, `onEvent`) rather than ViewModels to child composables when possible.
+- **State**: Use `collectAsState()` for ViewModel state. Prefer `remember`/`mutableStateOf` only for local UI state (e.g. drawer open). Avoid retaining heavy objects in composition.
+- **Modifiers**: Apply `Modifier` as the first parameter for composables that need layout customization. Order: layout/size → padding → click/scroll → then visual (clip, background).
+- **Accessibility**: Provide `contentDescription` for `Icon`/`IconButton`; use `stringResource` for user-facing text when strings are in resources.
+- **Lists**: Use `LazyColumn`/`LazyRow` with `items()` (or `itemsIndexed`) for lists; avoid `Column`/`Row` with many items.
+
+```kotlin
+// Prefer theme-aware
+Text(
+  text = "Title",
+  style = MaterialTheme.typography.titleMedium,
+  color = MaterialTheme.colorScheme.onSurface
+)
+
+// Prefer extracting and callback
+@Composable
+fun HomeHeader(userName: String, onSearchClick: () -> Unit, ...) { ... }
+```
