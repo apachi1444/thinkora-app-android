@@ -74,7 +74,7 @@ fun MainScreen(
                 Column(modifier = Modifier.fillMaxWidth()) {
                     // BannerAd(adManager = adManager)
                     NavigationBar(
-                        containerColor = Color.White,
+                        containerColor = MaterialTheme.colorScheme.surface,
                         tonalElevation = 8.dp
                     ) {
                         NavigationBarItem(

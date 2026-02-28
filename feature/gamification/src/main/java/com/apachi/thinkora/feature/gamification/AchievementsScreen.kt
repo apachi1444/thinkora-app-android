@@ -40,6 +40,10 @@ import androidx.navigation.NavController
 import com.apachi.thinkora.domain.model.Achievement
 
 @OptIn(ExperimentalMaterial3Api::class)
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AchievementsScreen(
     navController: NavController,
@@ -50,10 +54,13 @@ fun AchievementsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Achievements") },
+                title = { Text(stringResource(R.string.achievements_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = stringResource(R.string.common_back)
+                        )
                     }
                 }
             )
@@ -78,7 +85,10 @@ fun AchievementItem(achievement: Achievement) {
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = if (achievement.isUnlocked) Color(0xFFDCFCE7) else Color(0xFFF1F5F9)
+            containerColor = if (achievement.isUnlocked) 
+                MaterialTheme.colorScheme.primaryContainer 
+            else 
+                MaterialTheme.colorScheme.surfaceVariant
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -92,15 +102,13 @@ fun AchievementItem(achievement: Achievement) {
                 modifier = Modifier
                     .size(50.dp)
                     .clip(CircleShape)
-                    .background(if (achievement.isUnlocked) Color(0xFF22C55E) else Color.Gray),
+                    .background(if (achievement.isUnlocked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline),
                 contentAlignment = Alignment.Center
             ) {
-                // Determine icon based on iconName or just use generic for now
-                 // In a real app, you'd map iconName to R.drawable or ImageVectors
                 Icon(
                     imageVector = Icons.Default.Star,
                     contentDescription = null,
-                    tint = Color.White
+                    tint = if (achievement.isUnlocked) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             
@@ -111,12 +119,12 @@ fun AchievementItem(achievement: Achievement) {
                     text = achievement.title,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = if (achievement.isUnlocked) Color.Black else Color.Gray
+                    color = if (achievement.isUnlocked) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
                     text = achievement.description,
                     style = MaterialTheme.typography.bodyMedium,
-                    color = if (achievement.isUnlocked) Color.Black else Color.Gray
+                    color = if (achievement.isUnlocked) MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f) else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
                 )
             }
         }

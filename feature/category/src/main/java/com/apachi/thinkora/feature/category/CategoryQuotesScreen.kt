@@ -18,6 +18,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.apachi.thinkora.ui.components.HeroQuoteCard
 
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryQuotesScreen(
@@ -32,10 +35,17 @@ fun CategoryQuotesScreen(
                 title = { Text(state.categoryName) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = stringResource(R.string.common_back)
+                        )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface
+                )
             )
         }
     ) { padding ->
@@ -43,12 +53,16 @@ fun CategoryQuotesScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(Color(0xFFF8F9FC))
+                .background(MaterialTheme.colorScheme.background)
                 .padding(16.dp)
         ) {
             if (state.quotes.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("No quotes found for this category yet.")
+                    Text(
+                        text = stringResource(R.string.category_empty),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 }
             } else {
                 LazyColumn(
@@ -58,7 +72,7 @@ fun CategoryQuotesScreen(
                         HeroQuoteCard(
                             quote = quote,
                             onToggleFavorite = { viewModel.onEvent(CategoryQuotesEvent.ToggleFavorite(quote)) },
-                            onMarkRead = { /* Not implementing mark read here for simplicity, or can invoke similar event */ }
+                            onMarkRead = { /* Not implementing mark read here for simplicity */ }
                         )
                     }
                 }

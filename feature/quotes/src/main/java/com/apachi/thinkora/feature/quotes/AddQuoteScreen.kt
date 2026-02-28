@@ -16,6 +16,9 @@ import com.apachi.thinkora.core.designsystem.component.ThinkoraButton
 import com.apachi.thinkora.core.designsystem.component.ThinkoraTopAppBar
 
 
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddQuoteScreen(
@@ -24,7 +27,9 @@ fun AddQuoteScreen(
 ) {
     var content by remember { mutableStateOf("") }
     var author by remember { mutableStateOf("") }
-    var category by remember { mutableStateOf("Personal") }
+    
+    val personalLabel = stringResource(R.string.cat_personal)
+    var category by remember { mutableStateOf(personalLabel) }
 
     val context = LocalContext.current
     val activity = context as? Activity
@@ -32,10 +37,13 @@ fun AddQuoteScreen(
     Scaffold(
         topBar = {
             ThinkoraTopAppBar(
-                title = { Text("Add Quote") },
+                title = { Text(stringResource(R.string.quotes_add_quote)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.common_back)
+                        )
                     }
                 },
             )
@@ -51,7 +59,7 @@ fun AddQuoteScreen(
             ThinkoraTextField(
                 value = content,
                 onValueChange = { content = it },
-                label = { Text("Quote Content") },
+                label = { Text(stringResource(R.string.quotes_content_label)) },
                 modifier = Modifier.fillMaxWidth().height(150.dp),
                 maxLines = 5
             )
@@ -59,37 +67,43 @@ fun AddQuoteScreen(
             ThinkoraTextField(
                 value = author,
                 onValueChange = { author = it },
-                label = { Text("Author") },
+                label = { Text(stringResource(R.string.quotes_author_label)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
-            // Category Selection (Simple dropdown or chips)
+            // Category Selection
             Text(
-                "Category",
-                style = MaterialTheme.typography.labelLarge
+                text = stringResource(R.string.quotes_category_label),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onBackground
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 val categories = listOf(
-                    "Personal",
-                    "Motivation",
-                    "Work",
-                    "Life"
+                    stringResource(R.string.cat_personal),
+                    stringResource(R.string.cat_motivation),
+                    stringResource(R.string.cat_work),
+                    stringResource(R.string.cat_life)
                 )
                 categories.forEach { cat ->
                     FilterChip(
                         selected = category == cat,
                         onClick = { category = cat },
-                        label = { Text(cat) }
+                        label = { Text(cat) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            selectedContainerColor = MaterialTheme.colorScheme.primary,
+                            selectedLabelColor = MaterialTheme.colorScheme.onPrimary
+                        )
                     )
                 }
             }
 
             Spacer(modifier = Modifier.weight(1f))
 
+            val defaultAuthor = stringResource(R.string.quotes_default_author)
             ThinkoraButton(
                 onClick = {
                     if (content.isNotBlank()) {
-                        viewModel.addQuote(content, author.ifBlank { "Me" }, category, activity) {
+                        viewModel.addQuote(content, author.ifBlank { defaultAuthor }, category, activity) {
                             navController.popBackStack()
                         }
                     }
@@ -97,7 +111,7 @@ fun AddQuoteScreen(
                 modifier = Modifier.fillMaxWidth(),
                 enabled = content.isNotBlank()
             ) {
-                Text("Save Quote")
+                Text(stringResource(R.string.quotes_save))
             }
         }
     }

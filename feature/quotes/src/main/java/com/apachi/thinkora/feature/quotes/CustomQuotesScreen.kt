@@ -22,6 +22,9 @@ import androidx.navigation.NavController
 import com.apachi.thinkora.domain.model.Quote
 import com.apachi.thinkora.domain.navigation.Screen
 
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.R
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomQuotesScreen(
@@ -33,21 +36,35 @@ fun CustomQuotesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("My Quotes") },
+                title = { Text(stringResource(R.string.quotes_my_quotes)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            imageVector = Icons.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.common_back)
+                        )
                     }
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    titleContentColor = MaterialTheme.colorScheme.onSurface,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface
+                )
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { navController.navigate(Screen.AddQuoteScreen.route) }
+                onClick = { navController.navigate(Screen.AddQuoteScreen.route) },
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add Quote")
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(R.string.quotes_add_quote)
+                )
             }
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
         if (quotes.isEmpty()) {
             Box(
@@ -55,9 +72,9 @@ fun CustomQuotesScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No custom quotes yet.\nTap + to add one!",
+                    text = stringResource(R.string.quotes_empty),
                     style = MaterialTheme.typography.bodyLarge,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
                 )
             }
@@ -85,7 +102,10 @@ fun CustomQuoteItem(
 ) {
     Card(
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
     ) {
         Column(
             modifier = Modifier.padding(16.dp).fillMaxWidth()
@@ -105,13 +125,13 @@ fun CustomQuoteItem(
                     text = "- ${quote.author}",
                     style = MaterialTheme.typography.labelMedium,
                     fontWeight = FontWeight.Bold,
-                    color = Color.Gray
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 IconButton(onClick = onDeleteClick) {
                     Icon(
-                        Icons.Default.Delete,
-                        contentDescription = "Delete",
-                        tint = Color.Red.copy(alpha = 0.6f)
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = stringResource(R.string.common_delete),
+                        tint = MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
                     )
                 }
             }

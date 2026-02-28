@@ -32,6 +32,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.apachi.thinkora.domain.model.Quote
 
+import androidx.compose.ui.res.stringResource
+import com.apachi.thinkora.core.designsystem.R as DesignR
+
 @Composable
 fun HeroQuoteCard(
     quote: Quote,
@@ -45,8 +48,8 @@ fun HeroQuoteCard(
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(
-                        Color(0xFF6366F1), // Indigo
-                        Color(0xFF8B5CF6)  // Violet
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.secondary
                     )
                 )
             )
@@ -64,27 +67,27 @@ fun HeroQuoteCard(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        Icons.Default.DateRange,
+                        imageVector = Icons.Default.DateRange,
                         contentDescription = null, 
-                        tint = Color.White.copy(alpha = 0.8f),
+                        tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "Today",
-                        color = Color.White.copy(alpha = 0.8f),
+                        text = stringResource(DesignR.string.hero_today),
+                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
                         style = MaterialTheme.typography.labelMedium
                     )
                 }
                 
                 Surface(
-                    color = Color.White.copy(alpha = 0.2f),
+                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     Text(
                         text = quote.category,
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
@@ -93,7 +96,7 @@ fun HeroQuoteCard(
             Text(
                 text = "\"${quote.content}\"",
                 style = MaterialTheme.typography.bodyLarge,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontWeight = FontWeight.Medium,
                 maxLines = 3
             )
@@ -102,7 +105,7 @@ fun HeroQuoteCard(
                 Text(
                     text = "- ${quote.author}",
                     style = MaterialTheme.typography.labelMedium,
-                    color = Color.White.copy(alpha = 0.8f)
+                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
                 )
                 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -113,22 +116,22 @@ fun HeroQuoteCard(
                     Surface(
                         onClick = onMarkRead,
                         shape = RoundedCornerShape(12.dp),
-                        color = if (quote.isRead) Color.White.copy(alpha = 0.3f) else Color.White.copy(alpha = 0.2f)
+                        color = if (quote.isRead) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.3f) else MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f)
                     ) {
                         Row(
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            horizontalArrangement = Arrangement.SpaceBy(4.dp)
                         ) {
                             Icon(
-                                imageVector = if (quote.isRead) Icons.Default.Check else Icons.Default.Check,
-                                contentDescription = "Mark as read",
-                                tint = Color.White,
+                                imageVector = Icons.Default.Check,
+                                contentDescription = stringResource(DesignR.string.hero_mark_read),
+                                tint = MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier.size(16.dp)
                             )
                             Text(
-                                text = if (quote.isRead) "Read" else "Mark Read",
-                                color = Color.White,
+                                text = if (quote.isRead) stringResource(DesignR.string.hero_read) else stringResource(DesignR.string.hero_mark_read),
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 style = MaterialTheme.typography.labelSmall
                             )
                         }
@@ -137,7 +140,7 @@ fun HeroQuoteCard(
                     Surface(
                         onClick = onToggleFavorite,
                         shape = RoundedCornerShape(12.dp),
-                        color = Color.White.copy(alpha = 0.2f)
+                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f)
                     ) {
                         Row(
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
@@ -146,13 +149,13 @@ fun HeroQuoteCard(
                         ) {
                             Icon(
                                 imageVector = if (quote.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                                contentDescription = "Favorite",
-                                tint = if (quote.isFavorite) Color(0xFFFF6B9D) else Color.White,
+                                contentDescription = stringResource(DesignR.string.hero_favorite),
+                                tint = if (quote.isFavorite) Color(0xFFFF6B9D) else MaterialTheme.colorScheme.onPrimary,
                                 modifier = Modifier.size(16.dp)
                             )
                             Text(
-                                text = "Favorite",
-                                color = Color.White,
+                                text = stringResource(DesignR.string.hero_favorite),
+                                color = MaterialTheme.colorScheme.onPrimary,
                                 style = MaterialTheme.typography.labelSmall
                             )
                         }
