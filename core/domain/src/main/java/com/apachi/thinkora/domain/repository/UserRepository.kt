@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
     fun getUserPreferences(): Flow<UserPreferences?>
     suspend fun saveUserPreferences(userPreferences: UserPreferences)
+    suspend fun clearUserData()
 }

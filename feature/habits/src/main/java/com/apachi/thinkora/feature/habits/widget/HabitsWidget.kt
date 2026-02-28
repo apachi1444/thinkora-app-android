@@ -140,13 +140,26 @@ object HabitsWidget : GlanceAppWidget() {
                 }
             }
             
-            Spacer(modifier = GlanceModifier.height(16.dp))
-            
+            Spacer(modifier = GlanceModifier.height(12.dp))
+
             if (habitsCount > 0) {
-                Button(
-                    text = "+ Increment",
-                    onClick = actionRunCallback(IncrementHabitCallback::class.java)
-                )
+                Row(
+                    modifier = GlanceModifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.Horizontal.CenterHorizontally,
+                    verticalAlignment = Alignment.Vertical.CenterVertically
+                ) {
+                    Button(
+                        text = "+ Increment",
+                        onClick = actionRunCallback(IncrementHabitCallback::class.java)
+                    )
+                    if (habitsCount > 1) {
+                        Spacer(modifier = GlanceModifier.width(8.dp))
+                        Button(
+                            text = "Increment all",
+                            onClick = actionRunCallback(IncrementAllHabitsCallback::class.java)
+                        )
+                    }
+                }
             }
         }
     }
@@ -296,6 +309,29 @@ class IncrementHabitCallback : ActionCallback {
             }
         }
         HabitsWidget.update(context, glanceId)
+    }
+}
+
+class IncrementAllHabitsCallback : ActionCallback {
+    override suspend fun onAction(
+        context: Context,
+        glanceId: GlanceId,
+        parameters: ActionParameters
+    ) {
+        val repository = EntryPointAccessors.fromApplication(
+            context.applicationContext,
+            WidgetEntryPoint::class.java
+        ).getHabitRepository()
+
+        val habits = withContext(Dispatchers.IO) {
+            repository.getAllHabits().first()
+        }
+        withContext(Dispatchers.IO) {
+            habits.forEach { habit ->
+                repository.incrementHabitStreak(habit.id)
+            }
+        }
+        HabitsWidget.updateHabitsData(context)
     }
 }
 

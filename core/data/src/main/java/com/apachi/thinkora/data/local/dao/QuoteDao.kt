@@ -31,4 +31,6 @@ interface QuoteDao {
     @Query("SELECT * FROM quotes")
     fun getAllQuotes(): Flow<List<QuoteEntity>>
 
+    @Query("DELETE FROM quotes WHERE isCustom = 1")
+    suspend fun deleteAllCustomQuotes()
 }

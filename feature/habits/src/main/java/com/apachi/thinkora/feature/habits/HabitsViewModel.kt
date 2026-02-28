@@ -6,6 +6,8 @@ import com.apachi.thinkora.domain.model.Habit
 import com.apachi.thinkora.domain.use_case.AddHabitUseCase
 import com.apachi.thinkora.domain.use_case.DeleteHabitUseCase
 import com.apachi.thinkora.domain.use_case.GetHabitsUseCase
+import com.apachi.thinkora.domain.use_case.IncrementHabitStreakUseCase
+import com.apachi.thinkora.feature.habits.widget.HabitsWidget
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,7 +20,7 @@ import javax.inject.Inject
 class HabitsViewModel @Inject constructor(
     private val getHabitsUseCase: GetHabitsUseCase,
     private val addHabitUseCase: AddHabitUseCase,
-    private val incrementHabitStreakUseCase: com.apachi.thinkora.domain.use_case.IncrementHabitStreakUseCase,
+    private val incrementHabitStreakUseCase: IncrementHabitStreakUseCase,
     private val deleteHabitUseCase: DeleteHabitUseCase,
     @dagger.hilt.android.qualifiers.ApplicationContext private val context: android.content.Context
 ) : ViewModel() {
@@ -59,6 +61,14 @@ class HabitsViewModel @Inject constructor(
                     updateWidget()
                 }
             }
+            is HabitsEvent.IncrementAllHabits -> {
+                viewModelScope.launch {
+                    _state.value.habits.forEach { habit ->
+                        incrementHabitStreakUseCase(habit.id)
+                    }
+                    updateWidget()
+                }
+            }
             is HabitsEvent.DeleteHabit -> {
                 viewModelScope.launch {
                     deleteHabitUseCase(event.habitId)
@@ -72,7 +82,7 @@ class HabitsViewModel @Inject constructor(
     }
 
     private fun updateWidget() {
-        com.apachi.thinkora.feature.habits.widget.HabitsWidget.updateHabitsData(context)
+        HabitsWidget.updateHabitsData(context)
     }
 }
 
@@ -87,6 +97,7 @@ sealed class HabitsEvent {
     object ShowAddDialog : HabitsEvent()
     object HideAddDialog : HabitsEvent()
     data class IncrementStreak(val habitId: String) : HabitsEvent()
+    object IncrementAllHabits : HabitsEvent()
     data class DeleteHabit(val habitId: String) : HabitsEvent()
     object HideWidgetTutorial : HabitsEvent()
 }

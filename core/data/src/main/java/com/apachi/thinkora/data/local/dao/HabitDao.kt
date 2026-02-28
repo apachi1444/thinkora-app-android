@@ -30,4 +30,10 @@ interface HabitDao {
 
     @Query("SELECT * FROM habit_completions WHERE completionTimestamp >= :startTime")
     fun getAllCompletionsSince(startTime: Long): Flow<List<HabitCompletionEntity>>
+
+    @Query("DELETE FROM habit_completions")
+    suspend fun deleteAllCompletions()
+
+    @Query("DELETE FROM habits")
+    suspend fun deleteAllHabits()
 }

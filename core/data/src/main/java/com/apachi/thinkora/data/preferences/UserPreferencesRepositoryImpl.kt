@@ -47,4 +47,12 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             prefs[ONBOARDING_COMPLETED] = userPreferences.isOnboardingCompleted
         }
     }
+
+    override suspend fun clearUserData() {
+        context.dataStore.edit { prefs ->
+            prefs.remove(USER_NAME)
+            prefs.remove(INTERESTS)
+            prefs[ONBOARDING_COMPLETED] = false
+        }
+    }
 }

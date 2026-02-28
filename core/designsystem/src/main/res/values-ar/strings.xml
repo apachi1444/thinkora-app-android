@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nav_home">الرئيسية</string>
+    <string name="nav_habits">العادات</string>
+    <string name="nav_settings">الإعدادات</string>
+
+    <!-- Home -->
+    <string name="home_hi">مرحباً، %1$s</string>
+    <string name="home_lets_go">لنستلهم!</string>
+    <string name="home_your_streak">سلسلتك</string>
+    <string name="home_streak_days">سلسلة %1$d أيام!</string>
+    <string name="home_streak_subtitle">واظب يومياً لبناء عادتك.</string>
+    <string name="home_your_habits">عاداتك</string>
+    <string name="home_menu_cd">القائمة</string>
+    <string name="home_notifications_cd">الإشعارات</string>
+
+    <!-- Settings -->
+    <string name="settings_title">الإعدادات</string>
+    <string name="settings_appearance">مظهر التطبيق</string>
+    <string name="settings_dark_mode">الوضع الداكن</string>
+    <string name="settings_notifications">إعدادات الإشعارات</string>
+    <string name="settings_terms">الشروط والأحكام</string>
+    <string name="settings_privacy_policy">سياسة الخصوصية</string>
+    <string name="settings_delete_account">حذف الحساب</string>
+    <string name="settings_language">اللغة</string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_dialog_title">اختر اللغة</string>
+    <string name="delete_account_dialog_title">حذف الحساب</string>
+    <string name="delete_account_dialog_message">سيتم حذف جميع بياناتك المحلية (العادات، الاقتباسات، الإشعارات) وإعادة تعيين التطبيق. ستحتاج إلى إكمال المقدمة مرة أخرى. لا يمكن التراجع عن هذا.</string>
+    <string name="common_cancel">إلغاء</string>
+    <string name="common_delete">حذف</string>
+</resources>

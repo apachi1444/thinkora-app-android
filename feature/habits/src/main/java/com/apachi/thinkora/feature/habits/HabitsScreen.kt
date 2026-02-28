@@ -18,6 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.apachi.thinkora.domain.model.Habit
+import com.apachi.thinkora.feature.habits.widget.HabitsWidgetReceiver
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,8 +30,16 @@ fun HabitsScreen(
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
-    var habitToDelete by remember { mutableStateOf<com.apachi.thinkora.domain.model.Habit?>(null) }
+    var habitToDelete by remember { mutableStateOf<Habit?>(null) }
     var showDeleteConfirmation by remember { mutableStateOf(false) }
+    var cancelledHabitId by remember { mutableStateOf<String?>(null) }
+
+    LaunchedEffect(cancelledHabitId) {
+        cancelledHabitId?.let {
+            kotlinx.coroutines.delay(100)
+            cancelledHabitId = null
+        }
+    }
 
     Scaffold(
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -55,7 +65,24 @@ fun HabitsScreen(
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(16.dp))
-            
+
+            if (state.habits.isNotEmpty()) {
+                Button(
+                    onClick = { viewModel.onEvent(HabitsEvent.IncrementAllHabits) },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Increment all habits")
+                }
+                Spacer(modifier = Modifier.height(12.dp))
+            }
+
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
@@ -64,7 +91,8 @@ fun HabitsScreen(
                        onDelete = {
                            habitToDelete = habit
                            showDeleteConfirmation = true
-                       }
+                       },
+                       resetTrigger = cancelledHabitId == habit.id
                    ) {
                        HabitItem(
                            habit = habit,
@@ -108,8 +136,10 @@ fun HabitsScreen(
                     }
                 },
                 onDismiss = {
+                    val id = habitToDelete?.id
                     showDeleteConfirmation = false
                     habitToDelete = null
+                    id?.let { cancelledHabitId = it }
                 }
             )
         }
@@ -150,7 +180,7 @@ fun WidgetDiscoveryDialog(
             Button(
                 onClick = {
                     val appWidgetManager = android.appwidget.AppWidgetManager.getInstance(context)
-                    val myProvider = android.content.ComponentName(context, com.apachi.thinkora.feature.habits.widget.HabitsWidgetReceiver::class.java)
+                    val myProvider = android.content.ComponentName(context, HabitsWidgetReceiver::class.java)
                     
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && appWidgetManager.isRequestPinAppWidgetSupported) {
                         appWidgetManager.requestPinAppWidget(myProvider, null, null)
@@ -175,7 +205,7 @@ fun WidgetDiscoveryDialog(
 
 @Composable
 fun HabitItem(
-    habit: com.apachi.thinkora.domain.model.Habit,
+    habit: Habit,
     onIncrementClick: ((String) -> Unit)? = null
 ) {
     Card(
@@ -232,6 +262,7 @@ fun HabitItem(
 @Composable
 fun SwipeToDeleteContainer(
     onDelete: () -> Unit,
+    resetTrigger: Boolean = false,
     content: @Composable () -> Unit
 ) {
     var isRemoved by remember { mutableStateOf(false) }
@@ -250,6 +281,12 @@ fun SwipeToDeleteContainer(
         if (isRemoved) {
             kotlinx.coroutines.delay(300)
             onDelete()
+        }
+    }
+
+    LaunchedEffect(resetTrigger) {
+        if (resetTrigger) {
+            dismissState.reset()
         }
     }
 

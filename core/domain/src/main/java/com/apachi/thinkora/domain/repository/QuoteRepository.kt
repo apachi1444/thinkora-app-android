@@ -13,6 +13,7 @@ interface QuoteRepository {
     fun getCustomQuotes(): Flow<List<Quote>>
     suspend fun addQuote(content: String, author: String, category: String)
     suspend fun deleteQuote(quoteId: String)
+    suspend fun deleteAllCustomQuotes()
     fun getQuotesByCategory(category: String): Flow<List<Quote>>
 }
 

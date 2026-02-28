@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 fun DrawerContent(
     onLogoutClick: () -> Unit,
     onAchievementsClick: () -> Unit,
-    onCustomQuotesClick: () -> Unit,
     onAnalyticsClick: () -> Unit
 ) {
     Column(
@@ -109,8 +108,6 @@ fun DrawerContent(
 
         // --- Menu Items ---
         DrawerMenuItem(icon = Icons.Outlined.Star, label = "Achievements", onClick = onAchievementsClick)
-        Spacer(modifier = Modifier.height(24.dp))
-        DrawerMenuItem(icon = Icons.Outlined.Edit, label = "My Quotes", onClick = onCustomQuotesClick)
         Spacer(modifier = Modifier.height(24.dp))
         DrawerMenuItem(icon = Icons.Outlined.Person, label = "Detailed Analytics", onClick = onAnalyticsClick)
         Spacer(modifier = Modifier.height(24.dp))

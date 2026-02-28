@@ -220,6 +220,10 @@ class QuoteRepositoryImpl @Inject constructor(
         quoteDao.deleteQuote(quoteId)
     }
 
+    override suspend fun deleteAllCustomQuotes() {
+        quoteDao.deleteAllCustomQuotes()
+    }
+
     override fun getQuotesByCategory(category: String): Flow<List<Quote>> {
         return quoteDao.getQuotesByCategories(listOf(category)).map { entities ->
             entities.map { it.toDomain(isRead = false) }

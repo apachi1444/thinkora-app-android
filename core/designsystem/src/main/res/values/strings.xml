@@ -2,4 +2,31 @@
     <string name="nav_home">Home</string>
     <string name="nav_habits">Habits</string>
     <string name="nav_settings">Settings</string>
+
+    <!-- Home -->
+    <string name="home_hi">Hi, %1$s</string>
+    <string name="home_lets_go">Let\'s get inspired!</string>
+    <string name="home_your_streak">Your Streak</string>
+    <string name="home_streak_days">%1$d Day Streak!</string>
+    <string name="home_streak_subtitle">Keep reading daily to build your habit.</string>
+    <string name="home_your_habits">Your Habits</string>
+    <string name="home_menu_cd">Menu</string>
+    <string name="home_notifications_cd">Notifications</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_appearance">App appearance</string>
+    <string name="settings_dark_mode">Dark mode</string>
+    <string name="settings_notifications">Notifications settings</string>
+    <string name="settings_terms">Terms of use</string>
+    <string name="settings_privacy_policy">Privacy policy</string>
+    <string name="settings_delete_account">Delete account</string>
+    <string name="settings_language">Language</string>
+    <string name="language_english">English</string>
+    <string name="language_arabic">العربية</string>
+    <string name="language_dialog_title">Select Language</string>
+    <string name="delete_account_dialog_title">Delete account</string>
+    <string name="delete_account_dialog_message">This will delete all your local data (habits, custom quotes, notifications) and reset the app. You will need to go through onboarding again. This cannot be undone.</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_delete">Delete</string>
 </resources>

@@ -2,45 +2,53 @@ package com.apachi.thinkora.feature.settings
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.*
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-
 import androidx.hilt.navigation.compose.hiltViewModel
-
-import androidx.compose.runtime.*
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.TextButton
+import androidx.navigation.NavController
+import com.apachi.thinkora.designsystem.R
+import com.apachi.thinkora.domain.navigation.Screen
 
 @Composable
 fun SettingsScreen(
+    navController: NavController? = null,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
-    val isDarkTheme by viewModel.isDarkTheme.collectAsState()
-    val languageCode by viewModel.languageCode.collectAsState()
+    var showDeleteAccountDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
+    val languageCode by viewModel.languageCode.collectAsState()
 
     Column(
         modifier = Modifier
@@ -50,80 +58,66 @@ fun SettingsScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Profile",
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.Gray
+            text = stringResource(R.string.settings_title),
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold
         )
-        
         Spacer(modifier = Modifier.height(24.dp))
-        
-        ProfileSection()
-        
-        Spacer(modifier = Modifier.height(32.dp))
-        
-        // Appearance Section
+
+        // App appearance
         Text(
-            text = "Appearance",
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.primary
+            text = stringResource(R.string.settings_appearance),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
         )
-        Spacer(modifier = Modifier.height(8.dp))
-        
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.Settings, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
-                Spacer(modifier = Modifier.width(16.dp))
-                Text("Dark Mode", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
+        val isDarkTheme by viewModel.isDarkTheme.collectAsState()
+        SettingsRowWithSwitch(
+            icon = Icons.Default.Star,
+            title = stringResource(R.string.settings_dark_mode),
+            checked = isDarkTheme,
+            onCheckedChange = { viewModel.setDarkTheme(it) }
+        )
+        SettingsRow(
+            icon = Icons.Default.Star,
+            title = stringResource(R.string.settings_language),
+            subtitle = if (languageCode == "ar") stringResource(R.string.language_arabic) else stringResource(R.string.language_english),
+            onClick = { showLanguageDialog = true }
+        )
+        SettingsRow(
+            icon = Icons.Default.Notifications,
+            title = stringResource(R.string.settings_notifications),
+            onClick = {
+                navController?.navigate(Screen.NotificationsScreen.route)
             }
-            Switch(
-                checked = isDarkTheme,
-                onCheckedChange = { viewModel.setDarkTheme(it) }
-            )
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Language Selection
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { showLanguageDialog = true }
-                .padding(vertical = 8.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Filled.Favorite, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface)
-                Spacer(modifier = Modifier.width(16.dp))
-                Text("Language", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurface)
-            }
-            Text(
-                text = if (languageCode == "ar") "Arabic" else "English",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        SettingsItem(icon = Icons.Default.Check, title = "Payment Methods")
-        SettingsItem(icon = Icons.Default.Home, title = "Payment History")
-        SettingsItem(icon = Icons.Default.Lock, title = "Change Password")
-        SettingsItem(icon = Icons.Default.Settings, title = "Invite Friends")
-        SettingsItem(icon = Icons.Default.Warning, title = "FAQs")
-        SettingsItem(icon = Icons.Default.Info, title = "About Us")
-        SettingsItem(icon = Icons.Default.ShoppingCart, title = "Logout", titleColor = MaterialTheme.colorScheme.error)
+        // Terms of use
+        Text(
+            text = stringResource(R.string.settings_terms),
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)
+        )
+        SettingsRow(
+            icon = Icons.Default.Star,
+            title = stringResource(R.string.settings_privacy_policy),
+            onClick = { /* Open privacy policy */ }
+        )
+        SettingsRow(
+            icon = Icons.Default.Star,
+            title = stringResource(R.string.settings_delete_account),
+            titleColor = MaterialTheme.colorScheme.error,
+            onClick = { showDeleteAccountDialog = true }
+        )
     }
 
-    // Language Selection Dialog
     if (showLanguageDialog) {
         AlertDialog(
             onDismissRequest = { showLanguageDialog = false },
-            title = { Text("Select Language") },
+            title = { Text(stringResource(R.string.language_dialog_title)) },
             text = {
                 Column {
                     TextButton(
@@ -133,7 +127,7 @@ fun SettingsScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("English", modifier = Modifier.fillMaxWidth())
+                        Text(stringResource(R.string.language_english), modifier = Modifier.fillMaxWidth())
                     }
                     TextButton(
                         onClick = {
@@ -142,13 +136,39 @@ fun SettingsScreen(
                         },
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("Arabic", modifier = Modifier.fillMaxWidth())
+                        Text(stringResource(R.string.language_arabic), modifier = Modifier.fillMaxWidth())
                     }
                 }
             },
             confirmButton = {
                 TextButton(onClick = { showLanguageDialog = false }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.common_cancel))
+                }
+            }
+        )
+    }
+
+    if (showDeleteAccountDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteAccountDialog = false },
+            title = { Text(stringResource(R.string.delete_account_dialog_title)) },
+            text = {
+                Text(stringResource(R.string.delete_account_dialog_message))
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.deleteUserDataLocally()
+                        showDeleteAccountDialog = false
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
+                ) {
+                    Text(stringResource(R.string.common_delete))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteAccountDialog = false }) {
+                    Text(stringResource(R.string.common_cancel))
                 }
             }
         )
@@ -156,71 +176,69 @@ fun SettingsScreen(
 }
 
 @Composable
-fun ProfileSection() {
-    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-        Box(contentAlignment = Alignment.BottomEnd) {
-             Box(
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(RoundedCornerShape(24.dp))
-                    .background(Color.LightGray),
-                contentAlignment = Alignment.Center
-            ) {
-               Icon(
-                   Icons.Default.Person, 
-                   contentDescription = null, 
-                   modifier = Modifier.size(60.dp),
-                   tint = Color.White
-               )
-            }
-        }
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(
-                text = "My Profile",
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Icon(
-                Icons.Default.Edit,
-                contentDescription = "Edit",
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.size(20.dp)
-            )
-        }
-    }
-}
-
-@Composable
-fun SettingsItem(
+private fun SettingsRowWithSwitch(
     icon: ImageVector,
     title: String,
-    titleColor: Color = MaterialTheme.colorScheme.onSurface
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp)
-            .clickable { },
+            .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             imageVector = icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onSurface,
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.padding(end = 16.dp)
         )
-        Spacer(modifier = Modifier.width(16.dp))
         Text(
             text = title,
             style = MaterialTheme.typography.bodyLarge,
-            color = titleColor,
+            color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f)
         )
+        Switch(checked = checked, onCheckedChange = onCheckedChange)
+    }
+}
+
+@Composable
+private fun SettingsRow(
+    icon: ImageVector,
+    title: String,
+    subtitle: String? = null,
+    titleColor: Color = MaterialTheme.colorScheme.onSurface,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = titleColor,
+            modifier = Modifier.padding(end = 16.dp)
+        )
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+                color = titleColor
+            )
+            if (subtitle != null) {
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
         Icon(
             imageVector = Icons.Default.KeyboardArrowRight,
             contentDescription = null,
@@ -228,4 +246,3 @@ fun SettingsItem(
         )
     }
 }
-

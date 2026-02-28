@@ -56,6 +56,11 @@ class HabitRepositoryImpl @Inject constructor(
         habitDao.deleteHabit(id)
     }
 
+    override suspend fun deleteAllHabits() {
+        habitDao.deleteAllCompletions()
+        habitDao.deleteAllHabits()
+    }
+
     override fun getCompletions(habitId: String): Flow<List<Long>> {
         return habitDao.getCompletions(habitId).map { list ->
             list.map { it.completionTimestamp }

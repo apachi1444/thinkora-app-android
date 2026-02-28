@@ -32,6 +32,10 @@ class NotificationRepositoryImpl @Inject constructor(
     override suspend fun deleteNotification(id: String) {
         dao.deleteNotification(id)
     }
+
+    override suspend fun deleteAllNotifications() {
+        dao.deleteAllNotifications()
+    }
 }
 
 fun NotificationEntity.toDomain(): Notification {
