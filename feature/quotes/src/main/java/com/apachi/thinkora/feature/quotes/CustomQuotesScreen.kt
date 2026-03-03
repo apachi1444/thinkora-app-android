@@ -23,7 +23,7 @@ import com.apachi.thinkora.domain.model.Quote
 import com.apachi.thinkora.domain.navigation.Screen
 
 import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.R
+import com.apachi.thinkora.designsystem.R as DesignR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,12 +36,12 @@ fun CustomQuotesScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.quotes_my_quotes)) },
+                title = { Text(stringResource(DesignR.string.quotes_my_quotes)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.common_back)
+                            contentDescription = stringResource(DesignR.string.common_back)
                         )
                     }
                 },
@@ -60,7 +60,7 @@ fun CustomQuotesScreen(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(R.string.quotes_add_quote)
+                    contentDescription = stringResource(DesignR.string.quotes_add_quote)
                 )
             }
         },
@@ -72,7 +72,7 @@ fun CustomQuotesScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = stringResource(R.string.quotes_empty),
+                    text = stringResource(DesignR.string.quotes_empty),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -130,7 +130,7 @@ fun CustomQuoteItem(
                 IconButton(onClick = onDeleteClick) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = stringResource(R.string.common_delete),
+                        contentDescription = stringResource(DesignR.string.common_delete),
                         tint = MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
                     )
                 }

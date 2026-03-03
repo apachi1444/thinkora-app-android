@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import com.apachi.thinkora.domain.model.Quote
 
 import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.core.designsystem.R as DesignR
+import com.apachi.thinkora.designsystem.R as DesignR
 
 @Composable
 fun HeroQuoteCard(
@@ -121,7 +121,7 @@ fun HeroQuoteCard(
                         Row(
                             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBy(4.dp)
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Check,

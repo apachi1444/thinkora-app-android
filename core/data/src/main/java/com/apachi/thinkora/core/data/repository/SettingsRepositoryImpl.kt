@@ -3,6 +3,7 @@ package com.apachi.thinkora.core.data.repository
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.edit
@@ -26,6 +27,9 @@ class SettingsRepositoryImpl @Inject constructor(
 
     private val IS_DARK_THEME = booleanPreferencesKey("is_dark_theme")
     private val LANGUAGE_CODE = stringPreferencesKey("language_code")
+    private val NOTIFICATIONS_ENABLED = booleanPreferencesKey("notifications_enabled")
+    private val REMINDER_HOUR = intPreferencesKey("reminder_hour")
+    private val REMINDER_MINUTE = intPreferencesKey("reminder_minute")
 
     override val isDarkThemeConfig: Flow<Boolean> = context.dataStore.data
         .catch { exception ->
@@ -60,6 +64,29 @@ class SettingsRepositoryImpl @Inject constructor(
     override suspend fun setLanguageCode(code: String) {
         context.dataStore.edit { preferences ->
             preferences[LANGUAGE_CODE] = code
+        }
+    }
+
+    override val notificationsEnabled: Flow<Boolean> = context.dataStore.data
+        .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
+        .map { it[NOTIFICATIONS_ENABLED] ?: true }
+
+    override val reminderHour: Flow<Int> = context.dataStore.data
+        .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
+        .map { it[REMINDER_HOUR] ?: 9 }
+
+    override val reminderMinute: Flow<Int> = context.dataStore.data
+        .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
+        .map { it[REMINDER_MINUTE] ?: 0 }
+
+    override suspend fun setNotificationsEnabled(enabled: Boolean) {
+        context.dataStore.edit { it[NOTIFICATIONS_ENABLED] = enabled }
+    }
+
+    override suspend fun setReminderTime(hour: Int, minute: Int) {
+        context.dataStore.edit {
+            it[REMINDER_HOUR] = hour.coerceIn(0, 23)
+            it[REMINDER_MINUTE] = minute.coerceIn(0, 59)
         }
     }
 }

@@ -50,7 +50,6 @@
     <!-- Home Screen -->
     <string name="home_greeting">Good Morning</string>
     <string name="home_quote_of_day">Quote of the Day</string>
-    <string name="home_categories">Categories</string>
     <string name="home_daily_streak">Daily Streak</string>
     <string name="home_days">days</string>
     <string name="home_explore_quotes">Explore Quotes</string>
@@ -101,6 +100,11 @@
     <string name="onboarding_interests_title">Select your interests</string>
     <string name="onboarding_interests_desc">Tailor your daily quotes.</string>
     <string name="onboarding_complete_setup">Complete Setup</string>
+    <string name="onboarding_notifications_title">Daily reminder</string>
+    <string name="onboarding_notifications_desc">Get a notification every day to check your habits. You can change this later in Settings.</string>
+    <string name="onboarding_notifications_enable">Enable daily reminder</string>
+    <string name="onboarding_reminder_time">Reminder time</string>
+    <string name="onboarding_continue">Continue</string>
 
     <!-- Home Screen -->
     <string name="home_greeting_name">Hi, %s</string>
@@ -133,6 +137,11 @@
     <string name="cat_work">Work</string>
     <string name="cat_life">Life</string>
 
+    <!-- Habit reminder notification -->
+    <string name="notification_reminder_title">Habit reminder</string>
+    <string name="notification_reminder_text">Time to check your habits!</string>
+    <string name="notification_channel_reminders">Habit reminders</string>
+
     <!-- Notifications Screen -->
     <string name="notifications_title">Notifications</string>
     <string name="notifications_mark_all_read">Mark all as read</string>
@@ -151,18 +160,16 @@
     <string name="achievements_title">Achievements</string>
 
     <!-- Analytics Screen -->
-    <string name="analytics_title">Detailed Analytics</string>
-    <string name="analytics_empty">No habit data available yet.\nStart logging habits to see analytics!</string>
+    <string name="analytics_detailed_title">Detailed Analytics</string>
+    <string name="analytics_empty_detailed">No habit data available yet.\nStart logging habits to see analytics!</string>
     <string name="analytics_streak_label">Streak: %d</string>
     <string name="analytics_weekly_activity">Last 7 Days Activity</string>
 
-    <!-- Habits Screen -->
-    <string name="habits_title">Your Habits</string>
+    <!-- Habits Screen (extended) -->
     <string name="habits_add_habit">Add Habit</string>
     <string name="habits_delete_title">Delete Habit?</string>
     <string name="habits_delete_message">Are you sure you want to delete \"%s\"? You can undo this action.</string>
     <string name="habits_deleted_confirm">%s deleted</string>
-    <string name="habits_undo">Undo</string>
     <string name="habits_new_habit">New Habit</string>
     <string name="habits_name_label">Habit Name</string>
     <string name="habits_streak_label">Current Streak</string>

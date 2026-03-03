@@ -95,18 +95,16 @@
     <string name="cat_life">حياة</string>
 
     <!-- Analytics Screen -->
-    <string name="analytics_title">تحليلات مفصلة</string>
-    <string name="analytics_empty">لا توجد بيانات للعادات متاحة بعد.\nابدأ بتسجيل العادات لرؤية التحليلات!</string>
+    <string name="analytics_detailed_title">تحليلات مفصلة</string>
+    <string name="analytics_empty_detailed">لا توجد بيانات للعادات متاحة بعد.\nابدأ بتسجيل العادات لرؤية التحليلات!</string>
     <string name="analytics_streak_label">سلسلة النجاح: %d</string>
     <string name="analytics_weekly_activity">نشاط آخر 7 أيام</string>
 
-    <!-- Habits Screen -->
-    <string name="habits_title">عاداتك</string>
+    <!-- Habits Screen (extended) -->
     <string name="habits_add_habit">إضافة عادة</string>
     <string name="habits_delete_title">حذف العادة؟</string>
     <string name="habits_delete_message">هل أنت متأكد أنك تريد حذف \"%s\"؟ يمكنك التراجع عن هذا الإجراء.</string>
     <string name="habits_deleted_confirm">تم حذف %s</string>
-    <string name="habits_undo">تراجع</string>
     <string name="habits_new_habit">عادة جديدة</string>
     <string name="habits_name_label">اسم العادة</string>
     <string name="habits_streak_label">السلسلة الحالية</string>
@@ -127,7 +125,6 @@
 
     <!-- Home Screen -->
     <string name="home_quote_of_the_day">اقتباس اليوم</string>
-    <string name="home_categories">الفئات</string>
     <string name="home_your_streak">استمرارك</string>
     <string name="home_your_habits">عاداتك</string>
 
@@ -139,18 +136,13 @@
     <string name="widget_increment">+ زيادة</string>
     <string name="widget_streak_days">🔥 %1$s أيام</string>
 
-    <!-- Drawer Menu -->
+    <!-- Drawer Menu (extended) -->
     <string name="drawer_my_profile">ملفي الشخصي</string>
-    <string name="drawer_achievements">الإنجازات</string>
-    <string name="drawer_my_quotes">اقتباساتي</string>
-    <string name="drawer_analytics">تحليلات مفصلة</string>
     <string name="drawer_payment_methods">طرق الدفع</string>
     <string name="drawer_payment_history">سجل الدفع</string>
     <string name="drawer_change_password">تغيير كلمة المرور</string>
     <string name="drawer_invite_friends">دعوة الأصدقاء</string>
     <string name="drawer_faqs">الأسئلة الشائعة</string>
-    <string name="drawer_logout">تسجيل الخروج</string>
-    <string name="drawer_edit_profile">تعديل الملف الشخصي</string>
 
     <!-- Common -->
     <string name="common_back">رجوع</string>
@@ -165,4 +157,11 @@
     <string name="common_close">إغلاق</string>
     <string name="common_add">إضافة</string>
     <string name="common_favorites">المفضلة</string>
+
+    <!-- Onboarding Notifications -->
+    <string name="onboarding_notifications_title">تذكير يومي</string>
+    <string name="onboarding_notifications_desc">احصل على إشعار كل يوم لتتبع عاداتك. يمكنك تغيير ذلك لاحقاً من الإعدادات.</string>
+    <string name="onboarding_notifications_enable">تفعيل التذكير اليومي</string>
+    <string name="onboarding_reminder_time">وقت التذكير</string>
+    <string name="onboarding_continue">متابعة</string>
 </resources>

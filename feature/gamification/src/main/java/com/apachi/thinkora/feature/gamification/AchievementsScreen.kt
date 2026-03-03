@@ -39,9 +39,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.apachi.thinkora.domain.model.Achievement
 
-@OptIn(ExperimentalMaterial3Api::class)
 import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.R
+import com.apachi.thinkora.designsystem.R as DesignR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,12 +53,12 @@ fun AchievementsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.achievements_title)) },
+                title = { Text(stringResource(DesignR.string.achievements_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.common_back)
+                            contentDescription = stringResource(DesignR.string.common_back)
                         )
                     }
                 }

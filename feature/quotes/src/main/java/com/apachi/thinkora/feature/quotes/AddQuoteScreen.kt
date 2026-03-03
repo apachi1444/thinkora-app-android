@@ -17,7 +17,7 @@ import com.apachi.thinkora.core.designsystem.component.ThinkoraTopAppBar
 
 
 import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.R
+import com.apachi.thinkora.designsystem.R as DesignR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -28,7 +28,7 @@ fun AddQuoteScreen(
     var content by remember { mutableStateOf("") }
     var author by remember { mutableStateOf("") }
     
-    val personalLabel = stringResource(R.string.cat_personal)
+    val personalLabel = stringResource(DesignR.string.cat_personal)
     var category by remember { mutableStateOf(personalLabel) }
 
     val context = LocalContext.current
@@ -37,12 +37,12 @@ fun AddQuoteScreen(
     Scaffold(
         topBar = {
             ThinkoraTopAppBar(
-                title = { Text(stringResource(R.string.quotes_add_quote)) },
+                title = { Text(stringResource(DesignR.string.quotes_add_quote)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.common_back)
+                            contentDescription = stringResource(DesignR.string.common_back)
                         )
                     }
                 },
@@ -59,7 +59,7 @@ fun AddQuoteScreen(
             ThinkoraTextField(
                 value = content,
                 onValueChange = { content = it },
-                label = { Text(stringResource(R.string.quotes_content_label)) },
+                label = { Text(stringResource(DesignR.string.quotes_content_label)) },
                 modifier = Modifier.fillMaxWidth().height(150.dp),
                 maxLines = 5
             )
@@ -67,22 +67,22 @@ fun AddQuoteScreen(
             ThinkoraTextField(
                 value = author,
                 onValueChange = { author = it },
-                label = { Text(stringResource(R.string.quotes_author_label)) },
+                label = { Text(stringResource(DesignR.string.quotes_author_label)) },
                 modifier = Modifier.fillMaxWidth()
             )
 
             // Category Selection
             Text(
-                text = stringResource(R.string.quotes_category_label),
+                text = stringResource(DesignR.string.quotes_category_label),
                 style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onBackground
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 val categories = listOf(
-                    stringResource(R.string.cat_personal),
-                    stringResource(R.string.cat_motivation),
-                    stringResource(R.string.cat_work),
-                    stringResource(R.string.cat_life)
+                    stringResource(DesignR.string.cat_personal),
+                    stringResource(DesignR.string.cat_motivation),
+                    stringResource(DesignR.string.cat_work),
+                    stringResource(DesignR.string.cat_life)
                 )
                 categories.forEach { cat ->
                     FilterChip(
@@ -99,7 +99,7 @@ fun AddQuoteScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            val defaultAuthor = stringResource(R.string.quotes_default_author)
+            val defaultAuthor = stringResource(DesignR.string.quotes_default_author)
             ThinkoraButton(
                 onClick = {
                     if (content.isNotBlank()) {
@@ -111,7 +111,7 @@ fun AddQuoteScreen(
                 modifier = Modifier.fillMaxWidth(),
                 enabled = content.isNotBlank()
             ) {
-                Text(stringResource(R.string.quotes_save))
+                Text(stringResource(DesignR.string.quotes_save))
             }
         }
     }

@@ -25,21 +25,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 import androidx.glance.LocalContext
-import androidx.glance.appwidget.GlanceTheme
-import com.apachi.thinkora.R
+import com.apachi.thinkora.designsystem.R as DesignR
+
+private val surfaceColor = ColorProvider(Color.White)
+private val onSurfaceColor = ColorProvider(Color(0xFF1C1B1F))
+private val onSurfaceVariantColor = ColorProvider(Color(0xFF49454F))
 
 class FavoriteQuotesWidget : GlanceAppWidget() {
-    
-    @Composable
-    fun MyContent() {
-         val context = LocalContext.current
-         val content = androidx.glance.currentState(androidx.datastore.preferences.core.stringPreferencesKey("content")) ?: context.getString(R.string.widget_no_favorites)
-         val author = androidx.glance.currentState(androidx.datastore.preferences.core.stringPreferencesKey("author")) ?: ""
 
-         Column(
+    @Composable
+    override fun Content() {
+        val context = LocalContext.current
+        val content = androidx.glance.currentState(androidx.datastore.preferences.core.stringPreferencesKey("content")) ?: context.getString(DesignR.string.widget_no_favorites)
+        val author = androidx.glance.currentState(androidx.datastore.preferences.core.stringPreferencesKey("author")) ?: ""
+
+        Column(
             modifier = GlanceModifier
                 .fillMaxSize()
-                .background(GlanceTheme.colors.surface)
+                .background(surfaceColor)
                 .padding(16.dp),
             verticalAlignment = Alignment.Vertical.CenterVertically,
             horizontalAlignment = Alignment.Horizontal.CenterHorizontally
@@ -48,27 +51,20 @@ class FavoriteQuotesWidget : GlanceAppWidget() {
                 text = content,
                 style = TextStyle(
                     fontWeight = FontWeight.Medium,
-                    color = GlanceTheme.colors.onSurface,
+                    color = onSurfaceColor,
                     fontSize = 18.sp
                 )
             )
             if (author.isNotEmpty()) {
-                 Text(
+                Text(
                     text = "- $author",
                     style = TextStyle(
                         fontStyle = androidx.glance.text.FontStyle.Italic,
-                        color = GlanceTheme.colors.onSurfaceVariant,
+                        color = onSurfaceVariantColor,
                         fontSize = 14.sp
                     )
                 )
             }
-        }
-    }
-
-    @Composable
-    override fun Content() {
-        GlanceTheme {
-            MyContent()
         }
     }
 }
