@@ -33,6 +33,7 @@ import com.apachi.thinkora.domain.use_case.GetOnboardingStatusUseCase
 import com.apachi.thinkora.feature.onboarding.OnboardingInterestsScreen
 import com.apachi.thinkora.feature.onboarding.OnboardingIntroScreen
 import com.apachi.thinkora.feature.onboarding.OnboardingNameScreen
+import com.apachi.thinkora.feature.onboarding.OnboardingNotificationsScreen
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import javax.inject.Inject
@@ -122,6 +123,17 @@ class MainActivity : AppCompatActivity() {
                                     val onboardingViewModel: com.apachi.thinkora.feature.onboarding.OnboardingViewModel =
                                         androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
                                     OnboardingInterestsScreen(
+                                        navController = navController,
+                                        viewModel = onboardingViewModel
+                                    )
+                                }
+                                composable(com.apachi.thinkora.domain.navigation.Screen.OnboardingNotifications.route) { backStackEntry ->
+                                    val parentEntry = remember(backStackEntry) {
+                                        navController.getBackStackEntry(com.apachi.thinkora.domain.navigation.Screen.OnboardingScreen.route)
+                                    }
+                                    val onboardingViewModel: com.apachi.thinkora.feature.onboarding.OnboardingViewModel =
+                                        androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
+                                    OnboardingNotificationsScreen(
                                         navController = navController,
                                         viewModel = onboardingViewModel
                                     )

@@ -23,6 +23,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TimePicker
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,6 +44,7 @@ import androidx.navigation.NavController
 import com.apachi.thinkora.designsystem.R
 import com.apachi.thinkora.domain.navigation.Screen
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     navController: NavController? = null,
@@ -48,7 +52,11 @@ fun SettingsScreen(
 ) {
     var showDeleteAccountDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
+    var showTimePicker by remember { mutableStateOf(false) }
     val languageCode by viewModel.languageCode.collectAsState()
+    val notificationsEnabled by viewModel.notificationsEnabled.collectAsState()
+    val reminderHour by viewModel.reminderHour.collectAsState()
+    val reminderMinute by viewModel.reminderMinute.collectAsState()
 
     Column(
         modifier = Modifier
@@ -84,6 +92,20 @@ fun SettingsScreen(
             subtitle = if (languageCode == "ar") stringResource(R.string.language_arabic) else stringResource(R.string.language_english),
             onClick = { showLanguageDialog = true }
         )
+        SettingsRowWithSwitch(
+            icon = Icons.Default.Notifications,
+            title = stringResource(R.string.settings_daily_reminder),
+            checked = notificationsEnabled,
+            onCheckedChange = { viewModel.setNotificationsEnabled(it) }
+        )
+        if (notificationsEnabled) {
+            SettingsRow(
+                icon = Icons.Default.Notifications,
+                title = stringResource(R.string.settings_reminder_time),
+                subtitle = "%02d:%02d".format(reminderHour, reminderMinute),
+                onClick = { showTimePicker = true }
+            )
+        }
         SettingsRow(
             icon = Icons.Default.Notifications,
             title = stringResource(R.string.settings_notifications),
@@ -142,6 +164,32 @@ fun SettingsScreen(
             },
             confirmButton = {
                 TextButton(onClick = { showLanguageDialog = false }) {
+                    Text(stringResource(R.string.common_cancel))
+                }
+            }
+        )
+    }
+
+    if (showTimePicker) {
+        val timePickerState = rememberTimePickerState(
+            initialHour = reminderHour,
+            initialMinute = reminderMinute,
+            is24Hour = true
+        )
+        AlertDialog(
+            onDismissRequest = { showTimePicker = false },
+            title = { Text(stringResource(R.string.settings_reminder_time)) },
+            text = { TimePicker(state = timePickerState) },
+            confirmButton = {
+                Button(onClick = {
+                    viewModel.setReminderTime(timePickerState.hour, timePickerState.minute)
+                    showTimePicker = false
+                }) {
+                    Text(stringResource(R.string.common_done))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showTimePicker = false }) {
                     Text(stringResource(R.string.common_cancel))
                 }
             }

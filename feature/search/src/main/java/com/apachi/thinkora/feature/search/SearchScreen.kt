@@ -21,9 +21,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
-@OptIn(ExperimentalMaterial3Api::class)
 import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.R
+import com.apachi.thinkora.designsystem.R as DesignR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +46,7 @@ fun SearchScreen(
         ) {
             // Header
             Text(
-                text = stringResource(R.string.search_title),
+                text = stringResource(DesignR.string.search_title),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -61,7 +60,7 @@ fun SearchScreen(
                  TextField(
                     value = searchText,
                     onValueChange = { searchText = it },
-                    placeholder = { Text(stringResource(R.string.search_placeholder), color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    placeholder = { Text(stringResource(DesignR.string.search_placeholder), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                     leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier
                         .weight(1f)
@@ -76,7 +75,7 @@ fun SearchScreen(
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 IconButton(onClick = { navController.popBackStack() }) {
-                     Icon(Icons.Default.Close, contentDescription = stringResource(R.string.common_close), tint = MaterialTheme.colorScheme.onBackground)
+                     Icon(Icons.Default.Close, contentDescription = stringResource(DesignR.string.common_close), tint = MaterialTheme.colorScheme.onBackground)
                 }
             }
 
@@ -112,7 +111,7 @@ fun SearchScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = stringResource(R.string.search_results_found, 246),
+                text = stringResource(DesignR.string.search_results_found, 246),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onBackground

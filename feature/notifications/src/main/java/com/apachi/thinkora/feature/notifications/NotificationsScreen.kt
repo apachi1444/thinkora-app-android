@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.R
+import com.apachi.thinkora.designsystem.R as DesignR
 
 @Composable
 fun NotificationsScreen(
@@ -52,7 +52,7 @@ fun NotificationsScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(R.string.notifications_title),
+                    text = stringResource(DesignR.string.notifications_title),
                     style = MaterialTheme.typography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground
@@ -60,7 +60,7 @@ fun NotificationsScreen(
                 IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = stringResource(R.string.common_close),
+                        contentDescription = stringResource(DesignR.string.common_close),
                         tint = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
                     )
                 }
@@ -75,7 +75,7 @@ fun NotificationsScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(R.string.notifications_mark_all_read),
+                    text = stringResource(DesignR.string.notifications_mark_all_read),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.clickable { viewModel.markAllAsRead() }
@@ -83,7 +83,7 @@ fun NotificationsScreen(
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = stringResource(R.string.notifications_do_not_disturb),
+                        text = stringResource(DesignR.string.notifications_do_not_disturb),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f),
                         modifier = Modifier.padding(end = 8.dp)
@@ -113,7 +113,7 @@ fun NotificationsScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = stringResource(R.string.notifications_empty),
+                                text = stringResource(DesignR.string.notifications_empty),
                                 style = MaterialTheme.typography.bodyLarge,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
@@ -171,8 +171,8 @@ private fun formatTimestamp(timestamp: Long): String {
     val diff = now - timestamp
     
     return when {
-        diff < 60 * 60 * 1000 -> stringResource(R.string.notifications_just_now)
-        diff < 24 * 60 * 60 * 1000 -> stringResource(R.string.notifications_hours_ago, diff / (60 * 60 * 1000))
+        diff < 60 * 60 * 1000 -> stringResource(DesignR.string.notifications_just_now)
+        diff < 24 * 60 * 60 * 1000 -> stringResource(DesignR.string.notifications_hours_ago, diff / (60 * 60 * 1000))
         else -> SimpleDateFormat("MMM dd", Locale.getDefault()).format(Date(timestamp))
     }
 }

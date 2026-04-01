@@ -2,6 +2,8 @@ package com.apachi.thinkora.feature.onboarding
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.apachi.thinkora.core.domain.repository.SettingsRepository
+import com.apachi.thinkora.domain.scheduler.HabitReminderScheduler
 import com.apachi.thinkora.domain.use_case.CompleteOnboardingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -13,7 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
-    private val completeOnboardingUseCase: CompleteOnboardingUseCase
+    private val completeOnboardingUseCase: CompleteOnboardingUseCase,
+    private val settingsRepository: SettingsRepository,
+    private val habitReminderScheduler: HabitReminderScheduler
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(OnboardingState())
@@ -23,7 +27,7 @@ class OnboardingViewModel @Inject constructor(
     val uiEvent = _uiEvent.receiveAsFlow()
 
     fun onEvent(event: OnboardingEvent) {
-        when(event) {
+        when (event) {
             is OnboardingEvent.EnterName -> {
                 _state.value = _state.value.copy(name = event.name)
             }
@@ -45,6 +49,18 @@ class OnboardingViewModel @Inject constructor(
                     _uiEvent.send(OnboardingUiEvent.OnboardingCompleted)
                 }
             }
+            is OnboardingEvent.SubmitWithNotifications -> {
+                viewModelScope.launch {
+                    settingsRepository.setNotificationsEnabled(event.enabled)
+                    settingsRepository.setReminderTime(event.hour, event.minute)
+                    habitReminderScheduler.schedule(event.enabled, event.hour, event.minute)
+                    completeOnboardingUseCase(
+                        name = _state.value.name,
+                        interests = _state.value.selectedInterests
+                    )
+                    _uiEvent.send(OnboardingUiEvent.OnboardingCompleted)
+                }
+            }
         }
     }
 }
@@ -56,9 +72,10 @@ data class OnboardingState(
 )
 
 sealed class OnboardingEvent {
-    data class EnterName(val name: String): OnboardingEvent()
-    data class ToggleInterest(val interest: String): OnboardingEvent()
-    object Submit: OnboardingEvent()
+    data class EnterName(val name: String) : OnboardingEvent()
+    data class ToggleInterest(val interest: String) : OnboardingEvent()
+    object Submit : OnboardingEvent()
+    data class SubmitWithNotifications(val enabled: Boolean, val hour: Int, val minute: Int) : OnboardingEvent()
 }
 
 sealed class OnboardingUiEvent {

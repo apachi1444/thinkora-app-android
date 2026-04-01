@@ -19,6 +19,8 @@
     <string name="settings_appearance">مظهر التطبيق</string>
     <string name="settings_dark_mode">الوضع الداكن</string>
     <string name="settings_notifications">إعدادات الإشعارات</string>
+    <string name="settings_daily_reminder">تذكير يومي</string>
+    <string name="settings_reminder_time">وقت التذكير</string>
     <string name="settings_terms">الشروط والأحكام</string>
     <string name="settings_privacy_policy">سياسة الخصوصية</string>
     <string name="settings_delete_account">حذف الحساب</string>
@@ -30,4 +32,72 @@
     <string name="delete_account_dialog_message">سيتم حذف جميع بياناتك المحلية (العادات، الاقتباسات، الإشعارات) وإعادة تعيين التطبيق. ستحتاج إلى إكمال المقدمة مرة أخرى. لا يمكن التراجع عن هذا.</string>
     <string name="common_cancel">إلغاء</string>
     <string name="common_delete">حذف</string>
+    <string name="common_done">تم</string>
+    <string name="common_back">رجوع</string>
+    <string name="common_close">إغلاق</string>
+    <string name="common_save">حفظ</string>
+
+    <string name="hero_today">اليوم</string>
+    <string name="hero_read">تمت القراءة</string>
+    <string name="hero_mark_read">تحديد كمقروء</string>
+    <string name="hero_favorite">المفضلة</string>
+
+    <string name="analytics_detailed_title">تحليلات مفصلة</string>
+    <string name="analytics_empty_detailed">لا توجد بيانات عادات بعد.\nابدأ بتسجيل العادات لرؤية التحليلات!</string>
+    <string name="analytics_streak_label">السلسلة: %d</string>
+    <string name="analytics_weekly_activity">نشاط آخر 7 أيام</string>
+
+    <string name="notifications_title">الإشعارات</string>
+    <string name="notifications_mark_all_read">تحديد الكل كمقروء</string>
+    <string name="notifications_do_not_disturb">عدم الإزعاج</string>
+    <string name="notifications_empty">لا توجد إشعارات بعد</string>
+    <string name="notifications_just_now">الآن</string>
+    <string name="notifications_hours_ago">منذ %d ساعة</string>
+
+    <string name="quotes_my_quotes">اقتباساتي</string>
+    <string name="quotes_add_quote">إضافة اقتباس</string>
+    <string name="quotes_content_label">نص الاقتباس</string>
+    <string name="quotes_author_label">الكاتب</string>
+    <string name="quotes_category_label">الفئة</string>
+    <string name="quotes_save">حفظ الاقتباس</string>
+    <string name="quotes_empty">لا توجد اقتباسات مخصصة بعد.\nاضغط + للإضافة!</string>
+    <string name="quotes_default_author">أنا</string>
+
+    <string name="cat_personal">شخصي</string>
+    <string name="cat_motivation">تحفيز</string>
+    <string name="cat_work">عمل</string>
+    <string name="cat_life">حياة</string>
+
+    <string name="achievements_title">الإنجازات</string>
+
+    <string name="category_empty">لا توجد اقتباسات في هذه الفئة بعد.</string>
+    <string name="category_business">أعمال</string>
+    <string name="category_life">حياة</string>
+    <string name="category_sports">رياضة</string>
+    <string name="category_tech">تقنية</string>
+
+    <string name="search_title">بحث</string>
+    <string name="search_placeholder">ابحث عن اقتباسات أو مؤلفين أو فئات…</string>
+    <string name="search_results_found">عدد النتائج (%d)</string>
+    <string name="search_no_results">لا توجد نتائج</string>
+
+    <string name="onboarding_welcome_title">مرحباً بك في الاقتباسات</string>
+    <string name="onboarding_welcome_desc">اكتشف الإلهام اليومي والحكمة من أعظم العقول.</string>
+    <string name="onboarding_motivation_title">تحفيز يومي</string>
+    <string name="onboarding_motivation_desc">احصل على اقتباس جديد كل يوم لبدء صباحك بإيجابية.</string>
+    <string name="onboarding_widget_title">الودجات</string>
+    <string name="onboarding_widget_desc">أضف ودجات إلى الشاشة الرئيسية للوصول السريع لاقتباساتك المفضلة.</string>
+    <string name="onboarding_next">التالي</string>
+    <string name="onboarding_get_started">ابدأ</string>
+    <string name="onboarding_name_question">ما اسمك؟</string>
+    <string name="onboarding_name_label">اسمك</string>
+    <string name="onboarding_interests_title">اختر اهتماماتك</string>
+    <string name="onboarding_interests_desc">خصص اقتباساتك اليومية.</string>
+    <string name="onboarding_notifications_title">تذكير يومي</string>
+    <string name="onboarding_notifications_desc">احصل على إشعار كل يوم للتحقق من عاداتك. يمكنك تغيير ذلك لاحقاً في الإعدادات.</string>
+    <string name="onboarding_notifications_enable">تفعيل التذكير اليومي</string>
+    <string name="onboarding_reminder_time">وقت التذكير</string>
+    <string name="onboarding_continue">متابعة</string>
+
+    <string name="widget_no_favorites">لا توجد مفضلات بعد!</string>
 </resources>

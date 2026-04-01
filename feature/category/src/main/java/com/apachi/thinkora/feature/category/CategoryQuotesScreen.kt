@@ -19,7 +19,7 @@ import androidx.navigation.NavController
 import com.apachi.thinkora.ui.components.HeroQuoteCard
 
 import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.R
+import com.apachi.thinkora.designsystem.R as DesignR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +37,7 @@ fun CategoryQuotesScreen(
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
-                            contentDescription = stringResource(R.string.common_back)
+                            contentDescription = stringResource(DesignR.string.common_back)
                         )
                     }
                 },
@@ -59,7 +59,7 @@ fun CategoryQuotesScreen(
             if (state.quotes.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(
-                        text = stringResource(R.string.category_empty),
+                        text = stringResource(DesignR.string.category_empty),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

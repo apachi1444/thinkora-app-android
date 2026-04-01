@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 
 import androidx.compose.ui.res.stringResource
-import com.apachi.thinkora.R
+import com.apachi.thinkora.designsystem.R as DesignR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,12 +33,12 @@ fun AnalyticsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.analytics_title)) },
+                title = { Text(stringResource(DesignR.string.analytics_detailed_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.common_back)
+                            contentDescription = stringResource(DesignR.string.common_back)
                         )
                     }
                 },
@@ -57,7 +57,7 @@ fun AnalyticsScreen(
                 contentAlignment = Alignment.Center
             ) {
                  Text(
-                    text = stringResource(R.string.analytics_empty),
+                    text = stringResource(DesignR.string.analytics_empty_detailed),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center
@@ -100,14 +100,14 @@ fun AnalyticsCard(item: HabitAnalytics) {
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = stringResource(R.string.analytics_streak_label, item.habit.streak),
+                    text = stringResource(DesignR.string.analytics_streak_label, item.habit.streak),
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = stringResource(R.string.analytics_weekly_activity),
+                text = stringResource(DesignR.string.analytics_weekly_activity),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
