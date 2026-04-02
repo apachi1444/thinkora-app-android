@@ -1,7 +1,7 @@
-# Agent: Quotes Feature Specialist
+# Agent: Quotes & Mindset Feature Specialist
 
 ## Role
-You own the **quotes system** in the Thinkora app — the data model, categories, favorites, custom quotes (user-added), and the browsing UI.
+You own the **quotes and mindset system** in the AuraSkin app. The goal is no longer just general inspiration, but specifically self-love, skin-positivity, stress relief, and fostering patience for skin healing. 
 
 ---
 
@@ -24,7 +24,7 @@ data class Quote(
     val id: Long = 0,
     val content: String,
     val author: String,
-    val category: String,
+    val category: String, // e.g. "SKIN_POSITIVITY", "STRESS_RELIEF", "PATIENCE"
     val isFavorite: Boolean = false,
     val isCustom: Boolean = false,       // user-created quotes
     val isRead: Boolean = false
@@ -34,7 +34,7 @@ data class Quote(
 ---
 
 ## Feature State ✅
-- [x] Seeded quotes in Room DB
+- [x] Seeded skin-positivity and self-care quotes in Room DB
 - [x] Category browsing (`feature:category`)
 - [x] Favorites toggle (`ToggleFavoriteUseCase`)
 - [x] Custom quotes: add (author, content, category) + delete
@@ -42,14 +42,13 @@ data class Quote(
 - [x] Firebase event `custom_quote_added` logged on creation
 
 ## Roadmap
+- [ ] **Mood-Linked Quotes** — Fetch a specific category (like "STRESS_RELIEF") based on the daily `SkinLog` mood rating if it is "BAD" or "TERRIBLE".
 - [ ] **Social Sharing** — share as image → see `agent-social-sharing.md`
-- [ ] **Quote of the Day** — seeded daily from DB, shown on HomeScreen
 - [ ] **Full-text search** — unified with `agent-search.md`
 
 ---
 
 ## Rules
-- Custom quotes must have `isCustom = true` set before insert
-- Favorites toggle must update DB via `ToggleFavoriteUseCase`, never directly
-- Quote categories come from a predefined sealed class, not free text
-- `QuoteRepositoryImpl` must fire `AnalyticsManager.logCustomQuoteAdded()` on custom add
+- Custom quotes must have `isCustom = true` set before insert.
+- Quote categories must be aligned with skin wellness themes.
+- Favorites toggle must update DB via `ToggleFavoriteUseCase`, never directly.

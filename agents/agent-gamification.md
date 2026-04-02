@@ -1,7 +1,7 @@
 # Agent: Gamification Feature Specialist
 
 ## Role
-You own the **achievements, badges, and XP system** in the Thinkora app.
+You own the **achievements, badges, and XP system** in the AuraSkin app, encouraging consistency in skincare routines and daily skin photo logging.
 
 ---
 
@@ -30,41 +30,26 @@ data class Achievement(
 
 ---
 
-## Achievement Definitions (Seed Data)
+## Defined Badges (AuraSkin Focused)
 
 | Badge | Requirement | Icon |
 |---|---|---|
-| First Step | Complete any habit 1 time | 🌱 |
-| 3-Day Streak | 3 consecutive days | 🔥 |
-| Week Warrior | 7-day streak | 🏆 |
-| Month Master | 30-day streak | 👑 |
-| Habit Builder | 5 habits created | 🧱 |
-| Quote Lover | 10 quotes favorited | 💛 |
-| Consistent | Complete all habits in a day | ⭐ |
-
----
-
-## Achievement Unlock Flow
-```
-IncrementStreakUseCase completes
-  → CheckAchievementsUseCase(habitId, newStreak)
-    → GamificationRepository.getUnlocked()
-    → For each un-unlocked achievement: evaluate condition
-    → GamificationRepository.unlock(achievementId)
-      → AnalyticsManager.logEvent("achievement_unlocked", badgeName)
-```
+| First Step | Complete your first skincare habit | 🌱 |
+| The 7-Day Glow Up | 7-day habit streak + 7 days of skin logs | ✨ |
+| Hydration Hero | Complete "Drink Water" habit for 14 days | 💧 |
+| Mindful Journey | Favorite 10 quotes | 💛 |
+| Month Master | 30-day routine streak | 👑 |
+| The Perfect Day | Complete all morning & night habits | ⭐ |
 
 ---
 
 ## Roadmap
-- [ ] **XP System** — earn XP per habit completion, level up
-- [ ] **Level display** on HomeScreen ("Level 7 — Consistency Pro")
-- [ ] **Confetti animation** on badge unlock (Compose animation)
-- [ ] **Share badge** → connect to `agent-social-sharing.md`
+- [ ] **Level System** — earn XP for logging photos and completing routines (e.g. "Level 5 — Consistency Pro").
+- [ ] **Confetti animation** on badge unlock.
+- [ ] **Share badge** → connect to `agent-social-sharing.md`.
 
 ---
 
 ## Rules
-- Achievement checks must happen inside a use case, not inside ViewModel
-- Badge unlock is idempotent — re-checking an already unlocked badge is a no-op
-- All achievement seed data goes in the Room `prepopulate` callback
+- Achievement checking must happen in a UseCase (`CheckAchievementsUseCase`).
+- Badge unlock is idempotent.

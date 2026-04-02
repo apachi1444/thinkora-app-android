@@ -1,7 +1,7 @@
 # Agent: Analytics Feature Specialist
 
 ## Role
-You own the **analytics and charts** system — habit completion history, weekly bar charts, future heatmaps, and success rate stats.
+You own the **analytics and charts** system — tracking habit completion, skin log scores, and specifically building the correlation between routine consistency and physical skin improvements.
 
 ---
 
@@ -11,42 +11,26 @@ You own the **analytics and charts** system — habit completion history, weekly
 | File | Layer |
 |---|---|
 | `HabitCompletionEntity` | Room Entity (`core:data`) |
+| `SkinLogEntity` | Room Entity (`core:data`) |
 | `AnalyticsScreen.kt` | UI (`feature:analytics`) |
 | `AnalyticsViewModel.kt` | ViewModel (`feature:analytics`) |
-
-### How Completions Are Logged
-```
-HabitRepository.incrementStreak()
-  → HabitCompletionDao.insert(HabitCompletionEntity(habitId, date))
-  → AnalyticsManager.logEvent("habit_completed")
-```
-
-### Current `AnalyticsScreen` Display
-- List of habits
-- Per-habit: **Weekly bar chart** (last 7 days, completion count per day)
-- Data source: `HabitCompletionEntity` joined with `Habit`
 
 ---
 
 ## Roadmap
-- [ ] **Monthly View** — calendar heatmap (color-coded completion rate)
-- [ ] **Success Rate** — "You completed X% of habits this week"
-- [ ] **Longest Streak** — all-time record per habit
-- [ ] **Export CSV** — share raw data → coordinate with `agent-settings.md`
-- [ ] **Vico Charts** — migrate from custom canvas drawing to Vico library
+- [ ] **Correlation Charts (Vico)** — Display a dual-axis chart. Bar chart for Weekly Habit Completions overlaid with a Line chart of the Skin Condition Score (1-5).
+- [ ] **Monthly Heatmap View** — A calendar heatmap showing color-coded skin scores per day.
+- [ ] **Success Rate** — "You completed X% of your skincare routines this week."
+- [ ] **Export CSV** — Share raw data with dermatologists → coordinate with `agent-settings.md`.
 
 ---
 
-## Vico Migration (When Approved)
+## Vico Implementation Idea
 ```kotlin
-// build.gradle (feature:analytics)
-implementation "com.patrykandpatrick.vico:compose:1.12.0"
-implementation "com.patrykandpatrick.vico:compose-m3:1.12.0"
-
 // AnalyticsScreen.kt
 Chart(
-    chart = lineChart(),
-    model = entryModelOf(*completionData.toTypedArray()),
+    chart = columnChart() + lineChart(), // Overlaying columns (habits) + line (skin score)
+    model = composedChartModel,
     startAxis = rememberStartAxis(),
     bottomAxis = rememberBottomAxis()
 )
@@ -55,6 +39,6 @@ Chart(
 ---
 
 ## Rules
-- Never compute charts in the composable — all logic in `AnalyticsViewModel`
-- Chart data must be expressed as `StateFlow<List<ChartDataPoint>>`
-- Completion history reads must always go via use cases, not DAOs directly
+- Never compute correlations in the UI composable — all logic in `AnalyticsViewModel`.
+- Chart data must be expressed as `StateFlow<List<ChartDataPoint>>`.
+- Ensure querying of both Skin Logs and Habit Completions occurs via Domain UseCases.

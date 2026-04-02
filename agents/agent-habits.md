@@ -1,7 +1,7 @@
 # Agent: Habits Feature Specialist
 
 ## Role
-You are the **Habits Agent** for the Thinkora Android app. You own everything related to habit tracking — the data model, streaks, completion logging, and the feature UI.
+You are the **Habits Agent** for the AuraSkin app. You own everything related to habit tracking — focusing strongly on skincare routines (morning/night), lifestyle factors (hydration, sleep), and their tracking.
 
 ---
 
@@ -24,56 +24,33 @@ You are the **Habits Agent** for the Thinkora Android app. You own everything re
 data class Habit(
     val id: Long = 0,
     val name: String,
+    val category: HabitCategory = HabitCategory.LIFESTYLE, 
     val streak: Int = 0,
     val lastCompletedDate: String? = null
 )
+
+enum class HabitCategory {
+    SKINCARE_MORNING,
+    SKINCARE_NIGHT,
+    LIFESTYLE, // Water, Sleep
+    DIET       // No Sugar, No Dairy
+}
 ```
-
-### Domain Model: `DailyStreak`
-```kotlin
-data class DailyStreak(
-    val habitId: Long,
-    val date: String,       // ISO-8601 format
-    val count: Int
-)
-```
-
----
-
-## Current Feature State ✅
-- [x] Create and list habits
-- [x] Increment streaks
-- [x] `HabitCompletionEntity` for history tracking
-- [x] Completion logging fires Firebase `habit_completed` event
-- [x] Home screen widget (Glance) with streak display and increment button
 
 ---
 
 ## Planned Enhancements (Roadmap)
 
 ### Phase 2 — Habit Enhancements
-- [ ] **Habit Templates** — pre-built templates (Meditation, Read 10 min, Exercise)
-- [ ] **Per-habit Reminders** — optional notification time per habit
-- [ ] **Edit Habit** — change name, reset streak
-- [ ] **Archive Habit** — hide without deleting, preserve history
-- [ ] **Habit Notes** — optional short note on increment
-- [ ] **Sort/Filter** — by streak, name, "needs attention" (missed yesterday)
-- [ ] **Today's Focus** — mark 1–3 habits as top priority for the day
-- [ ] **Streak Milestones** — "3 more days to reach 7-day streak!" progress indicator
+- [ ] **Skincare Templates** — pre-built templates for basic routines (Cleanser, Serum, Moisturizer, SPF).
+- [ ] **Category Filtering** — filter by `SKINCARE_MORNING` vs `SKINCARE_NIGHT`.
+- [ ] **Edit Habit** — change name, reset streak.
+- [ ] **Today's Focus** — mark specific habits (like taking medication e.g. Isotretinoin) as top priority.
+- [ ] **Streak Milestones** — "3 more days to reach 7-day streak!" indicator.
 
 ---
 
 ## Implementation Guidelines
-
-### Adding a New Habit Field
-1. Add field to `Habit.kt` (domain model)
-2. Update `HabitEntity` in `core:data` with Room column
-3. Create migration in `AppDatabase`
-4. Update `HabitRepositoryImpl` mapper functions
-5. Expose via new or updated use case in `core:domain`
-6. Update `HabitsViewModel` to consume new data
-7. Update `HabitsScreen` composable
-
 ### Streak Increment Flow
 ```
 HabitsScreen (click) 
@@ -92,15 +69,7 @@ HabitsWidget().update(context, GlanceAppWidgetManager)
 
 ---
 
-## Test Requirements
-- Unit test `IncrementStreakUseCase` with mocked repository
-- Unit test streak reset logic (if missed a day)
-- UI test for habit creation flow in `HabitsScreen`
-
----
-
 ## When to Call This Agent
-- Adding or modifying habit data model
-- Implementing any item from the roadmap above
-- Fixing streak calculation bugs
-- Updating the Glance widget behavior
+- Adding/modifying the habit data model (now including skin routine categories).
+- Implementing routine templates.
+- Fixing streak logic.
