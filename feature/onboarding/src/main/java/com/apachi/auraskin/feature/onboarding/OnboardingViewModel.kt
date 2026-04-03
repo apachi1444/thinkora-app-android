@@ -31,32 +31,35 @@ class OnboardingViewModel @Inject constructor(
             is OnboardingEvent.EnterName -> {
                 _state.value = _state.value.copy(name = event.name)
             }
-            is OnboardingEvent.ToggleInterest -> {
-                val interests = _state.value.selectedInterests.toMutableList()
-                if (interests.contains(event.interest)) {
-                    interests.remove(event.interest)
-                } else {
-                    interests.add(event.interest)
-                }
-                _state.value = _state.value.copy(selectedInterests = interests)
+            is OnboardingEvent.SelectSkinFocus -> {
+                _state.value = _state.value.copy(skinFocus = event.focus)
             }
-            is OnboardingEvent.Submit -> {
-                viewModelScope.launch {
-                    completeOnboardingUseCase(
-                        name = _state.value.name,
-                        interests = _state.value.selectedInterests
-                    )
-                    _uiEvent.send(OnboardingUiEvent.OnboardingCompleted)
+            is OnboardingEvent.SelectSkinType -> {
+                _state.value = _state.value.copy(skinType = event.type)
+            }
+            is OnboardingEvent.SelectRoutineType -> {
+                _state.value = _state.value.copy(routineType = event.routine)
+            }
+            is OnboardingEvent.NextPage -> {
+                _state.value = _state.value.copy(currentPage = _state.value.currentPage + 1)
+            }
+            is OnboardingEvent.PreviousPage -> {
+                if (_state.value.currentPage > 0) {
+                    _state.value = _state.value.copy(currentPage = _state.value.currentPage - 1)
                 }
             }
             is OnboardingEvent.SubmitWithNotifications -> {
                 viewModelScope.launch {
                     settingsRepository.setNotificationsEnabled(event.enabled)
-                    settingsRepository.setReminderTime(event.hour, event.minute)
-                    habitReminderScheduler.schedule(event.enabled, event.hour, event.minute)
+                    if (event.enabled) {
+                        settingsRepository.setReminderTime(event.hour, event.minute)
+                        habitReminderScheduler.schedule(event.enabled, event.hour, event.minute)
+                    }
                     completeOnboardingUseCase(
                         name = _state.value.name,
-                        interests = _state.value.selectedInterests
+                        skinFocus = _state.value.skinFocus,
+                        skinType = _state.value.skinType,
+                        routineType = _state.value.routineType
                     )
                     _uiEvent.send(OnboardingUiEvent.OnboardingCompleted)
                 }
@@ -66,16 +69,21 @@ class OnboardingViewModel @Inject constructor(
 }
 
 data class OnboardingState(
+    val currentPage: Int = 0,
     val name: String = "",
-    val availableInterests: List<String> = listOf("Business", "Life", "Sports", "Tech"),
-    val selectedInterests: List<String> = emptyList()
+    val skinFocus: String = "", // e.g. "Clear Breakouts", "Reduce Redness", "Build a Routine"
+    val skinType: String = "",  // e.g. "Oily", "Dry", "Combination", "Normal"
+    val routineType: String = "" // e.g. "None", "Basic", "Advanced"
 )
 
 sealed class OnboardingEvent {
     data class EnterName(val name: String) : OnboardingEvent()
-    data class ToggleInterest(val interest: String) : OnboardingEvent()
-    object Submit : OnboardingEvent()
-    data class SubmitWithNotifications(val enabled: Boolean, val hour: Int, val minute: Int) : OnboardingEvent()
+    data class SelectSkinFocus(val focus: String) : OnboardingEvent()
+    data class SelectSkinType(val type: String) : OnboardingEvent()
+    data class SelectRoutineType(val routine: String) : OnboardingEvent()
+    object NextPage : OnboardingEvent()
+    object PreviousPage : OnboardingEvent()
+    data class SubmitWithNotifications(val enabled: Boolean, val hour: Int = 20, val minute: Int = 0) : OnboardingEvent()
 }
 
 sealed class OnboardingUiEvent {

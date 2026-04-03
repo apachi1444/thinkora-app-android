@@ -12,44 +12,44 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
 
-private val ThinkoraDarkColorScheme = darkColorScheme(
-    primary = ThinkoraDarkPrimary,
-    onPrimary = ThinkoraDarkOnPrimary,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
-    tertiaryContainer = ThinkoraDarkStreakContainer,
-    background = ThinkoraDarkBackground,
-    surface = ThinkoraDarkSurface,
-    onBackground = ThinkoraDarkOnSurface,
-    onSurface = ThinkoraDarkOnSurface,
-    onSurfaceVariant = ThinkoraDarkOnSurfaceVariant,
-    outline = ThinkoraDarkOutline
+private val AuraSkinDarkColorScheme = darkColorScheme(
+    primary = AuraSkinDarkPrimary,
+    onPrimary = AuraSkinDarkOnPrimary,
+    secondary = AuraSkinDarkPrimary, // Re-using primary for secondary fallback
+    tertiary = AuraSkinDarkStreakContainer,
+    tertiaryContainer = AuraSkinDarkStreakContainer,
+    background = AuraSkinDarkBackground,
+    surface = AuraSkinDarkSurface,
+    onBackground = AuraSkinDarkOnSurface,
+    onSurface = AuraSkinDarkOnSurface,
+    onSurfaceVariant = AuraSkinDarkOnSurfaceVariant,
+    outline = AuraSkinDarkOutline
 )
 
-private val ThinkoraLightColorScheme = lightColorScheme(
-    primary = ThinkoraLightPrimary,
-    onPrimary = ThinkoraLightOnPrimary,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
-    tertiaryContainer = ThinkoraLightStreakContainer,
-    background = ThinkoraLightBackground,
-    surface = ThinkoraLightSurface,
-    onBackground = ThinkoraLightOnSurface,
-    onSurface = ThinkoraLightOnSurface,
-    onSurfaceVariant = ThinkoraLightOnSurfaceVariant,
-    outline = ThinkoraLightOutline
+private val AuraSkinLightColorScheme = lightColorScheme(
+    primary = AuraSkinLightPrimary,
+    onPrimary = AuraSkinLightOnPrimary,
+    secondary = AuraSkinLightPrimary,
+    tertiary = AuraSkinLightStreakContainer,
+    tertiaryContainer = AuraSkinLightStreakContainer,
+    background = AuraSkinLightBackground,
+    surface = AuraSkinLightSurface,
+    onBackground = AuraSkinLightOnSurface,
+    onSurface = AuraSkinLightOnSurface,
+    onSurfaceVariant = AuraSkinLightOnSurfaceVariant,
+    outline = AuraSkinLightOutline
 )
 
 @Composable
-fun ThinkoraTheme(
+fun AuraSkinTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) ThinkoraDarkColorScheme else ThinkoraLightColorScheme
+    val colorScheme = if (darkTheme) AuraSkinDarkColorScheme else AuraSkinLightColorScheme
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
+            (view.context as Activity).window.statusBarColor = colorScheme.background.toArgb() // typically better matching background than primary
             ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = !darkTheme
         }
     }

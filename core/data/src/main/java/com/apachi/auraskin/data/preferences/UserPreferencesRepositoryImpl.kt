@@ -22,7 +22,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 ) : UserRepository {
 
     private val USER_NAME = stringPreferencesKey("user_name")
-    private val INTERESTS = stringSetPreferencesKey("interests")
+    private val SKIN_FOCUS = stringPreferencesKey("skin_focus")
+    private val SKIN_TYPE = stringPreferencesKey("skin_type")
+    private val ROUTINE_TYPE = stringPreferencesKey("routine_type")
     private val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
 
     override fun getUserPreferences(): Flow<UserPreferences?> {
@@ -31,7 +33,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             if (isOnboardingCompleted) {
                 UserPreferences(
                     userName = prefs[USER_NAME] ?: "",
-                    interestCategories = prefs[INTERESTS]?.toList() ?: emptyList(),
+                    skinFocus = prefs[SKIN_FOCUS] ?: "",
+                    skinType = prefs[SKIN_TYPE] ?: "",
+                    routineType = prefs[ROUTINE_TYPE] ?: "",
                     isOnboardingCompleted = true
                 )
             } else {
@@ -43,7 +47,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     override suspend fun saveUserPreferences(userPreferences: UserPreferences) {
         context.dataStore.edit { prefs ->
             prefs[USER_NAME] = userPreferences.userName
-            prefs[INTERESTS] = userPreferences.interestCategories.toSet()
+            prefs[SKIN_FOCUS] = userPreferences.skinFocus
+            prefs[SKIN_TYPE] = userPreferences.skinType
+            prefs[ROUTINE_TYPE] = userPreferences.routineType
             prefs[ONBOARDING_COMPLETED] = userPreferences.isOnboardingCompleted
         }
     }
@@ -51,7 +57,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     override suspend fun clearUserData() {
         context.dataStore.edit { prefs ->
             prefs.remove(USER_NAME)
-            prefs.remove(INTERESTS)
+            prefs.remove(SKIN_FOCUS)
+            prefs.remove(SKIN_TYPE)
+            prefs.remove(ROUTINE_TYPE)
             prefs[ONBOARDING_COMPLETED] = false
         }
     }

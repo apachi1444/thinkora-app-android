@@ -7,10 +7,12 @@ import javax.inject.Inject
 class CompleteOnboardingUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    suspend operator fun invoke(name: String, interests: List<String>) {
+    suspend operator fun invoke(name: String, skinFocus: String, skinType: String, routineType: String) {
         val preferences = UserPreferences(
             userName = name,
-            interestCategories = interests,
+            skinFocus = skinFocus,
+            skinType = skinType,
+            routineType = routineType,
             isOnboardingCompleted = true
         )
         userRepository.saveUserPreferences(preferences)

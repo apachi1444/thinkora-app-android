@@ -16,7 +16,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
+import com.apachi.auraskin.core.designsystem.component.AuraSkinButton
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -181,7 +181,7 @@ fun SettingsScreen(
             title = { Text(stringResource(R.string.settings_reminder_time)) },
             text = { TimePicker(state = timePickerState) },
             confirmButton = {
-                Button(onClick = {
+                AuraSkinButton(onClick = {
                     viewModel.setReminderTime(timePickerState.hour, timePickerState.minute)
                     showTimePicker = false
                 }) {
@@ -204,7 +204,7 @@ fun SettingsScreen(
                 Text(stringResource(R.string.delete_account_dialog_message))
             },
             confirmButton = {
-                Button(
+                AuraSkinButton(
                     onClick = {
                         viewModel.deleteUserDataLocally()
                         showDeleteAccountDialog = false

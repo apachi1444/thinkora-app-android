@@ -84,4 +84,9 @@
     <string name="common_delete">Remove</string>
     <string name="common_edit">Edit</string>
     <string name="common_done">Done</string>
+
+    <!-- Habit Reminder Notifications -->
+    <string name="notification_reminder_title">Daily Routine Check</string>
+    <string name="notification_reminder_text">Have you completed your skincare routine today? Log your progress!</string>
+    <string name="notification_channel_reminders">Daily Routine Reminders</string>
 </resources>

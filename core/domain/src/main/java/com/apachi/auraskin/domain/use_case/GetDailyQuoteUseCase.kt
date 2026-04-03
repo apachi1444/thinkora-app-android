@@ -18,7 +18,7 @@ class GetDailyQuoteUseCase @Inject constructor(
             if (preferences == null) {
                 flowOf(null)
             } else {
-                quoteRepository.getDailyQuote(preferences.interestCategories)
+                quoteRepository.getDailyQuote(listOf(preferences.skinFocus))
             }
         }
     }

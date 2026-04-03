@@ -26,14 +26,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.apachi.auraskin.core.designsystem.theme.ThinkoraTheme
+import com.apachi.auraskin.core.designsystem.theme.AuraSkinTheme
 import com.apachi.auraskin.core.domain.repository.SettingsRepository
 import com.apachi.auraskin.data.ads.AdManager
 import com.apachi.auraskin.domain.use_case.GetOnboardingStatusUseCase
-import com.apachi.auraskin.feature.onboarding.OnboardingInterestsScreen
-import com.apachi.auraskin.feature.onboarding.OnboardingIntroScreen
-import com.apachi.auraskin.feature.onboarding.OnboardingNameScreen
-import com.apachi.auraskin.feature.onboarding.OnboardingNotificationsScreen
+import com.apachi.auraskin.feature.onboarding.OnboardingScreen
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import javax.inject.Inject
@@ -80,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                     if (languageCode == "ar") View.LAYOUT_DIRECTION_RTL else View.LAYOUT_DIRECTION_LTR
             }
 
-            ThinkoraTheme(darkTheme = isDarkTheme) {
+            AuraSkinTheme(darkTheme = isDarkTheme) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -98,46 +95,13 @@ class MainActivity : AppCompatActivity() {
                             navController = navController,
                             startDestination = startDestination
                         ) {
-                            navigation(
-                                startDestination = com.apachi.auraskin.domain.navigation.Screen.OnboardingIntro.route,
-                                route = com.apachi.auraskin.domain.navigation.Screen.OnboardingScreen.route
-                            ) {
-                                composable(com.apachi.auraskin.domain.navigation.Screen.OnboardingIntro.route) {
-                                    OnboardingIntroScreen(navController = navController)
-                                }
-                                composable(com.apachi.auraskin.domain.navigation.Screen.OnboardingName.route) { backStackEntry ->
-                                    val parentEntry = remember(backStackEntry) {
-                                        navController.getBackStackEntry(com.apachi.auraskin.domain.navigation.Screen.OnboardingScreen.route)
-                                    }
-                                    val onboardingViewModel: com.apachi.auraskin.feature.onboarding.OnboardingViewModel =
-                                        androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
-                                    OnboardingNameScreen(
-                                        navController = navController,
-                                        viewModel = onboardingViewModel
-                                    )
-                                }
-                                composable(com.apachi.auraskin.domain.navigation.Screen.OnboardingInterests.route) { backStackEntry ->
-                                    val parentEntry = remember(backStackEntry) {
-                                        navController.getBackStackEntry(com.apachi.auraskin.domain.navigation.Screen.OnboardingScreen.route)
-                                    }
-                                    val onboardingViewModel: com.apachi.auraskin.feature.onboarding.OnboardingViewModel =
-                                        androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
-                                    OnboardingInterestsScreen(
-                                        navController = navController,
-                                        viewModel = onboardingViewModel
-                                    )
-                                }
-                                composable(com.apachi.auraskin.domain.navigation.Screen.OnboardingNotifications.route) { backStackEntry ->
-                                    val parentEntry = remember(backStackEntry) {
-                                        navController.getBackStackEntry(com.apachi.auraskin.domain.navigation.Screen.OnboardingScreen.route)
-                                    }
-                                    val onboardingViewModel: com.apachi.auraskin.feature.onboarding.OnboardingViewModel =
-                                        androidx.hilt.navigation.compose.hiltViewModel(parentEntry)
-                                    OnboardingNotificationsScreen(
-                                        navController = navController,
-                                        viewModel = onboardingViewModel
-                                    )
-                                }
+                            composable(com.apachi.auraskin.domain.navigation.Screen.OnboardingScreen.route) {
+                                val onboardingViewModel: com.apachi.auraskin.feature.onboarding.OnboardingViewModel =
+                                    androidx.hilt.navigation.compose.hiltViewModel()
+                                OnboardingScreen(
+                                    navController = navController,
+                                    viewModel = onboardingViewModel
+                                )
                             }
                             composable(com.apachi.auraskin.domain.navigation.Screen.MainScreen.route) {
                                 com.apachi.auraskin.feature.main.MainScreen(

@@ -11,9 +11,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import android.app.Activity
 import androidx.compose.material.icons.filled.ArrowBack
-import com.apachi.auraskin.core.designsystem.component.AuraTextField
-import com.apachi.auraskin.core.designsystem.component.AuraButton
-import com.apachi.auraskin.core.designsystem.component.AuraTopAppBar
+import com.apachi.auraskin.core.designsystem.component.AuraSkinTextField
+import com.apachi.auraskin.core.designsystem.component.AuraSkinButton
+import com.apachi.auraskin.core.designsystem.component.AuraSkinTopAppBar
 
 
 import androidx.compose.ui.res.stringResource
@@ -36,7 +36,7 @@ fun AddQuoteScreen(
 
     Scaffold(
         topBar = {
-            AuraTopAppBar(
+            AuraSkinTopAppBar(
                 title = { Text(stringResource(DesignR.string.quotes_add_quote)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
@@ -56,7 +56,7 @@ fun AddQuoteScreen(
                 .fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            AuraTextField(
+            AuraSkinTextField(
                 value = content,
                 onValueChange = { content = it },
                 label = { Text(stringResource(DesignR.string.quotes_content_label)) },
@@ -64,7 +64,7 @@ fun AddQuoteScreen(
                 maxLines = 5
             )
 
-            AuraTextField(
+            AuraSkinTextField(
                 value = author,
                 onValueChange = { author = it },
                 label = { Text(stringResource(DesignR.string.quotes_author_label)) },
@@ -100,7 +100,7 @@ fun AddQuoteScreen(
             Spacer(modifier = Modifier.weight(1f))
 
             val defaultAuthor = stringResource(DesignR.string.quotes_default_author)
-            AuraButton(
+            AuraSkinButton(
                 onClick = {
                     if (content.isNotBlank()) {
                         viewModel.addQuote(content, author.ifBlank { defaultAuthor }, category, activity) {

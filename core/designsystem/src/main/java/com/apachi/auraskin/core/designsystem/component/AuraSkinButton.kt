@@ -9,10 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun AuraButton(
+fun AuraSkinButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    colors: androidx.compose.material3.ButtonColors = ButtonDefaults.buttonColors(
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary
+    ),
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
     content: @Composable () -> Unit
 ) {
@@ -20,10 +24,7 @@ fun AuraButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary
-        ),
+        colors = colors,
         contentPadding = contentPadding,
         content = content as @Composable (RowScope.() -> Unit)
     )
