@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.apachi.thinkora.feature.quotes'
+    namespace 'com.apachi.auraskin.feature.quotes'
     compileSdk 34
 
     defaultConfig {

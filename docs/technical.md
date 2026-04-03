@@ -23,7 +23,7 @@ Thinkora is built using modern Android development practices and libraries:
 The project follows a modular structure organized by layer and feature:
 
 ```
-com.apachi.thinkora
+com.apachi.auraskin
 ├── data             # Data layer (Repositories, Room, DataStore)
 ├── di               # Dependency Injection modules
 ├── domain           # Domain layer (Models, Repositories Interfaces, Use Cases)

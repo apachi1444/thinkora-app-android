@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace 'com.apachi.thinkora'
+    namespace 'com.apachi.auraskin'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.apachi.thinkora"
+        applicationId "com.apachi.auraskin"
         minSdk 24
         targetSdk 34
         versionCode 1

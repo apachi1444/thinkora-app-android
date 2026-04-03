@@ -43,7 +43,7 @@
             </intent-filter>
         </activity>
         <receiver
-            android:name="com.apachi.thinkora.feature.habits.widget.HabitsWidgetReceiver"
+            android:name="com.apachi.auraskin.feature.habits.widget.HabitsWidgetReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

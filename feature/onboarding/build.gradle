@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.apachi.thinkora.feature.onboarding'
+    namespace 'com.apachi.auraskin.feature.onboarding'
     compileSdk 34
 
     defaultConfig {

@@ -34,7 +34,7 @@ You are the **Architecture Agent** for the Thinkora Android app. Your job is to 
 
 ### Package Namespace
 ```
-com.apachi.thinkora
+com.apachi.auraskin
 ```
 
 ### Layer Responsibilities
@@ -76,7 +76,7 @@ When asked to scaffold a new feature `feature:X`, create:
 ```
 feature/X/
   build.gradle
-  src/main/java/com/apachi/thinkora/feature/x/
+  src/main/java/com/apachi/auraskin/feature/x/
     XScreen.kt          ← Composable
     XViewModel.kt       ← Hilt ViewModel
 ```

@@ -1,167 +1,46 @@
 <resources>
-    <string name="app_name">ثينكورا</string>
+    <string name="app_name">أورا سكين</string>
 
     <!-- Navigation -->
     <string name="nav_home">الرئيسية</string>
-    <string name="nav_habits">العادات</string>
+    <string name="nav_habits">الروتين</string>
     <string name="nav_settings">الإعدادات</string>
 
     <!-- Drawer -->
-    <string name="drawer_title">ثينكورا</string>
-    <string name="drawer_notifications">الإشعارات</string>
-    <string name="drawer_favorites">المفضلة</string>
-    <string name="drawer_edit_profile">تعديل الملف الشخصي</string>
+    <string name="drawer_title">أورا سكين</string>
+    <string name="drawer_notifications">التذكيرات</string>
+    <string name="drawer_favorites">الإرشادات المحفوظة</string>
+    <string name="drawer_edit_profile">بشرتي</string>
     <string name="drawer_logout">تسجيل الخروج</string>
-    <string name="drawer_my_quotes">اقتباساتي</string>
-    <string name="drawer_analytics">التحليلات</string>
+    <string name="drawer_my_quotes">ملاحظاتي</string>
+    <string name="drawer_analytics">تحليلات البشرة</string>
     <string name="drawer_achievements">الإنجازات</string>
 
-    <!-- Settings Screen -->
-    <string name="settings_profile_section">الملف الشخصي</string>
-    <string name="settings_my_profile">ملفي الشخصي</string>
-    <string name="settings_appearance_section">المظهر</string>
-    <string name="settings_dark_mode">الوضع الداكن</string>
-    <string name="settings_language">اللغة</string>
-    <string name="settings_payment_methods">طرق الدفع</string>
-    <string name="settings_payment_history">سجل المدفوعات</string>
-    <string name="settings_change_password">تغيير كلمة المرور</string>
-    <string name="settings_invite_friends">دعوة الأصدقاء</string>
-    <string name="settings_faqs">الأسئلة الشائعة</string>
-    <string name="settings_about_us">من نحن</string>
-    <string name="settings_logout">تسجيل الخروج</string>
-
-    <!-- Language Selection -->
-    <string name="language_english">English</string>
-    <string name="language_arabic">العربية</string>
-    <string name="language_dialog_title">اختر اللغة</string>
-
     <!-- Home Screen -->
-    <string name="home_greeting">صباح الخير</string>
-    <string name="home_quote_of_day">اقتباس اليوم</string>
-    <string name="home_categories">الفئات</string>
-    <string name="home_daily_streak">السلسلة اليومية</string>
+    <string name="home_greeting">مستعد لرحلة التألق؟</string>
+    <string name="home_quote_of_day">إرشاد اليوم</string>
+    <string name="home_daily_streak">استمرارية الروتين</string>
     <string name="home_days">أيام</string>
-    <string name="home_explore_quotes">استكشف الاقتباسات</string>
+    <string name="home_explore_quotes">تصفح الإرشادات</string>
 
     <!-- Habits Screen -->
-    <string name="habits_title">عاداتي</string>
-    <string name="habits_add">إضافة عادة</string>
-    <string name="habits_empty">لا توجد عادات بعد. ابدأ ببناء عادات جيدة!</string>
-    <string name="habits_delete_confirm">حذف هذه العادة؟</string>
-    <string name="habits_delete">حذف</string>
-    <string name="habits_cancel">إلغاء</string>
-    <string name="habits_undo">تراجع</string>
-    <string name="habits_deleted">تم حذف العادة</string>
-
-    <!-- Custom Quotes Screen -->
-    <string name="custom_quotes_title">اقتباساتي</string>
-    <string name="custom_quotes_empty">لا توجد اقتباسات شخصية بعد. أضف اقتباسك الأول!</string>
-    <string name="custom_quotes_add">إضافة اقتباس</string>
-
-    <!-- Add Quote Screen -->
-    <string name="add_quote_title">إضافة اقتباس شخصي</string>
-    <string name="add_quote_content_label">محتوى الاقتباس</string>
-    <string name="add_quote_author_label">المؤلف (اختياري)</string>
-    <string name="add_quote_category_label">الفئة</string>
-    <string name="add_quote_save_button">حفظ الاقتباس</string>
-    <string name="add_quote_category_personal">شخصي</string>
-    <string name="add_quote_category_motivation">تحفيزي</string>
-    <string name="add_quote_category_work">عمل</string>
-    <string name="add_quote_category_life">حياة</string>
+    <string name="habits_title">الروتين الخاص بي</string>
+    <string name="habits_add">إضافة خطوة</string>
+    <string name="habits_empty">لا يوجد روتين بعد. ابدأ رحلتك نحو بشرة أكثر صفاء!</string>
 
     <!-- Analytics Screen -->
-    <string name="analytics_title">التحليلات</string>
-    <string name="analytics_weekly_progress">التقدم الأسبوعي</string>
-    <string name="analytics_empty">لا توجد بيانات بعد. أكمل العادات لرؤية تقدمك!</string>
-    <string name="analytics_completions">إكمالات</string>
+    <string name="analytics_title">التحليلات الشاملة</string>
+    <string name="analytics_weekly_progress">التأثير الأسبوعي</string>
+    <string name="analytics_empty">لا توجد بيانات بعد. سجل روتينك وبشرتك لترقب السحر!</string>
+    <string name="analytics_completions">خطوات مكتملة</string>
 
-    <!-- Quotes Screen -->
-    <string name="quotes_my_quotes">اقتباساتي</string>
-    <string name="quotes_add_quote">إضافة اقتباس</string>
-    <string name="quotes_content_label">محتوى الاقتباس</string>
-    <string name="quotes_author_label">المؤلف</string>
-    <string name="quotes_category_label">التصنيف</string>
-    <string name="quotes_save">حفظ الاقتباس</string>
-    <string name="quotes_empty">لا توجد اقتباسات مخصصة بعد.\nاضغط على + لإضافة واحد!</string>
-    <string name="quotes_default_author">أنا</string>
-
-    <!-- Category Screen -->
-    <string name="category_empty">لم يتم العثور على اقتباسات لهذا التصنيف بعد.</string>
-
-    <!-- Categories (Reusable) -->
-    <string name="cat_personal">شخصي</string>
-    <string name="cat_motivation">تحفيز</string>
-    <string name="cat_work">عمل</string>
-    <string name="cat_life">حياة</string>
-
-    <!-- Analytics Screen -->
-    <string name="analytics_detailed_title">تحليلات مفصلة</string>
-    <string name="analytics_empty_detailed">لا توجد بيانات للعادات متاحة بعد.\nابدأ بتسجيل العادات لرؤية التحليلات!</string>
-    <string name="analytics_streak_label">سلسلة النجاح: %d</string>
-    <string name="analytics_weekly_activity">نشاط آخر 7 أيام</string>
-
-    <!-- Habits Screen (extended) -->
-    <string name="habits_add_habit">إضافة عادة</string>
-    <string name="habits_delete_title">حذف العادة؟</string>
-    <string name="habits_delete_message">هل أنت متأكد أنك تريد حذف \"%s\"؟ يمكنك التراجع عن هذا الإجراء.</string>
-    <string name="habits_deleted_confirm">تم حذف %s</string>
-    <string name="habits_new_habit">عادة جديدة</string>
-    <string name="habits_name_label">اسم العادة</string>
-    <string name="habits_streak_label">السلسلة الحالية</string>
-    <string name="habits_increment">زيادة</string>
-
-    <!-- Widget Tutorial -->
-    <string name="habits_widget_tutorial_title">أضف أداة!</string>
-    <string name="habits_widget_tutorial_desc">هل تعلم؟ يمكنك إضافة أداة إلى شاشتك الرئيسية لتتبع عاداتك بسهولة دون فتح التطبيق!</string>
-    <string name="habits_widget_add">إضافة الأداة</string>
-    <string name="habits_widget_dismiss">حسناً</string>
-    <string name="habits_widget_unsupported">تثبيت الأداة غير مدعوم على هذا الجهاز.</string>
-
-    <!-- HeroQuoteCard -->
-    <string name="hero_today">اليوم</string>
-    <string name="hero_read">تمت القراءة</string>
-    <string name="hero_mark_read">تحديد كمقروء</string>
-    <string name="hero_favorite">المفضلة</string>
-
-    <!-- Home Screen -->
-    <string name="home_quote_of_the_day">اقتباس اليوم</string>
-    <string name="home_your_streak">استمرارك</string>
-    <string name="home_your_habits">عاداتك</string>
-
-    <!-- Widgets -->
-    <string name="widget_no_favorites">لا توجد مفضلات بعد!</string>
-    <string name="widget_your_habits">عاداتك</string>
-    <string name="widget_no_habits">لا توجد عادات</string>
-    <string name="widget_no_habits_yet">لا توجد عادات بعد</string>
-    <string name="widget_increment">+ زيادة</string>
-    <string name="widget_streak_days">🔥 %1$s أيام</string>
-
-    <!-- Drawer Menu (extended) -->
-    <string name="drawer_my_profile">ملفي الشخصي</string>
-    <string name="drawer_payment_methods">طرق الدفع</string>
-    <string name="drawer_payment_history">سجل الدفع</string>
-    <string name="drawer_change_password">تغيير كلمة المرور</string>
-    <string name="drawer_invite_friends">دعوة الأصدقاء</string>
-    <string name="drawer_faqs">الأسئلة الشائعة</string>
-
-    <!-- Common -->
+    <!-- Onboarding -->
+    <string name="onboarding_welcome_title">أهلاً بك في أورا سكين</string>
+    <string name="onboarding_welcome_desc">رفيقك الشامل لربط عاداتك اليومية بحالتك النفسية وتألق بشرتك.</string>
+    
+    <!-- General -->
     <string name="common_back">رجوع</string>
     <string name="common_save">حفظ</string>
     <string name="common_cancel">إلغاء</string>
-    <string name="common_delete">حذف</string>
-    <string name="common_edit">تعديل</string>
-    <string name="common_done">تم</string>
-    <string name="common_menu">القائمة</string>
-    <string name="common_notifications">الإشعارات</string>
-    <string name="common_search">بحث</string>
-    <string name="common_close">إغلاق</string>
-    <string name="common_add">إضافة</string>
-    <string name="common_favorites">المفضلة</string>
-
-    <!-- Onboarding Notifications -->
-    <string name="onboarding_notifications_title">تذكير يومي</string>
-    <string name="onboarding_notifications_desc">احصل على إشعار كل يوم لتتبع عاداتك. يمكنك تغيير ذلك لاحقاً من الإعدادات.</string>
-    <string name="onboarding_notifications_enable">تفعيل التذكير اليومي</string>
-    <string name="onboarding_reminder_time">وقت التذكير</string>
-    <string name="onboarding_continue">متابعة</string>
+    <string name="common_delete">إزالة</string>
 </resources>

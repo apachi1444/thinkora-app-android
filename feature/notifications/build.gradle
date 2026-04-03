@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.apachi.thinkora.feature.notifications'
+    namespace 'com.apachi.auraskin.feature.notifications'
     compileSdk 34
 
     defaultConfig {

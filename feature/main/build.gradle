@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace 'com.apachi.thinkora.feature.main'
+    namespace 'com.apachi.auraskin.feature.main'
     compileSdk 34
 
     defaultConfig {
