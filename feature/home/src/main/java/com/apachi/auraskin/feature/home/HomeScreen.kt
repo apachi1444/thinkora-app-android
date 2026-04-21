@@ -1,46 +1,35 @@
 package com.apachi.auraskin.feature.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.outlined.CheckCircle
+import /* androidx.compose.material.icons.outlined.LocalFireDepartment */
+import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.apachi.auraskin.designsystem.R
 import com.apachi.auraskin.domain.navigation.Screen
-import com.apachi.auraskin.feature.habits.HabitItem
+import com.apachi.auraskin.domain.model.Habit
 
 @Composable
 fun HomeScreen(
@@ -55,151 +44,254 @@ fun HomeScreen(
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .padding(horizontal = 24.dp)
+            .padding(top = 16.dp, bottom = 32.dp)
     ) {
         HomeHeader(
-            userName = state.userName,
-            onNotificationClick = { navController.navigate(Screen.NotificationsScreen.route) },
-            onOpenDrawer = onOpenDrawer
+            onOpenDrawer = onOpenDrawer,
+            onNotificationClick = { navController.navigate(Screen.NotificationsScreen.route) }
+        )
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        // Greeting Section
+        Text(
+            text = stringResource(R.string.home_hi, state.userName.ifBlank { "Sarah" }) + " 👋",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = stringResource(R.string.home_greeting_subtitle),
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text(
-            text = stringResource(R.string.home_your_streak),
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.onSurface
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        StreakCard(streak = state.streak.currentStreak)
+        // Global Progress Card
+        GlobalProgressCard(streak = state.streak.currentStreak)
 
-        if (state.habits.isNotEmpty()) {
-            Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(40.dp))
+
+        // Your Habits Header
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom
+        ) {
             Text(
                 text = stringResource(R.string.home_your_habits),
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
+                style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            Spacer(modifier = Modifier.height(12.dp))
-            state.habits.take(3).forEach { habit ->
-                HabitItem(
-                    habit = habit,
-                    onIncrementClick = { habitId ->
-                        viewModel.onEvent(HomeEvent.IncrementHabitStreak(habitId))
+            Text(
+                text = stringResource(R.string.home_view_all),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.clickable {
+                    navController.navigate(Screen.HabitsScreen.route) {
+                        popUpTo(Screen.HomeScreen.route) { inclusive = false }
                     }
+                }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Habit List
+        if (state.habits.isEmpty()) {
+            Text(
+                text = "No habits scheduled for today.",
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
+        } else {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                state.habits.take(3).forEach { habit ->
+                    CompactHabitItem(
+                        habit = habit,
+                        onClick = { viewModel.onEvent(HomeEvent.IncrementHabitStreak(habit.id)) }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            // Increment All Button
+            OutlinedButton(
+                onClick = {
+                    state.habits.forEach { habit ->
+                        viewModel.onEvent(HomeEvent.IncrementHabitStreak(habit.id))
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                shape = MaterialTheme.shapes.medium, // 16dp radius
+                border = BorderStroke(2.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f)),
+                colors = ButtonDefaults.outlinedButtonColors(
+                    contentColor = MaterialTheme.colorScheme.onSurface
+                ),
+                contentPadding = PaddingValues(vertical = 16.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.home_increment_all),
+                    style = MaterialTheme.typography.labelSmall,
+                    textAlign = TextAlign.Center
                 )
-                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
 }
 
 @Composable
-fun HomeHeader(
-    userName: String,
-    onNotificationClick: () -> Unit,
-    onOpenDrawer: () -> Unit
+private fun HomeHeader(
+    onOpenDrawer: () -> Unit,
+    onNotificationClick: () -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(
-                onClick = onOpenDrawer,
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(MaterialTheme.colorScheme.surface)
-            ) {
-                Icon(
-                    Icons.Default.Menu,
-                    contentDescription = stringResource(R.string.home_menu_cd)
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .size(50.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    Icons.Default.Build,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-            Spacer(modifier = Modifier.width(12.dp))
-            Column {
-                Text(
-                    text = stringResource(R.string.home_hi, userName),
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                Text(
-                    text = stringResource(R.string.home_lets_go),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-        }
-        IconButton(
-            onClick = onNotificationClick,
+        // Avatar (acts as drawer trigger)
+        Box(
             modifier = Modifier
-                .clip(RoundedCornerShape(12.dp))
-                .background(MaterialTheme.colorScheme.surface)
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .clickable { onOpenDrawer() },
+            contentAlignment = Alignment.Center
         ) {
             Icon(
-                Icons.Default.Notifications,
-                contentDescription = stringResource(R.string.home_notifications_cd)
+                imageVector = Icons.Default.Person,
+                contentDescription = stringResource(R.string.home_menu_cd),
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+
+        // App Logo/Name
+        Text(
+            text = "AURASKIN",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.ExtraBold,
+            letterSpacing = 2.dp,
+            color = MaterialTheme.colorScheme.primary
+        )
+
+        // Notification Bell
+        IconButton(onClick = onNotificationClick) {
+            Icon(
+                imageVector = Icons.Outlined.Notifications,
+                contentDescription = stringResource(R.string.home_notifications_cd),
+                tint = MaterialTheme.colorScheme.primary
             )
         }
     }
 }
 
 @Composable
-fun StreakCard(streak: Int) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        modifier = Modifier.fillMaxWidth()
+private fun GlobalProgressCard(streak: Int) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.large) // 24dp
+            .background(
+                Brush.linearGradient(
+                    colors = listOf(
+                        MaterialTheme.colorScheme.primary,
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
+                    )
+                )
+            )
+            .padding(24.dp)
     ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(50.dp)
-                    .clip(CircleShape)
-                    .background(MaterialTheme.colorScheme.tertiaryContainer),
-                contentAlignment = Alignment.Center
+        Column {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Icon(
-                    Icons.Default.Star,
+                    imageVector = Icons.Outlined.CheckCircle, // Placeholder for fire icon
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
-            }
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
-                Text(
-                    text = stringResource(R.string.home_streak_days, streak),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.9f),
+                    modifier = Modifier.size(16.dp)
                 )
                 Text(
-                    text = stringResource(R.string.home_streak_subtitle),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    text = stringResource(R.string.home_global_progress).uppercase(),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.9f)
                 )
             }
+            
+            Spacer(modifier = Modifier.height(32.dp))
+            
+            Text(
+                text = "$streak Days",
+                style = MaterialTheme.typography.displaySmall,
+                color = MaterialTheme.colorScheme.onPrimary
+            )
+            
+            Spacer(modifier = Modifier.height(4.dp))
+            
+            Text(
+                text = stringResource(R.string.home_consecutive_streak),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
+            )
         }
+    }
+}
+
+@Composable
+private fun CompactHabitItem(
+    habit: Habit,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.large) // 24dp for cards
+            .background(MaterialTheme.colorScheme.surface)
+            .clickable { onClick() }
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // Icon Container
+        Box(
+            modifier = Modifier
+                .size(48.dp)
+                .clip(MaterialTheme.shapes.medium) // 16dp
+                .background(MaterialTheme.colorScheme.surfaceVariant),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Outlined.CheckCircle, // Placeholder
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
+            )
+        }
+        
+        Spacer(modifier = Modifier.width(16.dp))
+        
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = habit.name,
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = stringResource(R.string.home_consistency),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        
+        // Right side - streak or percentage
+        Text(
+            text = "${habit.currentStreak}",
+            style = MaterialTheme.typography.titleLarge,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }
