@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AuraSkin - Mindset Vault</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface": "#fcf9f7",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#ffafa9",
+                        "tertiary-fixed-dim": "#b7c7e7",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#7eb8a0",
+                        "tertiary": "#4f5f7b",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#dcd9d8",
+                        "surface-tint": "#2f6854",
+                        "on-secondary-fixed-variant": "#6e3633",
+                        "on-tertiary-fixed": "#0a1c34",
+                        "on-secondary-fixed": "#380c0b",
+                        "on-primary-fixed-variant": "#13503d",
+                        "tertiary-fixed": "#d6e3ff",
+                        "on-tertiary-container": "#31415b",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#9dadcc",
+                        "inverse-primary": "#98d3ba",
+                        "on-secondary-container": "#7a403c",
+                        "outline-variant": "#bfc9c3",
+                        "outline": "#707974",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f6f3f1",
+                        "on-primary-container": "#084937",
+                        "surface-container-high": "#eae8e6",
+                        "primary-fixed": "#b3efd5",
+                        "surface-container": "#f0edeb",
+                        "inverse-on-surface": "#f3f0ee",
+                        "on-background": "#1b1c1b",
+                        "on-surface": "#1b1c1b",
+                        "surface-variant": "#e5e2e0",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "background": "#fcf9f7",
+                        "on-tertiary-fixed-variant": "#384762",
+                        "surface-bright": "#fcf9f7",
+                        "secondary-fixed": "#ffdad7",
+                        "secondary": "#8b4d49",
+                        "on-surface-variant": "#404944",
+                        "on-primary-fixed": "#002116",
+                        "primary": "#2f6854",
+                        "inverse-surface": "#30302f",
+                        "surface-container-highest": "#e5e2e0",
+                        "primary-fixed-dim": "#98d3ba",
+                        "secondary-fixed-dim": "#ffb3ad"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+            font-family: 'Manrope', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+        .masonry-grid {
+            column-count: 2;
+            column-gap: 1rem;
+        }
+        @media (max-width: 640px) {
+            .masonry-grid {
+                column-count: 1;
+            }
+        }
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="pb-24 pt-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/70 backdrop-blur-xl shadow-[0_12px_40px_rgba(42,59,54,0.04)] px-6 py-4 flex justify-between items-center hidden md:flex">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close up portrait of a young woman with natural glowing skin in soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBL3w8yeJUTgo7iZdn_CsbquODaGt4JFKud2qWOm6xG3-Fztm1Ob5lKhcqKEKWhlfI95oOJjVgSn3u4ffIT9sojmQFdZB0FY_wEoTzwaVqXnscKsT7LOXvX1HiqSO0mawRcqd4NJxY-BS9te1UoJ1bJ9J02Z26JavOhEMEIN8DgmjXP3dhyS_jNmQuJRBOBqDjeA5VTtrRpqHD0fNehwzu6Z5eMyPYj5AC9GqN8WsroNfyKKK-9-HRuVJ5-kbiBDIVw57pp0vl1gIA"/>
+</div>
+<h1 class="font-manrope font-bold tracking-widest uppercase text-primary text-xl">AuraSkin</h1>
+</div>
+<nav class="flex gap-8">
+<a class="font-manrope font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-manrope font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors" href="#">Log</a>
+<a class="font-manrope font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors" href="#">Habits</a>
+<a class="font-manrope font-medium tracking-tight text-on-surface-variant hover:text-primary transition-colors" href="#">Insights</a>
+<a class="font-manrope font-medium tracking-tight text-primary border-b-2 border-primary pb-1" href="#">Vault</a>
+</nav>
+<button class="text-primary hover:bg-surface-container/50 p-2 rounded-full transition-all">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Mobile Header -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl px-6 py-4 flex justify-between items-center md:hidden">
+<div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="close up portrait of a young woman with natural glowing skin in soft natural light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANK5KOsjNNvTMQeqY47iIrphB0p17SbjrtpkvwdeqQRAi1nICcipUaMfulg2W7NjKhdOjI28dN07_JwiBzyGBhfGoYhc_KgfZhLOOGV-NVgpIEs88fs6Xbg9KFKmpTWUx6kekxnSU5mPYswAqca346lZtQHgXQFGldmnYAH2tcCEf5ZnhO6Yru_Ux-wCRYc7nYwmnyFjozFLaG6khpmKbdt1FP4WGjEJbKzDZVOfD72uxVe3par-RIzBRl059hL3ClHGGl84IsZFI"/>
+</div>
+<h1 class="font-manrope font-bold tracking-widest uppercase text-primary text-xl">AuraSkin</h1>
+<button class="text-primary">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<main class="max-w-5xl mx-auto px-6 md:px-8 pt-8">
+<!-- Page Header -->
+<div class="mb-12">
+<h2 class="font-headline text-4xl md:text-5xl text-on-surface font-light tracking-tight mb-4">Mindset Vault</h2>
+<p class="font-body text-lg text-on-surface-variant max-w-2xl leading-relaxed">Your personal sanctuary for reflection, growth, and the small victories that create a lasting glow.</p>
+</div>
+<!-- Tabs -->
+<div class="flex gap-6 mb-10 border-b border-surface-variant/50 pb-2">
+<button class="font-label text-base font-semibold text-primary border-b-2 border-primary pb-2 px-2 -mb-[3px]">Saved Quotes</button>
+<button class="font-label text-base font-medium text-on-surface-variant hover:text-primary transition-colors pb-2 px-2">Achievements</button>
+</div>
+<!-- Masonry Grid -->
+<div class="masonry-grid">
+<!-- Quote Card 1 -->
+<div class="masonry-item bg-surface-container-lowest rounded-xl p-8 shadow-[0_12px_40px_rgba(42,59,54,0.04)] relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary to-primary-container"></div>
+<span class="material-symbols-outlined text-primary/20 text-4xl mb-4 block" data-icon="format_quote">format_quote</span>
+<p class="font-headline text-2xl text-on-surface leading-snug mb-6">"The glow you seek is already within you."</p>
+<div class="flex justify-between items-center mt-auto">
+<span class="font-label text-sm text-on-surface-variant">Daily Affirmation</span>
+<button class="text-primary hover:bg-surface-container p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="favorite" data-weight="fill">favorite</span>
+</button>
+</div>
+</div>
+<!-- Image Quote Card -->
+<div class="masonry-item rounded-xl overflow-hidden shadow-[0_12px_40px_rgba(42,59,54,0.04)] relative">
+<img alt="Botanical aesthetic" class="w-full h-64 object-cover" data-alt="close up of delicate green monstera leaves with soft natural light and shadows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcO0XdRdthNvTg11H9UHRxVZyM1pPqZJvXGbJynF_Hpyl57vtBEFQQb7lfHFKR7DtOduklIkMXwpIzaOS4G-DqKSKnRqPpNwV122pcOiv0l9cc6A3rM27SfKhkaaLF_qo3jsXI61_FN_ySVGUIWsZg2KTAUEp7GKFuy7CknkmgFbmgJcCdvNh4exvM-UGSBhMxGphssdFyzKOUVtPt8c65wLMm5Tka2ANp7_zPxrj0wBl4CgPvLXZGiGdzEwbWcs41I3QBUQyGMi8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-on-surface/80 to-transparent flex flex-col justify-end p-6">
+<p class="font-headline text-xl text-on-primary mb-2 leading-relaxed">"Be as gentle with yourself as you are with a growing plant."</p>
+<span class="font-label text-sm text-surface-container-low">Mindful Moment</span>
+</div>
+</div>
+<!-- Achievement Badge 1 -->
+<div class="masonry-item bg-surface-container-low rounded-xl p-6 shadow-[0_12px_40px_rgba(42,59,54,0.04)] flex flex-col items-center text-center">
+<div class="w-20 h-20 rounded-full bg-gradient-to-br from-primary-container to-primary flex items-center justify-center mb-4 shadow-[0_8px_20px_rgba(47,104,84,0.2)]">
+<span class="material-symbols-outlined text-on-primary text-3xl" data-icon="auto_awesome" data-weight="fill">auto_awesome</span>
+</div>
+<h3 class="font-headline text-lg font-semibold text-on-surface mb-1">7-Day Glow Up</h3>
+<p class="font-body text-sm text-on-surface-variant">Completed a full week of your morning ritual.</p>
+<span class="mt-4 px-3 py-1 bg-surface-container-lowest rounded-full font-label text-xs text-primary">Unlocked Oct 12</span>
+</div>
+<!-- Quote Card 2 -->
+<div class="masonry-item bg-surface-container-lowest rounded-xl p-8 shadow-[0_12px_40px_rgba(42,59,54,0.04)]">
+<p class="font-body text-lg text-on-surface leading-relaxed mb-6 italic">"Progress is not linear. Embrace the resting phases."</p>
+<div class="flex justify-between items-center">
+<span class="font-label text-sm text-on-surface-variant">Evening Reflection</span>
+<button class="text-on-surface-variant hover:text-primary p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="bookmark" data-weight="fill">bookmark</span>
+</button>
+</div>
+</div>
+<!-- Achievement Badge 2 -->
+<div class="masonry-item bg-surface-container-low rounded-xl p-6 shadow-[0_12px_40px_rgba(42,59,54,0.04)] flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="shield_person">shield_person</span>
+</div>
+<div>
+<h3 class="font-headline text-base font-semibold text-on-surface mb-1">Self-Love Guard</h3>
+<p class="font-body text-sm text-on-surface-variant">Logged 5 positive mindset shifts.</p>
+</div>
+</div>
+<!-- Milestone Card -->
+<div class="masonry-item bg-gradient-to-br from-surface-container-lowest to-surface-container-low rounded-xl p-8 shadow-[0_12px_40px_rgba(42,59,54,0.04)] border border-outline-variant/15">
+<div class="flex justify-between items-start mb-6">
+<span class="px-3 py-1 bg-tertiary-container rounded-full font-label text-xs text-on-tertiary-container uppercase tracking-wider">Milestone</span>
+<span class="material-symbols-outlined text-tertiary" data-icon="wb_twilight">wb_twilight</span>
+</div>
+<h3 class="font-headline text-2xl font-semibold text-on-surface mb-2">Morning Alchemist</h3>
+<p class="font-body text-base text-on-surface-variant mb-6">You've successfully integrated hydration before caffeine for 30 consecutive days.</p>
+<div class="w-full bg-surface-variant rounded-full h-2 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-2 pb-6 bg-surface/80 backdrop-blur-lg rounded-t-3xl shadow-[0_-8px_30px_rgba(42,59,54,0.03)] z-50 md:hidden transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors duration-300 w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="home_wellness">home_health</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors duration-300 w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="edit_note">edit_note</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Log</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors duration-300 w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="auto_awesome_motion">auto_awesome_motion</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Habits</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors duration-300 w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="analytics">analytics</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Insights</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-2xl px-3 py-1 w-16" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="auto_stories" data-weight="fill">auto_stories</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Vault</span>
+</a>
+</nav>
+</body></html>

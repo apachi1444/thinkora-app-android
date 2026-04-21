@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AuraSkin - Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface": "#fcf9f7",
+                      "on-tertiary": "#ffffff",
+                      "secondary-container": "#ffafa9",
+                      "tertiary-fixed-dim": "#b7c7e7",
+                      "on-error-container": "#93000a",
+                      "primary-container": "#7eb8a0",
+                      "tertiary": "#4f5f7b",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-dim": "#dcd9d8",
+                      "surface-tint": "#2f6854",
+                      "on-secondary-fixed-variant": "#6e3633",
+                      "on-tertiary-fixed": "#0a1c34",
+                      "on-secondary-fixed": "#380c0b",
+                      "on-primary-fixed-variant": "#13503d",
+                      "tertiary-fixed": "#d6e3ff",
+                      "on-tertiary-container": "#31415b",
+                      "error-container": "#ffdad6",
+                      "tertiary-container": "#9dadcc",
+                      "inverse-primary": "#98d3ba",
+                      "on-secondary-container": "#7a403c",
+                      "outline-variant": "#bfc9c3",
+                      "outline": "#707974",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container-low": "#f6f3f1",
+                      "on-primary-container": "#084937",
+                      "surface-container-high": "#eae8e6",
+                      "primary-fixed": "#b3efd5",
+                      "surface-container": "#f0edeb",
+                      "inverse-on-surface": "#f3f0ee",
+                      "on-background": "#1b1c1b",
+                      "on-surface": "#1b1c1b",
+                      "surface-variant": "#e5e2e0",
+                      "error": "#ba1a1a",
+                      "on-primary": "#ffffff",
+                      "background": "#fcf9f7",
+                      "on-tertiary-fixed-variant": "#384762",
+                      "surface-bright": "#fcf9f7",
+                      "secondary-fixed": "#ffdad7",
+                      "secondary": "#8b4d49",
+                      "on-surface-variant": "#404944",
+                      "on-primary-fixed": "#002116",
+                      "primary": "#2f6854",
+                      "inverse-surface": "#30302f",
+                      "surface-container-highest": "#e5e2e0",
+                      "primary-fixed-dim": "#98d3ba",
+                      "secondary-fixed-dim": "#ffb3ad"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {},
+              "fontFamily": {
+                      "headline": [
+                              "Manrope"
+                      ],
+                      "body": [
+                              "Manrope"
+                      ],
+                      "label": [
+                              "Manrope"
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom Toggle Switch Styles */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: theme('colors.primary');
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: theme('colors.primary');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen flex flex-col pb-24">
+<!-- Top Navigation (Task-focused header) -->
+<header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl transition-all duration-300 px-6 py-4 flex items-center shadow-[0_12px_40px_rgba(42,59,54,0.04)]">
+<button class="text-on-surface-variant hover:text-on-surface transition-colors duration-300 p-2 -ml-2 rounded-full active:scale-95">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h1 class="ml-4 font-headline text-xl font-bold tracking-tight text-on-surface">Settings</h1>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow pt-24 px-6 max-w-2xl mx-auto w-full">
+<!-- APPEARANCE Section -->
+<section class="mb-10 animate-fade-in-up">
+<h2 class="font-label text-sm font-semibold tracking-[0.05rem] text-on-surface-variant uppercase mb-4 pl-2">Appearance</h2>
+<div class="bg-surface-container-low rounded-2xl p-2 shadow-[0_12px_40px_rgba(42,59,54,0.02)]">
+<!-- Dark Mode Toggle -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl mb-2 transition-colors duration-300 hover:bg-surface-bright group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">dark_mode</span>
+</div>
+<span class="font-body text-base font-medium text-on-surface">Dark Mode</span>
+</div>
+<!-- Toggle Switch -->
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 z-10 top-0 left-0 border-surface-variant" id="dark-mode-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-surface-variant cursor-pointer transition-colors duration-300" for="dark-mode-toggle"></label>
+</div>
+</div>
+<!-- Language Selection -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl transition-colors duration-300 hover:bg-surface-bright group cursor-pointer active:scale-[0.98]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">language</span>
+</div>
+<span class="font-body text-base font-medium text-on-surface">Language</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="font-body text-sm">English</span>
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- NOTIFICATIONS Section -->
+<section class="mb-10 animate-fade-in-up" style="animation-delay: 100ms;">
+<h2 class="font-label text-sm font-semibold tracking-[0.05rem] text-on-surface-variant uppercase mb-4 pl-2">Notifications</h2>
+<div class="bg-surface-container-low rounded-2xl p-2 shadow-[0_12px_40px_rgba(42,59,54,0.02)]">
+<!-- Daily Reminder Toggle -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl mb-2 transition-colors duration-300 hover:bg-surface-bright group">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications_active</span>
+</div>
+<span class="font-body text-base font-medium text-on-surface">Daily Reminder</span>
+</div>
+<!-- Toggle Switch -->
+<div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer transition-all duration-300 z-10 top-0 right-0 border-primary" id="reminder-toggle" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-6 rounded-full bg-primary cursor-pointer transition-colors duration-300" for="reminder-toggle"></label>
+</div>
+</div>
+<!-- Reminder Time -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl transition-colors duration-300 hover:bg-surface-bright group cursor-pointer active:scale-[0.98]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">schedule</span>
+</div>
+<span class="font-body text-base font-medium text-on-surface">Reminder Time</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-body text-sm font-medium text-primary bg-primary-container/20 px-3 py-1 rounded-full">20:00</span>
+<span class="material-symbols-outlined text-lg text-on-surface-variant">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- TERMS OF USE Section -->
+<section class="mb-16 animate-fade-in-up" style="animation-delay: 200ms;">
+<h2 class="font-label text-sm font-semibold tracking-[0.05rem] text-on-surface-variant uppercase mb-4 pl-2">Terms of Use</h2>
+<div class="bg-surface-container-low rounded-2xl p-2 shadow-[0_12px_40px_rgba(42,59,54,0.02)]">
+<!-- Privacy Policy -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl mb-2 transition-colors duration-300 hover:bg-surface-bright group cursor-pointer active:scale-[0.98]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined">policy</span>
+</div>
+<span class="font-body text-base font-medium text-on-surface">Privacy Policy</span>
+</div>
+<span class="material-symbols-outlined text-lg text-on-surface-variant">chevron_right</span>
+</div>
+<!-- Delete Account -->
+<div class="flex items-center justify-between p-4 bg-surface-container-lowest rounded-xl transition-colors duration-300 hover:bg-error-container/20 group cursor-pointer active:scale-[0.98]">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-error-container/50 flex items-center justify-center text-error group-hover:bg-error-container transition-colors">
+<span class="material-symbols-outlined">delete_forever</span>
+</div>
+<span class="font-body text-base font-medium text-error">Delete Account</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="text-center pb-8 animate-fade-in-up" style="animation-delay: 300ms;">
+<p class="font-label text-xs tracking-widest text-on-surface-variant/60 uppercase">AURASKIN V2.4.0 • BUILT FOR ZEN</p>
+</footer>
+</main>
+<!-- Navigation Suppressed intentionally for Settings/Transactional view per JSON instructions -->
+<!-- "Automatic Suppression: You MUST exclude the navigation shell if the page intent is: Linear/Transactional... or Task-Focused: Any sub-page featuring a 'Close' or 'Back' action that implies a temporary departure from the main navigation flow." -->
+</body></html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AuraSkin - Skin Insights</title>
+<!-- Typography -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface": "#fcf9f7",
+                        "on-tertiary": "#ffffff",
+                        "secondary-container": "#ffafa9",
+                        "tertiary-fixed-dim": "#b7c7e7",
+                        "on-error-container": "#93000a",
+                        "primary-container": "#7eb8a0",
+                        "tertiary": "#4f5f7b",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-dim": "#dcd9d8",
+                        "surface-tint": "#2f6854",
+                        "on-secondary-fixed-variant": "#6e3633",
+                        "on-tertiary-fixed": "#0a1c34",
+                        "on-secondary-fixed": "#380c0b",
+                        "on-primary-fixed-variant": "#13503d",
+                        "tertiary-fixed": "#d6e3ff",
+                        "on-tertiary-container": "#31415b",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#9dadcc",
+                        "inverse-primary": "#98d3ba",
+                        "on-secondary-container": "#7a403c",
+                        "outline-variant": "#bfc9c3",
+                        "outline": "#707974",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f6f3f1",
+                        "on-primary-container": "#084937",
+                        "surface-container-high": "#eae8e6",
+                        "primary-fixed": "#b3efd5",
+                        "surface-container": "#f0edeb",
+                        "inverse-on-surface": "#f3f0ee",
+                        "on-background": "#1b1c1b",
+                        "on-surface": "#1b1c1b",
+                        "surface-variant": "#e5e2e0",
+                        "error": "#ba1a1a",
+                        "on-primary": "#ffffff",
+                        "background": "#fcf9f7",
+                        "on-tertiary-fixed-variant": "#384762",
+                        "surface-bright": "#fcf9f7",
+                        "secondary-fixed": "#ffdad7",
+                        "secondary": "#8b4d49",
+                        "on-surface-variant": "#404944",
+                        "on-primary-fixed": "#002116",
+                        "primary": "#2f6854",
+                        "inverse-surface": "#30302f",
+                        "surface-container-highest": "#e5e2e0",
+                        "primary-fixed-dim": "#98d3ba",
+                        "secondary-fixed-dim": "#ffb3ad"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Manrope", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-stone-50/70 dark:bg-stone-900/70 backdrop-blur-xl flex justify-between items-center px-6 py-4 shadow-[0_12px_40px_rgba(42,59,54,0.04)]">
+<div class="w-10 h-10 rounded-full overflow-hidden shrink-0 bg-surface-container-highest">
+<img alt="User profile portrait" class="w-full h-full object-cover" data-alt="Portrait of a young woman with a serene expression and glowing skin, soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2lF4_fj6SrYkWTJOXX4AMfDOMFVRxBXrGdydTfZZK6bS48ZhOfOf52gaMP3PNfyGv8kLcncRkhVDTW8d-bxsZqRUKi4CqW-iu6cweGSm-EMbV3E3V_ffnR6KWAQIMwG04PFm3YMNTR13lkcg1VVAcSa96mb-xwvnKIGVB6G80qaV449BO_p4nOpPgp3cdign0tmHkzbXQIoQuZ2vuvLFhjnbNwQuPzlFmXb6NFcp_xjx54CDdM9hmygXwcGNHfcPLwzWT-gKNPiA"/>
+</div>
+<h1 class="font-manrope font-medium tracking-tight text-stone-800 dark:text-stone-100 text-xl font-bold tracking-widest uppercase text-emerald-800 dark:text-emerald-200">AuraSkin</h1>
+<button class="text-emerald-700 dark:text-emerald-400 hover:bg-stone-100/50 dark:hover:bg-stone-800/50 transition-all duration-300 scale-95 active:scale-90 flex items-center justify-center w-10 h-10 rounded-full">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<!-- Main Canvas -->
+<main class="pt-24 pb-32 max-w-2xl mx-auto">
+<!-- Page Header -->
+<div class="px-6 mb-8">
+<h2 class="font-headline text-3xl font-light text-on-surface mb-2">Skin Insights</h2>
+<p class="font-body text-on-surface-variant text-lg leading-relaxed">Discover the subtle rhythms connecting your habits to your complexion.</p>
+</div>
+<!-- Habit Synergy Card -->
+<section class="px-6 mb-10">
+<div class="relative bg-surface-container-low rounded-[1.5rem] p-6 overflow-hidden flex flex-col justify-end min-h-[240px] shadow-[0_12px_40px_rgba(27,28,27,0.04)]">
+<!-- Ethereal Background Image Overlay -->
+<div class="absolute inset-0 z-0">
+<img class="w-full h-full object-cover opacity-40 mix-blend-multiply" data-alt="Soft abstract macro photography of botanical leaf texture in muted sage green tones with gentle light gradients" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-iRTw9k3LQiLc-qDciOnh1oATYc6G5TvBXVAouJn2mnyRS3-2rrEx-NpcU3KkBcql7PXecCL-Gni3Gy0yM0nFKS9U9JhP92LrxD19nRE_uqr0PNqoLD2K7a9iE1E0cM7wdIBSw2ZwHNprM8tJGdE0fUPx9Tr2mAc9ot8IbgNEnjyICT0T9mRagVOCNoTAMH1qFaf9lvO8vR6_e4fJUTJaJEuKUT2RH-rAgTyVuyLCpXYQmSjg_lJ7n2m_fJjbdLNqYwUUGokOAUc"/>
+</div>
+<div class="relative z-10">
+<div class="inline-flex items-center gap-2 bg-surface/80 backdrop-blur-md px-3 py-1.5 rounded-full mb-4">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label text-xs tracking-widest uppercase text-primary font-bold">Habit Synergy Detected</span>
+</div>
+<p class="font-headline text-xl text-on-surface leading-tight mb-6 w-5/6">Your consistent evening routine is compounding hydration benefits.</p>
+<button class="bg-gradient-to-br from-primary to-primary-container text-on-primary rounded-xl px-6 py-3.5 font-label text-sm tracking-wide shadow-[0_8px_20px_rgba(47,104,84,0.15)] hover:opacity-90 transition-all duration-300 w-full sm:w-auto">
+                        Apply Recommendations
+                    </button>
+</div>
+</div>
+</section>
+<!-- Correlation Analysis -->
+<section class="px-6 mb-10">
+<div class="flex items-end justify-between mb-4">
+<h3 class="font-headline text-xl text-on-surface">Correlation Analysis</h3>
+<span class="font-label text-xs tracking-wider uppercase text-on-surface-variant">Last 7 Days</span>
+</div>
+<div class="bg-surface-container-lowest rounded-[1.5rem] p-6 shadow-[0_12px_40px_rgba(27,28,27,0.04)]">
+<!-- Hybrid Chart Simulation -->
+<div class="h-48 flex items-end justify-between gap-3 relative pb-2 border-b border-surface-variant/50">
+<!-- Line Chart Overlay (Soft Rose/Secondary) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-20" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Glow effect -->
+<path class="text-secondary-container opacity-30 blur-sm" d="M5,70 Q25,85 50,40 T95,30" fill="none" stroke="currentColor" stroke-width="6" vector-effect="non-scaling-stroke"></path>
+<!-- Main line -->
+<path class="text-secondary-container" d="M5,70 Q25,85 50,40 T95,30" fill="none" stroke="currentColor" stroke-width="3" vector-effect="non-scaling-stroke"></path>
+<!-- Data points -->
+<circle class="fill-secondary-container" cx="5" cy="70" r="2"></circle>
+<circle class="fill-secondary-container" cx="50" cy="40" r="2"></circle>
+<circle class="fill-secondary-container" cx="95" cy="30" r="2"></circle>
+</svg>
+<!-- Bar Chart (Sage Green/Primary) -->
+<div class="w-full bg-primary-container/40 rounded-t-lg relative group transition-all duration-300 hover:bg-primary-container" style="height: 40%"></div>
+<div class="w-full bg-primary-container/40 rounded-t-lg relative group transition-all duration-300 hover:bg-primary-container" style="height: 55%"></div>
+<div class="w-full bg-primary-container/40 rounded-t-lg relative group transition-all duration-300 hover:bg-primary-container" style="height: 35%"></div>
+<div class="w-full bg-primary-container/40 rounded-t-lg relative group transition-all duration-300 hover:bg-primary-container" style="height: 60%"></div>
+<div class="w-full bg-primary-container/40 rounded-t-lg relative group transition-all duration-300 hover:bg-primary-container" style="height: 80%"></div>
+<div class="w-full bg-primary-container/40 rounded-t-lg relative group transition-all duration-300 hover:bg-primary-container" style="height: 50%"></div>
+<!-- Active Day -->
+<div class="w-full bg-primary text-on-primary flex items-start justify-center pt-2 rounded-t-lg relative z-10 shadow-[0_0_20px_rgba(47,104,84,0.2)]" style="height: 90%">
+</div>
+</div>
+<!-- X-Axis Labels -->
+<div class="flex justify-between mt-3 text-[10px] font-label tracking-widest uppercase text-on-surface-variant">
+<span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span class="text-primary font-bold">Sun</span>
+</div>
+<!-- Legend -->
+<div class="mt-6 flex items-center justify-center gap-6 text-xs font-label text-on-surface">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary-container"></div>
+<span>Habit Consistency</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-1 rounded-full bg-secondary-container"></div>
+<span>Skin Score</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid Metrics -->
+<section class="px-6 mb-10 grid grid-cols-2 gap-4">
+<!-- Hydration Link -->
+<div class="bg-surface-container-low rounded-xl p-5 flex flex-col justify-between aspect-square hover:bg-surface-container transition-colors duration-300">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<div>
+<h4 class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Hydration Link</h4>
+<p class="font-headline text-xl text-on-surface">Strong</p>
+</div>
+</div>
+<!-- Recovery Rate -->
+<div class="bg-surface-container-low rounded-xl p-5 flex flex-col justify-between aspect-square hover:bg-surface-container transition-colors duration-300">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">healing</span>
+</div>
+<div>
+<h4 class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Recovery Rate</h4>
+<p class="font-headline text-xl text-on-surface flex items-baseline gap-1">
+                        +2.4
+                        <span class="text-sm font-body text-on-surface-variant font-normal">/wk</span>
+</p>
+</div>
+</div>
+<!-- Surface Texture (Full Width) -->
+<div class="bg-surface-container-low rounded-xl p-5 col-span-2 flex items-center justify-between hover:bg-surface-container transition-colors duration-300">
+<div>
+<h4 class="font-label text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Surface Texture</h4>
+<p class="font-headline text-xl text-on-surface">Smoother</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest shadow-[0_4px_15px_rgba(27,28,27,0.03)] flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">face_retouching_natural</span>
+</div>
+</div>
+</section>
+<!-- Activity Influence -->
+<section class="px-6">
+<h3 class="font-headline text-xl text-on-surface mb-5">Activity Influence</h3>
+<div class="flex flex-col gap-3">
+<div class="bg-surface-container-lowest rounded-xl p-4 flex items-center gap-4 shadow-[0_4px_20px_rgba(27,28,27,0.02)] transition-transform duration-300 hover:-translate-y-1">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">nightlight</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body text-on-surface font-semibold">Evening Double Cleanse</h4>
+<p class="text-[11px] tracking-wide text-on-surface-variant font-label mt-1 uppercase">High Positive Impact</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-sm">trending_up</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-4 flex items-center gap-4 shadow-[0_4px_20px_rgba(27,28,27,0.02)] transition-transform duration-300 hover:-translate-y-1">
+<div class="w-12 h-12 rounded-full bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed shrink-0">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">light_mode</span>
+</div>
+<div class="flex-1">
+<h4 class="font-body text-on-surface font-semibold">Sunscreen</h4>
+<p class="text-[11px] tracking-wide text-on-surface-variant font-label mt-1 uppercase">Steady Protection</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-sm">shield</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 rounded-t-3xl bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-lg shadow-[0_-8px_30px_rgba(42,59,54,0.03)] flex justify-around items-center px-4 pt-2 pb-6">
+<!-- Home -->
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-emerald-500 transition-colors duration-300 w-16">
+<span class="material-symbols-outlined mb-1">home_health</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Home</span>
+</button>
+<!-- Log -->
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-emerald-500 transition-colors duration-300 w-16">
+<span class="material-symbols-outlined mb-1">edit_note</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Log</span>
+</button>
+<!-- Habits -->
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-emerald-500 transition-colors duration-300 w-16">
+<span class="material-symbols-outlined mb-1">auto_awesome_motion</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Habits</span>
+</button>
+<!-- Insights (Active) -->
+<button class="flex flex-col items-center justify-center text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl px-3 py-1 hover:text-emerald-500 transition-colors duration-300 w-16">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Insights</span>
+</button>
+<!-- Vault -->
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-emerald-500 transition-colors duration-300 w-16">
+<span class="material-symbols-outlined mb-1">auto_stories</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Vault</span>
+</button>
+</nav>
+</body></html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AuraSkin - Home</title>
+<!-- Google Fonts: Manrope & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Design System Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface": "#fcf9f7",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#ffafa9",
+                    "tertiary-fixed-dim": "#b7c7e7",
+                    "on-error-container": "#93000a",
+                    "primary-container": "#7eb8a0",
+                    "tertiary": "#4f5f7b",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#dcd9d8",
+                    "surface-tint": "#2f6854",
+                    "on-secondary-fixed-variant": "#6e3633",
+                    "on-tertiary-fixed": "#0a1c34",
+                    "on-secondary-fixed": "#380c0b",
+                    "on-primary-fixed-variant": "#13503d",
+                    "tertiary-fixed": "#d6e3ff",
+                    "on-tertiary-container": "#31415b",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#9dadcc",
+                    "inverse-primary": "#98d3ba",
+                    "on-secondary-container": "#7a403c",
+                    "outline-variant": "#bfc9c3",
+                    "outline": "#707974",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f6f3f1",
+                    "on-primary-container": "#084937",
+                    "surface-container-high": "#eae8e6",
+                    "primary-fixed": "#b3efd5",
+                    "surface-container": "#f0edeb",
+                    "inverse-on-surface": "#f3f0ee",
+                    "on-background": "#1b1c1b",
+                    "on-surface": "#1b1c1b",
+                    "surface-variant": "#e5e2e0",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "background": "#fcf9f7",
+                    "on-tertiary-fixed-variant": "#384762",
+                    "surface-bright": "#fcf9f7",
+                    "secondary-fixed": "#ffdad7",
+                    "secondary": "#8b4d49",
+                    "on-surface-variant": "#404944",
+                    "on-primary-fixed": "#002116",
+                    "primary": "#2f6854",
+                    "inverse-surface": "#30302f",
+                    "surface-container-highest": "#e5e2e0",
+                    "primary-fixed-dim": "#98d3ba",
+                    "secondary-fixed-dim": "#ffb3ad"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px",
+                    "2xl": "1rem",
+                    "3xl": "1.5rem"
+            },
+            "spacing": {},
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Ambient Occlusion Shadow utility */
+        .shadow-ambient {
+            box-shadow: 0 12px 40px rgba(27, 28, 27, 0.04);
+        }
+        /* Hide scrollbar for a cleaner look */
+        ::-webkit-scrollbar { display: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body antialiased min-h-screen flex flex-col relative overflow-x-hidden">
+<!-- TopAppBar (From JSON) -->
+<header class="fixed top-0 w-full z-50 bg-stone-50/70 dark:bg-stone-900/70 backdrop-blur-xl shadow-[0_12px_40px_rgba(42,59,54,0.04)]">
+<div class="flex justify-between items-center px-6 py-4 w-full">
+<!-- Leading: Avatar -->
+<button aria-label="User profile" class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high focus:outline-none focus:ring-2 focus:ring-primary/20 transition-transform scale-95 active:scale-90">
+<img alt="Sarah" class="w-full h-full object-cover" data-alt="Portrait of a young woman with glowing skin, soft natural lighting, peaceful expression" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPDtq6Cym8QbnC6Cj8sz6Me7L5ElefR9KSSQQAf8M_7AmY1Ls1mYFVulSUC_pcXGlw5aHO_hBKQrAblTl4drssE_T95OdVCpYjGXDDxdUZ1KL13bY6GeLV4hCM3VM-ACm-bJGJ8hXqNguYXNjgLYFn9igj_TiAYBAwlg_8ERJf5yT6hHoy0DZMU3_zAQlyD4R8HATX9S4M4QTJR9JTxmArtUuWKA6PbPRbEy8lFj0Ejww8xVK6b5xiUB5ulATflR4xr5jKgLgpupo"/>
+</button>
+<!-- Headline -->
+<h1 class="text-xl font-bold tracking-widest uppercase text-emerald-800 dark:text-emerald-200 font-headline">AuraSkin</h1>
+<!-- Trailing: Icon -->
+<button aria-label="Notifications" class="w-10 h-10 flex items-center justify-center rounded-full text-emerald-700 dark:text-emerald-400 hover:bg-stone-100/50 dark:hover:bg-stone-800/50 transition-all duration-300 scale-95 active:scale-90 focus:outline-none">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="flex-1 pt-28 pb-32 px-6 flex flex-col gap-10 z-10">
+<!-- Greeting Section -->
+<section class="flex flex-col gap-1 animate-fade-in">
+<h2 class="text-3xl font-headline font-medium text-on-surface tracking-tight">Hi, Sarah 👋</h2>
+<p class="text-on-surface-variant font-body text-lg leading-relaxed">Embrace your ritual today.</p>
+</section>
+<!-- Global Progress Card (Luminous Calm) -->
+<section class="relative w-full rounded-3xl overflow-hidden shadow-ambient bg-gradient-to-br from-primary to-primary-container p-8 flex flex-col justify-between aspect-[2/1] sm:aspect-[3/1]">
+<!-- Decorative Glass Elements -->
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-surface/10 rounded-full blur-2xl"></div>
+<div class="absolute -bottom-8 -left-8 w-32 h-32 bg-primary-fixed/20 rounded-full blur-xl"></div>
+<div class="relative z-10 flex flex-col h-full justify-between">
+<div class="flex items-center gap-2 text-on-primary/90">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="font-label text-xs uppercase tracking-widest font-semibold">Global Progress</span>
+</div>
+<div>
+<h3 class="text-5xl font-headline font-bold text-on-primary tracking-tighter mb-1">14 Days</h3>
+<p class="text-on-primary/80 font-body text-sm">Consecutive wellness streak</p>
+</div>
+</div>
+</section>
+<!-- Your Habits Section -->
+<section class="flex flex-col gap-6">
+<div class="flex justify-between items-end px-1">
+<h3 class="text-xl font-headline font-medium text-on-surface">Your Habits</h3>
+<span class="text-sm font-label text-primary tracking-wide cursor-pointer hover:opacity-80 transition-opacity">View All</span>
+</div>
+<!-- Habit Cards (Bento/List Style) -->
+<div class="flex flex-col gap-4">
+<!-- Habit 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-ambient flex items-center justify-between group hover:bg-surface-container-low transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">water_drop</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline font-semibold text-on-surface text-base">Morning Cleanse</span>
+<span class="font-body text-sm text-on-surface-variant">Consistency</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline font-bold text-lg text-primary">85%</span>
+</div>
+</div>
+<!-- Habit 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-ambient flex items-center justify-between group hover:bg-surface-container-low transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">local_drink</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline font-semibold text-on-surface text-base">8 Glasses Water</span>
+<span class="font-body text-sm text-on-surface-variant">Consistency</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline font-bold text-lg text-primary">92%</span>
+</div>
+</div>
+<!-- Habit 3 -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-ambient flex items-center justify-between group hover:bg-surface-container-low transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">sunny</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline font-semibold text-on-surface text-base">SPF Application</span>
+<span class="font-body text-sm text-on-surface-variant">Consistency</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-headline font-bold text-lg text-primary">100%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Action Button -->
+<section class="mt-4">
+<!-- Using a ghost border/ring instead of a 1px solid border to respect the "No-Line" rule while achieving an "Outlined" feel -->
+<button class="w-full py-5 rounded-2xl ring-2 ring-outline-variant/20 bg-transparent text-on-surface font-label text-sm font-bold tracking-[0.1em] uppercase hover:bg-surface-container-lowest hover:ring-outline-variant/40 transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] focus:outline-none focus:ring-primary/30">
+                INCREMENT ALL
+            </button>
+</section>
+</main>
+<!-- BottomNavBar (From JSON) -->
+<nav class="fixed bottom-0 w-full z-50 rounded-t-3xl bg-stone-50/80 dark:bg-stone-950/80 backdrop-blur-lg shadow-[0_-8px_30px_rgba(42,59,54,0.03)] pb-safe pt-2">
+<div class="w-full flex justify-around items-center px-4 pb-6">
+<!-- Tab 1: Home (Active) -->
+<button class="flex flex-col items-center justify-center text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-900/30 rounded-2xl px-3 py-1 scale-95 active:scale-90 transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 1;">home_health</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Home</span>
+</button>
+<!-- Tab 2: Log (Inactive) -->
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-emerald-500 transition-colors duration-300 scale-95 active:scale-90 ease-[cubic-bezier(0.4,0,0.2,1)] px-3 py-1">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 0;">edit_note</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Log</span>
+</button>
+<!-- Tab 3: Habits (Inactive) -->
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-emerald-500 transition-colors duration-300 scale-95 active:scale-90 ease-[cubic-bezier(0.4,0,0.2,1)] px-3 py-1">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 0;">auto_awesome_motion</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Habits</span>
+</button>
+<!-- Tab 4: Insights (Inactive) -->
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-emerald-500 transition-colors duration-300 scale-95 active:scale-90 ease-[cubic-bezier(0.4,0,0.2,1)] px-3 py-1">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 0;">analytics</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Insights</span>
+</button>
+<!-- Tab 5: Vault (Inactive) -->
+<button class="flex flex-col items-center justify-center text-stone-400 dark:text-stone-500 hover:text-emerald-500 transition-colors duration-300 scale-95 active:scale-90 ease-[cubic-bezier(0.4,0,0.2,1)] px-3 py-1">
+<span class="material-symbols-outlined mb-1 text-[24px]" style="font-variation-settings: 'FILL' 0;">auto_stories</span>
+<span class="font-manrope text-[10px] font-semibold tracking-wider uppercase">Vault</span>
+</button>
+</div>
+</nav>
+</body></html>

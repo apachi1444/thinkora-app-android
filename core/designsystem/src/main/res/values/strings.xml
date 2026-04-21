@@ -12,18 +12,28 @@
     <string name="home_your_habits">Your Habits</string>
     <string name="home_menu_cd">Menu</string>
     <string name="home_notifications_cd">Notifications</string>
+    <string name="home_greeting_subtitle">Embrace your ritual today.</string>
+    <string name="home_global_progress">Global Progress</string>
+    <string name="home_consecutive_streak">Consecutive wellness streak</string>
+    <string name="home_view_all">View All</string>
+    <string name="home_consistency">Consistency</string>
+    <string name="home_increment_all">INCREMENT ALL</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
+    <string name="settings_appearance_label">APPEARANCE</string>
     <string name="settings_appearance">App appearance</string>
-    <string name="settings_dark_mode">Dark mode</string>
+    <string name="settings_dark_mode">Dark Mode</string>
+    <string name="settings_notifications_label">NOTIFICATIONS</string>
     <string name="settings_notifications">Notifications settings</string>
-    <string name="settings_daily_reminder">Daily reminder</string>
-    <string name="settings_reminder_time">Reminder time</string>
+    <string name="settings_daily_reminder">Daily Reminder</string>
+    <string name="settings_reminder_time">Reminder Time</string>
+    <string name="settings_terms_label">TERMS OF USE</string>
     <string name="settings_terms">Terms of use</string>
-    <string name="settings_privacy_policy">Privacy policy</string>
-    <string name="settings_delete_account">Delete account</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_delete_account">Delete Account</string>
     <string name="settings_language">Language</string>
+    <string name="settings_footer">AURASKIN V2.4.0 • BUILT FOR ZEN</string>
     <string name="language_english">English</string>
     <string name="language_arabic">العربية</string>
     <string name="language_dialog_title">Select Language</string>
