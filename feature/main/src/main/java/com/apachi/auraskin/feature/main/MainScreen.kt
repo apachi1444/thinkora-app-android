@@ -37,8 +37,17 @@ import com.apachi.auraskin.feature.category.CategoryQuotesScreen
 import com.apachi.auraskin.feature.drawer.DrawerContent
 import com.apachi.auraskin.feature.drawer.ZoomDrawer
 import com.apachi.auraskin.feature.habits.HabitsScreen
+import com.apachi.auraskin.feature.habits.HabitManagerScreen
+import com.apachi.auraskin.feature.habits.MorningGuideScreen
 import com.apachi.auraskin.feature.home.HomeScreen
 import com.apachi.auraskin.feature.settings.SettingsScreen
+import com.apachi.auraskin.feature.skin.SkinScreen
+import com.apachi.auraskin.feature.skin.CabinetScreen
+import com.apachi.auraskin.feature.quotes.VaultScreen
+import com.apachi.auraskin.feature.analytics.InsightsScreen
+import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.AutoStories
+import androidx.compose.material.icons.filled.ShowChart
 
 
 @Composable
@@ -89,6 +98,18 @@ fun MainScreen(
                             label = { Text(stringResource(R.string.nav_home)) }
                         )
                         NavigationBarItem(
+                            selected = currentRoute == Screen.SkinLogScreen.route,
+                            onClick = {
+                                bottomNavController.navigate(Screen.SkinLogScreen.route) {
+                                    popUpTo(Screen.HomeScreen.route) { saveState = true }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
+                            icon = { Icon(Icons.Default.Face, contentDescription = stringResource(R.string.nav_skin)) },
+                            label = { Text(stringResource(R.string.nav_skin)) }
+                        )
+                        NavigationBarItem(
                             selected = currentRoute == Screen.HabitsScreen.route,
                             onClick = {
                                 bottomNavController.navigate(Screen.HabitsScreen.route) {
@@ -101,16 +122,28 @@ fun MainScreen(
                             label = { Text(stringResource(R.string.nav_habits)) }
                         )
                         NavigationBarItem(
-                            selected = currentRoute == Screen.SettingsScreen.route,
+                            selected = currentRoute == Screen.InsightsScreen.route,
                             onClick = {
-                                bottomNavController.navigate(Screen.SettingsScreen.route) {
+                                bottomNavController.navigate(Screen.InsightsScreen.route) {
                                     popUpTo(Screen.HomeScreen.route) { saveState = true }
                                     launchSingleTop = true
                                     restoreState = true
                                 }
                             },
-                            icon = { Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.nav_settings)) },
-                            label = { Text(stringResource(R.string.nav_settings)) }
+                            icon = { Icon(Icons.Default.ShowChart, contentDescription = stringResource(R.string.nav_insights)) },
+                            label = { Text(stringResource(R.string.nav_insights)) }
+                        )
+                        NavigationBarItem(
+                            selected = currentRoute == Screen.VaultScreen.route,
+                            onClick = {
+                                bottomNavController.navigate(Screen.VaultScreen.route) {
+                                    popUpTo(Screen.HomeScreen.route) { saveState = true }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            },
+                            icon = { Icon(Icons.Default.AutoStories, contentDescription = stringResource(R.string.nav_vault)) },
+                            label = { Text(stringResource(R.string.nav_vault)) }
                         )
                     }
                 }
@@ -178,6 +211,24 @@ fun MainScreen(
                 }
                 composable(route = Screen.AnalyticsScreen.route) {
                     com.apachi.auraskin.feature.analytics.AnalyticsScreen(navController = bottomNavController)
+                }
+                composable(route = Screen.SkinLogScreen.route) {
+                    SkinScreen(navController = bottomNavController)
+                }
+                composable(route = Screen.VaultScreen.route) {
+                    VaultScreen(navController = bottomNavController)
+                }
+                composable(route = Screen.InsightsScreen.route) {
+                    InsightsScreen(navController = bottomNavController)
+                }
+                composable(route = Screen.HabitManagerScreen.route) {
+                    HabitManagerScreen(navController = bottomNavController)
+                }
+                composable(route = Screen.MorningGuideScreen.route) {
+                    MorningGuideScreen(navController = bottomNavController)
+                }
+                composable(route = Screen.CabinetScreen.route) {
+                    CabinetScreen(navController = bottomNavController)
                 }
             }
         }

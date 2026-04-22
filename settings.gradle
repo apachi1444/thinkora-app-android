@@ -30,6 +30,7 @@ include ':feature:category'
 include ':feature:gamification'
 include ':feature:quotes'
 include ':feature:analytics'
+include ':feature:skin'
 include ':feature:drawer'
 include ':feature:main'
 
