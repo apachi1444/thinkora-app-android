@@ -15,37 +15,37 @@ import com.apachi.auraskin.core.designsystem.component.AuraSkinSelectionCard
 fun FocusScreen(state: OnboardingState, viewModel: OnboardingViewModel) {
     Column {
         Text(
-            text = "What's your primary skin focus?",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.ExtraBold,
-            color = MaterialTheme.colorScheme.onSurface
+            text = "Your Skin's Primary Focus",
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Light
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "Let's tailor your journey to what matters most to you right now.",
+            text = "We will tailor your journey to what matters most to your complexion right now.",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
         
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(40.dp))
 
         AuraSkinSelectionCard(
             title = "Clear Breakouts",
-            subtitle = "ACTIVE TREATMENT",
+            subtitle = "Soothe active inflammation",
             isSelected = state.skinFocus == "Clear Breakouts",
             onClick = { viewModel.onEvent(OnboardingEvent.SelectSkinFocus("Clear Breakouts")) }
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         AuraSkinSelectionCard(
             title = "Reduce Redness",
-            subtitle = "CALM & SOOTHE",
+            subtitle = "Calm reactive conditions",
             isSelected = state.skinFocus == "Reduce Redness",
             onClick = { viewModel.onEvent(OnboardingEvent.SelectSkinFocus("Reduce Redness")) }
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         AuraSkinSelectionCard(
-            title = "Build a Routine",
-            subtitle = "CONSISTENCY FOCUS",
+            title = "Consistency First",
+            subtitle = "Build a sustainable routine",
             isSelected = state.skinFocus == "Build a Routine",
             onClick = { viewModel.onEvent(OnboardingEvent.SelectSkinFocus("Build a Routine")) }
         )

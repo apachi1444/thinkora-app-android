@@ -11,32 +11,46 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.apachi.auraskin.core.designsystem.component.AuraSkinSelectionCard
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+
 @Composable
 fun SkinTypeScreen(state: OnboardingState, viewModel: OnboardingViewModel) {
     Column {
         Text(
-            text = "What is your skin type?",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.ExtraBold,
-            color = MaterialTheme.colorScheme.onSurface
+            text = "Your Skin Identity",
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Light
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "This helps us recommend the right tracking metrics.",
+            text = "Understanding your surface helps us refine your habit recommendations.",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(40.dp))
         
         val types = listOf("Oily", "Dry", "Combination", "Normal")
-        types.forEach { type ->
-            AuraSkinSelectionCard(
-                title = type,
-                subtitle = null,
-                isSelected = state.skinType == type,
-                onClick = { viewModel.onEvent(OnboardingEvent.SelectSkinType(type)) }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
+        
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            types.chunked(2).forEach { rowTypes ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    rowTypes.forEach { type ->
+                        AuraSkinSelectionCard(
+                            title = type,
+                            subtitle = null,
+                            isSelected = state.skinType == type,
+                            onClick = { viewModel.onEvent(OnboardingEvent.SelectSkinType(type)) },
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
+                }
+            }
         }
     }
 }

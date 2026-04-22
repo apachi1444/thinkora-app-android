@@ -12,7 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.DateRange
@@ -44,12 +44,12 @@ fun HeroQuoteCard(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(24.dp))
+            .clip(MaterialTheme.shapes.large) // 24dp
             .background(
-                brush = Brush.horizontalGradient(
+                brush = Brush.linearGradient(
                     colors = listOf(
                         MaterialTheme.colorScheme.primary,
-                        MaterialTheme.colorScheme.secondary
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.7f)
                     )
                 )
             )
@@ -115,13 +115,13 @@ fun HeroQuoteCard(
                 ) {
                     Surface(
                         onClick = onMarkRead,
-                        shape = RoundedCornerShape(12.dp),
+                        shape = MaterialTheme.shapes.medium, // 16dp
                         color = if (quote.isRead) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.3f) else MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f)
                     ) {
                         Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Check,
@@ -130,33 +130,28 @@ fun HeroQuoteCard(
                                 modifier = Modifier.size(16.dp)
                             )
                             Text(
-                                text = if (quote.isRead) stringResource(DesignR.string.hero_read) else stringResource(DesignR.string.hero_mark_read),
+                                text = if (quote.isRead) "LOGGED" else "LOG CONDITION",
                                 color = MaterialTheme.colorScheme.onPrimary,
-                                style = MaterialTheme.typography.labelSmall
+                                style = MaterialTheme.typography.labelSmall,
+                                fontWeight = FontWeight.Bold
                             )
                         }
                     }
                     
                     Surface(
                         onClick = onToggleFavorite,
-                        shape = RoundedCornerShape(12.dp),
+                        shape = MaterialTheme.shapes.medium,
                         color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f)
                     ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        Box(
+                            modifier = Modifier.padding(12.dp),
+                            contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = if (quote.isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                                 contentDescription = stringResource(DesignR.string.hero_favorite),
                                 tint = if (quote.isFavorite) Color(0xFFFF6B9D) else MaterialTheme.colorScheme.onPrimary,
-                                modifier = Modifier.size(16.dp)
-                            )
-                            Text(
-                                text = stringResource(DesignR.string.hero_favorite),
-                                color = MaterialTheme.colorScheme.onPrimary,
-                                style = MaterialTheme.typography.labelSmall
+                                modifier = Modifier.size(18.dp)
                             )
                         }
                     }

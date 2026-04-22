@@ -36,4 +36,6 @@ interface HabitDao {
 
     @Query("DELETE FROM habits")
     suspend fun deleteAllHabits()
+    @Query("SELECT * FROM habits WHERE name LIKE '%' || :query || '%'")
+    fun searchHabits(query: String): Flow<List<HabitEntity>>
 }

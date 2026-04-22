@@ -10,4 +10,5 @@ interface HabitRepository {
     suspend fun deleteHabit(id: String)
     suspend fun deleteAllHabits()
     fun getCompletions(habitId: String): Flow<List<Long>>
+    fun searchHabits(query: String): Flow<List<Habit>>
 }

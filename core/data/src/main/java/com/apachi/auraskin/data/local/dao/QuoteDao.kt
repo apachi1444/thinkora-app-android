@@ -33,4 +33,6 @@ interface QuoteDao {
 
     @Query("DELETE FROM quotes WHERE isCustom = 1")
     suspend fun deleteAllCustomQuotes()
+    @Query("SELECT * FROM quotes WHERE content LIKE '%' || :query || '%' OR author LIKE '%' || :query || '%'")
+    fun searchQuotes(query: String): Flow<List<QuoteEntity>>
 }

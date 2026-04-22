@@ -19,6 +19,19 @@
     <string name="home_consistency">Consistency</string>
     <string name="home_increment_all">INCREMENT ALL</string>
 
+    <!-- Habits -->
+    <string name="habits_title">Daily Rituals</string>
+    <string name="habits_morning">Morning</string>
+    <string name="habits_night">Night</string>
+    <string name="habits_lifestyle">Lifestyle</string>
+    
+    <!-- Notifications -->
+    <string name="notifications_title">Notifications</string>
+    <string name="notifications_mark_read">Mark all as read</string>
+    <string name="notifications_dnd">Do not disturb</string>
+    <string name="notifications_vault_title">Vault Access</string>
+    <string name="notifications_vault_desc">Secure your deepest insights and premium editorial content.</string>
+
     <!-- Settings -->
     <string name="settings_title">Settings</string>
     <string name="settings_appearance_label">APPEARANCE</string>

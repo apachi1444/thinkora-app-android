@@ -15,36 +15,36 @@ import com.apachi.auraskin.core.designsystem.component.AuraSkinSelectionCard
 fun RoutineScreen(state: OnboardingState, viewModel: OnboardingViewModel) {
     Column {
         Text(
-            text = "How extensive is your current routine?",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.ExtraBold,
-            color = MaterialTheme.colorScheme.onSurface
+            text = "Routine Maturity",
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Light
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "We'll suggest habits to match your commitment level.",
+            text = "Your current level of ritual helps us suggest habits that feel natural, not overwhelming.",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(40.dp))
         
         AuraSkinSelectionCard(
-            title = "Minimal to None",
-            subtitle = "0-1 steps",
+            title = "Essential",
+            subtitle = "Cleanser or nothing yet",
             isSelected = state.routineType == "None",
             onClick = { viewModel.onEvent(OnboardingEvent.SelectRoutineType("None")) }
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         AuraSkinSelectionCard(
-            title = "Basic",
-            subtitle = "Cleanser, Moisturizer, SPF",
+            title = "Balanced",
+            subtitle = "Cleanser, Moisturize, SPF",
             isSelected = state.routineType == "Basic",
             onClick = { viewModel.onEvent(OnboardingEvent.SelectRoutineType("Basic")) }
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
         AuraSkinSelectionCard(
             title = "Advanced",
-            subtitle = "Multi-step complex routines",
+            subtitle = "Serums, Actives, multi-step",
             isSelected = state.routineType == "Advanced",
             onClick = { viewModel.onEvent(OnboardingEvent.SelectRoutineType("Advanced")) }
         )

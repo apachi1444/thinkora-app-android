@@ -14,18 +14,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
+import com.apachi.auraskin.core.designsystem.component.AuraSkinTopAppBar
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Stars
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.ui.graphics.Brush
+import com.apachi.auraskin.designsystem.R as DesignR
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -52,7 +52,7 @@ fun AchievementsScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            AuraSkinTopAppBar(
                 title = { Text(stringResource(DesignR.string.achievements_title)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
@@ -63,68 +63,117 @@ fun AchievementsScreen(
                     }
                 }
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
-        LazyColumn(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            items(achievements) { achievement ->
-                AchievementItem(achievement = achievement)
+            Spacer(modifier = Modifier.height(24.dp))
+            
+            Text(
+                text = "YOUR MILESTONES",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 24.dp)
+            )
+            Text(
+                text = "Journey Progress",
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(horizontal = 24.dp)
+            )
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(1),
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(horizontal = 24.dp, bottom = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                items(achievements) { achievement ->
+                    AchievementBadgeCard(achievement = achievement)
+                }
             }
         }
     }
 }
 
 @Composable
-fun AchievementItem(achievement: Achievement) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = if (achievement.isUnlocked) 
-                MaterialTheme.colorScheme.primaryContainer 
-            else 
-                MaterialTheme.colorScheme.surfaceVariant
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+fun AchievementBadgeCard(achievement: Achievement) {
+    val unlockedBrush = Brush.linearGradient(
+        colors = listOf(
+            MaterialTheme.colorScheme.primary,
+            MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
+        )
+    )
+    
+    val dateFormat = remember { SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()) }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.large)
+            .background(
+                if (achievement.isUnlocked) Color.Transparent else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+            )
+            .then(
+                if (achievement.isUnlocked) Modifier.background(unlockedBrush) else Modifier
+            )
+            .padding(20.dp)
     ) {
         Row(
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Icon Container
             Box(
                 modifier = Modifier
-                    .size(50.dp)
-                    .clip(CircleShape)
-                    .background(if (achievement.isUnlocked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline),
+                    .size(64.dp)
+                    .clip(MaterialTheme.shapes.medium)
+                    .background(
+                        if (achievement.isUnlocked) 
+                            MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.2f) 
+                        else 
+                            MaterialTheme.colorScheme.surface
+                    ),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = Icons.Default.Star,
+                    imageVector = if (achievement.isUnlocked) Icons.Default.Stars else Icons.Default.Lock,
                     contentDescription = null,
-                    tint = if (achievement.isUnlocked) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = if (achievement.isUnlocked) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.outlineVariant,
+                    modifier = Modifier.size(32.dp)
                 )
             }
             
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.width(20.dp))
             
-            Column {
+            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = achievement.title,
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = if (achievement.isUnlocked) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+                    color = if (achievement.isUnlocked) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = achievement.description,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = if (achievement.isUnlocked) MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f) else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+                    style = MaterialTheme.typography.bodySmall,
+                    color = if (achievement.isUnlocked) MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f) else MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                
+                if (achievement.isUnlocked && achievement.unlockedDate != null) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Unlocked on ${dateFormat.format(Date(achievement.unlockedDate))}",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.6f)
+                    )
+                }
             }
         }
     }

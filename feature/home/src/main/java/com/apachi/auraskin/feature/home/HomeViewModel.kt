@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apachi.auraskin.domain.model.DailyStreak
 import com.apachi.auraskin.domain.model.Habit
+import com.apachi.auraskin.domain.model.Quote
+import com.apachi.auraskin.domain.use_case.GetDailyQuoteUseCase
 import com.apachi.auraskin.domain.use_case.GetDailyStreakUseCase
 import com.apachi.auraskin.domain.use_case.GetHabitsUseCase
 import com.apachi.auraskin.domain.use_case.GetUserNameUseCase
@@ -18,6 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val getDailyQuoteUseCase: GetDailyQuoteUseCase,
     private val getDailyStreakUseCase: GetDailyStreakUseCase,
     private val getUserNameUseCase: GetUserNameUseCase,
     private val getHabitsUseCase: GetHabitsUseCase,
@@ -30,6 +33,13 @@ class HomeViewModel @Inject constructor(
     init {
         loadStreak()
         loadUserName()
+        loadDailyQuote()
+    }
+
+    private fun loadDailyQuote() {
+        getDailyQuoteUseCase().onEach { quote ->
+            _state.value = _state.value.copy(dailyQuote = quote)
+        }.launchIn(viewModelScope)
     }
 
     private fun loadUserName() {
@@ -61,7 +71,8 @@ class HomeViewModel @Inject constructor(
 data class HomeState(
     val streak: DailyStreak = DailyStreak(0, 0),
     val userName: String = "",
-    val habits: List<Habit> = emptyList()
+    val habits: List<Habit> = emptyList(),
+    val dailyQuote: Quote? = null
 )
 
 sealed class HomeEvent {

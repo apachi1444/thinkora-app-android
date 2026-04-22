@@ -267,8 +267,9 @@ private fun SettingsContainer(content: @Composable ColumnScope.() -> Unit) {
         modifier = Modifier
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.large) // 24dp
-            .background(MaterialTheme.colorScheme.surfaceVariant)
-            .padding(8.dp),
+            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+            .padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         content = content
     )
 }
@@ -278,15 +279,15 @@ private fun SettingsActionRow(
     icon: ImageVector,
     title: String,
     titleColor: Color = MaterialTheme.colorScheme.onSurface,
-    iconContainerColor: Color = MaterialTheme.colorScheme.background, // fallback for isolated elements inside a card
-    iconContentColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    iconContainerColor: Color = MaterialTheme.colorScheme.surface,
+    iconContentColor: Color = MaterialTheme.colorScheme.secondary,
     trailingContent: @Composable () -> Unit,
     onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.medium) // 16dp
+            .clip(MaterialTheme.shapes.large) // 24dp for all rows now
             .background(MaterialTheme.colorScheme.surface)
             .clickable(onClick = onClick)
             .padding(16.dp),
@@ -295,16 +296,16 @@ private fun SettingsActionRow(
         // Icon Container
         Box(
             modifier = Modifier
-                .size(40.dp)
+                .size(44.dp)
                 .clip(CircleShape)
-                .background(iconContainerColor.copy(alpha = if (iconContainerColor == MaterialTheme.colorScheme.background) 1f else 0.5f))
-                .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = if (iconContainerColor == MaterialTheme.colorScheme.background) 1f else 0f)),
+                .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = if (iconContainerColor == MaterialTheme.colorScheme.background) MaterialTheme.colorScheme.onSurfaceVariant else iconContentColor
+                tint = iconContentColor,
+                modifier = Modifier.size(20.dp)
             )
         }
         
@@ -313,6 +314,7 @@ private fun SettingsActionRow(
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Medium,
             color = titleColor,
             modifier = Modifier.weight(1f)
         )
@@ -331,7 +333,7 @@ private fun SettingsSwitchRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.medium) // 16dp
+            .clip(MaterialTheme.shapes.large) // 24dp
             .background(MaterialTheme.colorScheme.surface)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -339,15 +341,16 @@ private fun SettingsSwitchRow(
         // Icon Container
         Box(
             modifier = Modifier
-                .size(40.dp)
+                .size(44.dp)
                 .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.surfaceVariant),
+                .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.8f)),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = icon,
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp)
             )
         }
         
@@ -356,6 +359,7 @@ private fun SettingsSwitchRow(
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f)
         )

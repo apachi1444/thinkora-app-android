@@ -65,5 +65,16 @@ class HabitRepositoryImpl @Inject constructor(
         return habitDao.getCompletions(habitId).map { list ->
             list.map { it.completionTimestamp }
         }
+    override fun searchHabits(query: String): Flow<List<Habit>> {
+        return habitDao.searchHabits(query).map { entities ->
+            entities.map { entity ->
+                Habit(
+                    id = entity.id,
+                    name = entity.name,
+                    streak = entity.streak,
+                    createdTimestamp = entity.createdTimestamp
+                )
+            }
+        }
     }
 }

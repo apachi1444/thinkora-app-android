@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.apachi.auraskin.core.designsystem.component.AuraSkinTopAppBar
 import com.apachi.auraskin.ui.components.HeroQuoteCard
 
 import androidx.compose.ui.res.stringResource
@@ -31,7 +32,7 @@ fun CategoryQuotesScreen(
 
     Scaffold(
         topBar = {
-            TopAppBar(
+            AuraSkinTopAppBar(
                 title = { Text(state.categoryName) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
@@ -40,21 +41,16 @@ fun CategoryQuotesScreen(
                             contentDescription = stringResource(DesignR.string.common_back)
                         )
                     }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.surface,
-                    titleContentColor = MaterialTheme.colorScheme.onSurface,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onSurface
-                )
+                }
             )
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.background
     ) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(MaterialTheme.colorScheme.background)
-                .padding(16.dp)
+                .padding(horizontal = 24.dp)
         ) {
             if (state.quotes.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

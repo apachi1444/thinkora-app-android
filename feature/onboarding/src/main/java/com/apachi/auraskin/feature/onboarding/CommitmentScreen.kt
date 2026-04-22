@@ -15,6 +15,8 @@ import com.apachi.auraskin.core.designsystem.component.AuraSkinTextField
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
 fun CommitmentScreen(state: OnboardingState, viewModel: OnboardingViewModel) {
     var notificationsEnabled by remember { mutableStateOf(true) }
     var showTimePicker by remember { mutableStateOf(false) }
@@ -23,55 +25,92 @@ fun CommitmentScreen(state: OnboardingState, viewModel: OnboardingViewModel) {
 
     Column {
         Text(
-            text = "Are you ready to commit?",
-            style = MaterialTheme.typography.headlineMedium,
-            fontWeight = FontWeight.ExtraBold,
-            color = MaterialTheme.colorScheme.onSurface
+            text = "Gentle Commitment",
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onSurface,
+            fontWeight = FontWeight.Light
         )
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = "Consistency is the single most important factor in skincare. Let us gently remind you.",
+            text = "Consistency is the single most important factor in skincare success. Let us gently guide you.",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(40.dp))
         
         AuraSkinTextField(
             value = state.name,
             onValueChange = { viewModel.onEvent(OnboardingEvent.EnterName(it)) },
-            label = { Text("What should we call you?") },
+            label = { Text("How should we address you?") },
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
         
         Spacer(modifier = Modifier.height(32.dp))
 
-        Card(
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
-            shape = RoundedCornerShape(16.dp)
+        // Reminder Section with Tonal Layering
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clip(MaterialTheme.shapes.large) // 24dp
+                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .padding(8.dp)
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.medium) // 16dp
+                    .background(MaterialTheme.colorScheme.surface)
+                    .padding(20.dp)
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Daily Reminder", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.SemiBold)
-                    Switch(checked = notificationsEnabled, onCheckedChange = { notificationsEnabled = it })
+                    Column {
+                        Text(
+                            text = "Daily Reminder",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        Text(
+                            text = "A gentle nudge for your ritual",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    Switch(
+                        checked = notificationsEnabled,
+                        onCheckedChange = { notificationsEnabled = it },
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = MaterialTheme.colorScheme.onPrimary,
+                            checkedTrackColor = MaterialTheme.colorScheme.primary
+                        )
+                    )
                 }
                 
                 if (notificationsEnabled) {
-                    Divider(modifier = Modifier.padding(vertical = 12.dp), color = MaterialTheme.colorScheme.outline)
+                    Spacer(modifier = Modifier.height(24.dp))
                     Row(
-                        modifier = Modifier.fillMaxWidth().clickable { showTimePicker = true },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clip(MaterialTheme.shapes.small)
+                            .clickable { showTimePicker = true }
+                            .background(MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+                            .padding(16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("Time", color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(
+                            text = "Ritual Time",
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                         Text(
                             text = "%02d:%02d".format(reminderHour, reminderMinute),
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.primary
                         )
@@ -89,7 +128,7 @@ fun CommitmentScreen(state: OnboardingState, viewModel: OnboardingViewModel) {
             modifier = Modifier.fillMaxWidth(),
             enabled = state.name.isNotBlank()
         ) {
-            Text("Complete Journey Setup", fontWeight = FontWeight.Bold)
+            Text("Complete Personalization", fontWeight = FontWeight.Bold)
         }
 
         if (showTimePicker) {
@@ -101,7 +140,7 @@ fun CommitmentScreen(state: OnboardingState, viewModel: OnboardingViewModel) {
                         reminderHour = timePickerState.hour
                         reminderMinute = timePickerState.minute
                         showTimePicker = false
-                    }) { Text("Confirm") }
+                    }) { Text("Confirm", color = MaterialTheme.colorScheme.primary) }
                 },
                 text = { TimePicker(state = timePickerState) }
             )

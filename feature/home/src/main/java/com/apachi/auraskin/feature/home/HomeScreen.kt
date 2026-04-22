@@ -7,11 +7,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AutoAwesome
+import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.CheckCircle
-import /* androidx.compose.material.icons.outlined.LocalFireDepartment */
+import androidx.compose.material.icons.outlined.FormatQuote
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material.icons.outlined.WbTwilight
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,6 +33,7 @@ import androidx.navigation.NavController
 import com.apachi.auraskin.designsystem.R
 import com.apachi.auraskin.domain.navigation.Screen
 import com.apachi.auraskin.domain.model.Habit
+import com.apachi.auraskin.domain.model.Quote
 
 @Composable
 fun HomeScreen(
@@ -69,8 +73,29 @@ fun HomeScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Global Progress Card
-        GlobalProgressCard(streak = state.streak.currentStreak)
+        // Bento Grid Section
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            // Priority Row: Status & Global Progress
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                SkinLogStatusCard(
+                    isLogged = false, // Mock for now, will connect to VM
+                    onLogClick = { navController.navigate(Screen.SkinLogScreen.route) },
+                    modifier = Modifier.weight(1f).aspectRatio(1f)
+                )
+                GlobalProgressCard(
+                    streak = state.streak.currentStreak,
+                    modifier = Modifier.weight(1f).aspectRatio(1f)
+                )
+            }
+
+            // Daily Mindset Card (Quote)
+            state.dailyQuote?.let { quote ->
+                DailyMindsetCard(quote = quote)
+            }
+        }
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -80,65 +105,60 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.Bottom
         ) {
-            Text(
-                text = stringResource(R.string.home_your_habits),
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = stringResource(R.string.home_view_all),
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable {
+            Column {
+                Text(
+                    text = "Today's Rituals",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    text = "MORNING PHASE",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+            TextButton(
+                onClick = {
                     navController.navigate(Screen.HabitsScreen.route) {
                         popUpTo(Screen.HomeScreen.route) { inclusive = false }
                     }
                 }
-            )
+            ) {
+                Text(
+                    text = stringResource(R.string.home_view_all),
+                    style = MaterialTheme.typography.labelLarge,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Habit List
         if (state.habits.isEmpty()) {
-            Text(
-                text = "No habits scheduled for today.",
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                modifier = Modifier.padding(vertical = 16.dp)
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.large)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+                    .padding(32.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "No habits scheduled for today.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         } else {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 state.habits.take(3).forEach { habit ->
                     CompactHabitItem(
                         habit = habit,
                         onClick = { viewModel.onEvent(HomeEvent.IncrementHabitStreak(habit.id)) }
                     )
                 }
-            }
-
-            Spacer(modifier = Modifier.height(24.dp))
-
-            // Increment All Button
-            OutlinedButton(
-                onClick = {
-                    state.habits.forEach { habit ->
-                        viewModel.onEvent(HomeEvent.IncrementHabitStreak(habit.id))
-                    }
-                },
-                modifier = Modifier.fillMaxWidth(),
-                shape = MaterialTheme.shapes.medium, // 16dp radius
-                border = BorderStroke(2.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.4f)),
-                colors = ButtonDefaults.outlinedButtonColors(
-                    contentColor = MaterialTheme.colorScheme.onSurface
-                ),
-                contentPadding = PaddingValues(vertical = 16.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.home_increment_all),
-                    style = MaterialTheme.typography.labelSmall,
-                    textAlign = TextAlign.Center
-                )
             }
         }
     }
@@ -155,13 +175,12 @@ private fun HomeHeader(
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Avatar (acts as drawer trigger)
-        Box(
+        IconButton(
+            onClick = onOpenDrawer,
             modifier = Modifier
                 .size(40.dp)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.surfaceVariant)
-                .clickable { onOpenDrawer() },
-            contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = Icons.Default.Person,
@@ -170,10 +189,10 @@ private fun HomeHeader(
             )
         }
 
-        // App Logo/Name
+        // App Logo
         Text(
             text = "AURASKIN",
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.labelLarge,
             fontWeight = FontWeight.ExtraBold,
             letterSpacing = 2.dp,
             color = MaterialTheme.colorScheme.primary
@@ -191,10 +210,9 @@ private fun HomeHeader(
 }
 
 @Composable
-private fun GlobalProgressCard(streak: Int) {
+private fun GlobalProgressCard(streak: Int, modifier: Modifier = Modifier) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
             .clip(MaterialTheme.shapes.large) // 24dp
             .background(
                 Brush.linearGradient(
@@ -204,41 +222,117 @@ private fun GlobalProgressCard(streak: Int) {
                     )
                 )
             )
+            .padding(20.dp)
+    ) {
+        Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxSize()) {
+            Icon(
+                imageVector = Icons.Outlined.CheckCircle,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimary,
+                modifier = Modifier.size(24.dp)
+            )
+            
+            Column {
+                Text(
+                    text = streak.toString(),
+                    style = MaterialTheme.typography.displaySmall,
+                    color = MaterialTheme.colorScheme.onPrimary,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = "DAY STREAK",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun SkinLogStatusCard(isLogged: Boolean, onLogClick: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .clip(MaterialTheme.shapes.large)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .clickable { onLogClick() }
+            .padding(20.dp),
+        verticalArrangement = Arrangement.SpaceBetween
+    ) {
+        Box(
+            modifier = Modifier
+                .size(40.dp)
+                .clip(CircleShape)
+                .background(MaterialTheme.colorScheme.surface),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = Icons.Default.Face,
+                contentDescription = null,
+                tint = if (isLogged) Color(0xFF76B599) else MaterialTheme.colorScheme.primary
+            )
+        }
+        
+        Column {
+            Text(
+                text = if (isLogged) "LOGGED" else "PENDING",
+                style = MaterialTheme.typography.labelSmall,
+                color = if (isLogged) Color(0xFF76B599) else MaterialTheme.colorScheme.primary,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Skin Condition",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+    }
+}
+
+@Composable
+private fun DailyMindsetCard(quote: Quote) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(MaterialTheme.shapes.large)
+            .background(MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.4f))
             .padding(24.dp)
     ) {
         Column {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    imageVector = Icons.Outlined.CheckCircle, // Placeholder for fire icon
+                    imageVector = Icons.Outlined.FormatQuote,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.9f),
-                    modifier = Modifier.size(16.dp)
+                    tint = MaterialTheme.colorScheme.tertiary,
+                    modifier = Modifier.size(18.dp)
                 )
+                Spacer(modifier = Modifier.width(8.dp))
                 Text(
-                    text = stringResource(R.string.home_global_progress).uppercase(),
+                    text = "DAILY MINDSET",
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.9f)
+                    color = MaterialTheme.colorScheme.tertiary,
+                    fontWeight = FontWeight.Bold
                 )
             }
-            
-            Spacer(modifier = Modifier.height(32.dp))
-            
+            Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "$streak Days",
-                style = MaterialTheme.typography.displaySmall,
-                color = MaterialTheme.colorScheme.onPrimary
+                text = quote.content,
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+                lineHeight = MaterialTheme.typography.titleLarge.lineHeight
             )
-            
-            Spacer(modifier = Modifier.height(4.dp))
-            
-            Text(
-                text = stringResource(R.string.home_consecutive_streak),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f)
-            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Box(modifier = Modifier.size(24.dp).clip(CircleShape).background(MaterialTheme.colorScheme.tertiary.copy(alpha=0.2f)), contentAlignment = Alignment.Center) {
+                    Icon(Icons.Outlined.AutoAwesome, null, tint = MaterialTheme.colorScheme.tertiary, modifier = Modifier.size(12.dp))
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = quote.author,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
 }
@@ -251,7 +345,7 @@ private fun CompactHabitItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(MaterialTheme.shapes.large) // 24dp for cards
+            .clip(MaterialTheme.shapes.large) // 24dp
             .background(MaterialTheme.colorScheme.surface)
             .clickable { onClick() }
             .padding(16.dp),
@@ -266,7 +360,7 @@ private fun CompactHabitItem(
             contentAlignment = Alignment.Center
         ) {
             Icon(
-                imageVector = Icons.Outlined.CheckCircle, // Placeholder
+                imageVector = Icons.Outlined.WbTwilight,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary
             )
@@ -278,20 +372,21 @@ private fun CompactHabitItem(
             Text(
                 text = habit.name,
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
+                fontWeight = FontWeight.SemiBold
             )
             Text(
-                text = stringResource(R.string.home_consistency),
-                style = MaterialTheme.typography.bodySmall,
+                text = "DAILY RITUAL",
+                style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
         
-        // Right side - streak or percentage
-        Text(
-            text = "${habit.currentStreak}",
-            style = MaterialTheme.typography.titleLarge,
-            color = MaterialTheme.colorScheme.primary
+        Icon(
+            imageVector = Icons.Default.ChevronRight,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.outlineVariant,
+            modifier = Modifier.size(20.dp)
         )
     }
 }

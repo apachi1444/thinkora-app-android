@@ -15,5 +15,6 @@ interface QuoteRepository {
     suspend fun deleteQuote(quoteId: String)
     suspend fun deleteAllCustomQuotes()
     fun getQuotesByCategory(category: String): Flow<List<Quote>>
+    fun searchQuotes(query: String): Flow<List<Quote>>
 }
 

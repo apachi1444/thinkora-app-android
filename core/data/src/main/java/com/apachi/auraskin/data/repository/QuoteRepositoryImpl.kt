@@ -13,7 +13,7 @@ import com.apachi.auraskin.domain.model.DailyStreak
 import com.apachi.auraskin.domain.model.Quote
 import com.apachi.auraskin.domain.repository.QuoteRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
@@ -237,7 +237,10 @@ class QuoteRepositoryImpl @Inject constructor(
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
-        return calendar.timeInMillis / (1000 * 60 * 60 * 24)
+    override fun searchQuotes(query: String): Flow<List<Quote>> {
+        return quoteDao.searchQuotes(query).map { entities ->
+            entities.map { it.toDomain(isRead = false) }
+        }
     }
 }
 
