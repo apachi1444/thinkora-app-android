@@ -106,14 +106,16 @@ fun OnboardingScreen(
                 else -> true // Commitment handles its own submit
             }
 
-            AuraSkinButton(
-                onClick = { 
-                    if (state.currentPage < 3) viewModel.onEvent(OnboardingEvent.NextPage) 
-                },
-                modifier = Modifier.weight(1f).padding(start = if (state.currentPage > 0) 16.dp else 0.dp),
-                enabled = isNextEnabled && state.currentPage < 3
-            ) {
-                Text("Continue", fontWeight = FontWeight.Bold)
+            if (state.currentPage < 3) {
+                AuraSkinButton(
+                    onClick = { 
+                        viewModel.onEvent(OnboardingEvent.NextPage) 
+                    },
+                    modifier = Modifier.weight(1f).padding(start = if (state.currentPage > 0) 16.dp else 0.dp),
+                    enabled = isNextEnabled
+                ) {
+                    Text("Continue", fontWeight = FontWeight.Bold)
+                }
             }
             
             // Note: Page 4 (CommitmentScreen) hides this default Next button via layout or handles its own submit

@@ -1,6 +1,8 @@
 package com.apachi.auraskin.domain.navigation
 
 sealed class Screen(val route: String) {
+    object SignInScreen : Screen("sign_in_screen")
+    object SignUpScreen : Screen("sign_up_screen")
     object OnboardingScreen : Screen("onboarding_screen")
     object OnboardingIntro : Screen("onboarding_intro")
     object OnboardingName : Screen("onboarding_name")

@@ -26,6 +26,6 @@ fun AuraSkinButton(
         enabled = enabled,
         colors = colors,
         contentPadding = contentPadding,
-        content = content as @Composable (RowScope.() -> Unit)
+        content = { content() }
     )
 }

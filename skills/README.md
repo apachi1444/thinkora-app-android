@@ -1,83 +1,210 @@
-# Android / KMP Architecture Skills for Claude Code
+# [WIP] Android Development Skill for Claude Code
 
-A collection of six opinionated architecture skills that teach Claude Code how to write Android and Kotlin Multiplatform code the way you'd write it yourself. Once installed, Claude will automatically follow these patterns whenever you ask it to scaffold features, write tests, set up navigation, and more.
+A production-ready skill that enables Claude Code to build Android applications following Google's official architecture guidance and best practices from the [NowInAndroid](https://github.com/android/nowinandroid) reference app.
 
-## Prerequisites: Installing Claude Code
+## Overview
 
-If you don't have Claude Code yet, install it first.
+This skill provides Claude with comprehensive knowledge of modern Android development patterns, including:
 
-### macOS / Linux
+- **Clean Architecture** with UI, Domain, and Data layers
+- **Jetpack Compose** patterns and best practices
+- **Multi-module project structure** with convention plugins
+- **Offline-first architecture** with Room and reactive streams
+- **Dependency injection** with Hilt
+- **Comprehensive testing** strategies
 
-Open a terminal and run:
+## Installation
+
+1. Clone this repository into your Claude Code skills directory:
+   ```bash
+   git clone https://github.com/dpconde/claude-android-skill.git
+   ```
+
+2. Claude Code will automatically detect and load the skill when you work on Android projects.
+
+## Usage
+
+The skill automatically activates when you request Android-related tasks. Simply ask Claude to:
+
+- "Create a new Android feature module for user settings"
+- "Build a Compose screen with MVVM pattern"
+- "Set up a Repository with offline-first architecture"
+- "Add navigation to my Android app"
+- "Configure multi-module Gradle setup"
+
+Claude will follow the patterns and best practices defined in this skill.
+
+## Project Structure
+
+```
+claude-android-skill/
+├── SKILL.md                    # Main skill definition and quick reference
+├── references/                 # Detailed documentation
+│   ├── architecture.md         # UI, Domain, Data layers patterns
+│   ├── compose-patterns.md     # Jetpack Compose best practices
+│   ├── gradle-setup.md         # Build configuration & convention plugins
+│   ├── modularization.md       # Multi-module project structure
+│   └── testing.md              # Testing strategies and patterns
+├── assets/
+│   └── templates/              # Project templates
+│       ├── libs.versions.toml.template
+│       └── settings.gradle.kts.template
+└── scripts/
+    └── generate_feature.py     # Feature module generator script
+```
+
+## Core Principles
+
+This skill teaches Claude to follow these key Android development principles:
+
+1. **Offline-first**: Local database as source of truth, synchronized with remote data
+2. **Unidirectional data flow**: Events flow down, data flows up (UDF pattern)
+3. **Reactive streams**: Use Kotlin Flow for all data exposure
+4. **Modular by feature**: Each feature is self-contained with clear API boundaries
+5. **Testable by design**: Use interfaces and test doubles, avoid mocking frameworks
+
+## Reference Documentation
+
+### Quick Navigation
+
+| Topic | File | Description |
+|-------|------|-------------|
+| Architecture | [architecture.md](references/architecture.md) | MVVM pattern, layers, repositories, use cases |
+| Compose UI | [compose-patterns.md](references/compose-patterns.md) | Screens, state hoisting, side effects, theming |
+| Build Setup | [gradle-setup.md](references/gradle-setup.md) | Convention plugins, version catalogs, configuration |
+| Modularization | [modularization.md](references/modularization.md) | Module types, dependencies, feature structure |
+| Testing | [testing.md](references/testing.md) | Unit tests, UI tests, test doubles, strategies |
+
+## Architecture Overview
+
+```
+┌─────────────────────────────────────────┐
+│              UI Layer                    │
+│  (Compose Screens + ViewModels)          │
+├─────────────────────────────────────────┤
+│           Domain Layer                   │
+│  (Use Cases - optional, for reuse)       │
+├─────────────────────────────────────────┤
+│            Data Layer                    │
+│  (Repositories + DataSources)            │
+└─────────────────────────────────────────┘
+```
+
+### Module Types
+
+```
+app/                    # Application module
+feature/
+  ├── featurename/
+  │   ├── api/          # Public navigation contracts
+  │   └── impl/         # Internal implementation
+core/
+  ├── data/             # Repositories
+  ├── database/         # Room DAOs & entities
+  ├── network/          # Retrofit & API models
+  ├── model/            # Domain models
+  ├── ui/               # Reusable components
+  ├── designsystem/     # Theme & design tokens
+  └── testing/          # Test utilities
+```
+
+## Features
+
+### Code Generation
+
+The skill includes a Python script to generate feature modules:
 
 ```bash
-curl -fsSL https://claude.ai/install.sh | bash
+python scripts/generate_feature.py settings \
+  --package com.example.app \
+  --path /path/to/project
 ```
 
-Then run `claude` to launch Claude Code and complete the authentication flow.
+This creates a complete feature module with:
+- API module with navigation definitions
+- Implementation module with Screen, ViewModel, UiState
+- Gradle build files with proper dependencies
+- Hilt dependency injection setup
 
-### Windows
+### Templates
 
-Open **PowerShell** and run:
+Pre-configured templates for common Android project files:
+- `libs.versions.toml.template` - Gradle version catalog
+- `settings.gradle.kts.template` - Project settings
 
-```powershell
-irm https://claude.ai/install.ps1 | iex
+## Standard Patterns
+
+### ViewModel Pattern
+```kotlin
+@HiltViewModel
+class MyFeatureViewModel @Inject constructor(
+    private val repository: MyRepository,
+) : ViewModel() {
+    val uiState: StateFlow<MyFeatureUiState> = repository
+        .getData()
+        .map { MyFeatureUiState.Success(it) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = MyFeatureUiState.Loading,
+        )
+}
 ```
 
-Then run `claude` to launch Claude Code and complete the authentication flow.
-
-> [Git for Windows](https://git-scm.com/downloads/win) is required. See the [official docs](https://docs.claude.com/en/docs/claude-code/quickstart) for detailed setup instructions.
-
-## Installing the Skills
-
-Each skill is a single markdown file (`SKILL.md`) inside its own folder. To install them, copy the six skill folders into your Claude Code skills directory:
-
-```
-~/.claude/skills/
-├── android-data-layer/
-│   └── SKILL.md
-├── android-di-koin/
-│   └── SKILL.md
-├── android-module-structure/
-│   └── SKILL.md
-├── android-navigation/
-│   └── SKILL.md
-├── android-presentation-mvi/
-│   └── SKILL.md
-└── android-testing/
-    └── SKILL.md
+### Screen Pattern
+```kotlin
+@Composable
+internal fun MyFeatureRoute(
+    viewModel: MyFeatureViewModel = hiltViewModel(),
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    MyFeatureScreen(uiState = uiState)
+}
 ```
 
-Simply paste the six folders into `~/.claude/skills/` and they'll be picked up automatically the next time you start a Claude Code session. No restart or configuration is needed beyond having the files in place.
+### Repository Pattern
+```kotlin
+interface MyRepository {
+    fun getData(): Flow<List<MyModel>>
+}
 
-## What Each Skill Does
+internal class OfflineFirstMyRepository @Inject constructor(
+    private val dao: MyDao,
+    private val api: MyNetworkApi,
+) : MyRepository {
+    override fun getData(): Flow<List<MyModel>> =
+        dao.getAll().map { it.toModel() }
+}
+```
 
-### android-module-structure
+## Technology Stack
 
-Defines the project-level blueprint: feature-layered modularization, Gradle convention plugins, version catalogs, and dependency rules. Claude will follow this structure whenever you ask it to create a new module, set up a project, or decide where code should live.
+This skill configures projects with:
 
-### android-data-layer
+- **Language**: Kotlin
+- **UI**: Jetpack Compose
+- **Architecture**: MVVM with UDF
+- **DI**: Hilt
+- **Database**: Room
+- **Network**: Retrofit + Kotlinx Serialization
+- **Async**: Kotlin Coroutines + Flow
+- **Testing**: JUnit, Turbine, Compose Testing
+- **Build**: Gradle with Convention Plugins
 
-Covers everything below the domain boundary: repository implementations, DTOs, Room entities and DAOs, Ktor `HttpClient` setup, safe-call helpers, token storage, offline-first patterns, and the shared `Result` / `DataError` types.
+## License
 
-### android-presentation-mvi
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-The MVI presentation layer pattern: a single `State` data class, a sealed `Action` interface, one-time `Event` side-effects via `Channel`, ViewModel wiring, the Root/Screen composable split, `UiText` error mapping, and process-death handling with `SavedStateHandle`.
+## Acknowledgments
 
-### android-navigation
+Based on patterns and practices from:
+- [NowInAndroid](https://github.com/android/nowinandroid) by Google
+- [Android Architecture Guidelines](https://developer.android.com/topic/architecture)
+- [Jetpack Compose Best Practices](https://developer.android.com/jetpack/compose)
 
-Type-safe Compose Navigation using `@Serializable` route objects, one nav graph per feature, cross-feature navigation through callbacks, and assembly in the `:app` module.
+## Resources
 
-### android-di-koin
-
-Koin dependency injection conventions: one module per feature layer, `single` / `viewModel` / `factory` scoping, assembling modules in `:app`, and injecting ViewModels in composables with `koinViewModel()`.
-
-### android-testing
-
-Testing patterns and stack: JUnit 5 + AssertK + Turbine for ViewModel unit tests, `UnconfinedTestDispatcher`, fake repositories, `SavedStateHandle` testing, and Compose UI tests with `ComposeTestRule`.
-
-## How Skills Work
-
-When you give Claude Code a task — for example, *"create a new notes feature with a list and detail screen"* — it checks whether any installed skills match the request. If they do, Claude reads the corresponding `SKILL.md` files and follows the patterns described in them. Multiple skills can activate at once, so a feature-scaffolding request might pull in module-structure, data-layer, presentation-mvi, navigation, DI, and testing all together.
-
-You don't need to reference skills by name. Just describe what you want to build and Claude will apply the right patterns automatically.
+- [Android Developer Documentation](https://developer.android.com)
+- [NowInAndroid Repository](https://github.com/android/nowinandroid)
+- [Kotlin Documentation](https://kotlinlang.org/docs/home.html)
+- [Jetpack Compose Pathway](https://developer.android.com/courses/pathways/compose)

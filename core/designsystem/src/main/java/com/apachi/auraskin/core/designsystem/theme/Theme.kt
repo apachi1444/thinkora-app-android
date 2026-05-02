@@ -23,7 +23,8 @@ private val AuraSkinDarkColorScheme = darkColorScheme(
     onBackground = AuraSkinDarkOnSurface,
     onSurface = AuraSkinDarkOnSurface,
     onSurfaceVariant = AuraSkinDarkOnSurfaceVariant,
-    outline = AuraSkinDarkOutline
+    outline = AuraSkinDarkOutline,
+    error = AuraSkinDarkError
 )
 
 private val AuraSkinLightColorScheme = lightColorScheme(
@@ -37,7 +38,8 @@ private val AuraSkinLightColorScheme = lightColorScheme(
     onBackground = AuraSkinLightOnSurface,
     onSurface = AuraSkinLightOnSurface,
     onSurfaceVariant = AuraSkinLightOnSurfaceVariant,
-    outline = AuraSkinLightOutline
+    outline = AuraSkinLightOutline,
+    error = AuraSkinLightError
 )
 
 @Composable
@@ -57,6 +59,7 @@ fun AuraSkinTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        shapes = Shapes,
         content = content
     )
 }
